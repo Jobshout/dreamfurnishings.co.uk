@@ -1,0 +1,96 @@
+@charset "UTF-8";
+/* CSS Document */
+#navigation-bar {
+    position: relative;
+    height: 60px;
+    padding-left: 60px;
+}
+.searchnew {
+   position: relative;
+float: right;
+width: 60px;
+height: 60px;
+/*margin-left: -60px;*/
+right: 0px;
+/*left: 29%;*/
+top: 28px;
+}
+#label {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    z-index: 20;
+}
+#label label {
+    display: block;
+width: 26px;
+height: 30px;
+background: url(../images/search.svg) no-repeat;
+font-size: 0;
+color: rgba(0, 0, 0, 0);
+text-indent: -9999px;
+cursor: pointer;
+margin-top: 10px;
+margin-left: 15px;
+}
+#label label:hover {
+}
+
+
+#label.active label {
+	background: url(../images/cross.svg) no-repeat;
+
+}
+
+#input  {
+  position: absolute;
+top: -28px;
+right: 45px;
+/*width: 580px;*/
+height: 105px;
+overflow: hidden;
+	
+	
+}
+
+
+#input input {
+    display: block;
+    position: absolute;
+    top: 0;
+   left: -580px;
+/*width: 580px;*/
+width: 600px;
+    height: 100px!important;
+    margin: 0;
+    padding: 0 10px;
+    background-color: #fff;
+	border:none;
+	font-size: 20px;
+   
+}
+#input input:focus {
+    outline: none
+}
+#input.focus {
+    z-index: 20;
+  /*  width: 560px;*/
+    width: 630px;
+}
+#input.focus input {
+    left: 0;
+    -webkit-transition: left 0.3s;
+    -moz-transition: left 0.3s;
+    -ms-transition: left 0.3s;
+    -o-transition: left 0.3s;
+    transition: left 0.3s;
+}
+
+.alert {
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+

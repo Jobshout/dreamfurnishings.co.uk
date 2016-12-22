@@ -1,0 +1,12 @@
+<script src="js/jquery-1.12.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- SmartMenus jQuery plugin -->
+    <script type="text/javascript" src="js/jquery.smartmenus.js"></script>
+
+    <!-- SmartMenus jQuery Bootstrap Addon -->
+    <script type="text/javascript" src="js/jquery.smartmenus.bootstrap.js"></script>
+
+<script src="js/menu.js"></script>
+<script src="js/common.js"></script>
+<script src="js/classie.js"></script>
+<script src="js/jquery.cookie.js"></script>

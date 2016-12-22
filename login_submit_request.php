@@ -1,0 +1,71 @@
+<?php           
+if(!empty($_POST['sign_in'])){
+	$email=$_POST['email_address'];
+	$action=$_POST['action'];
+	$password=addslashes($_POST['password']);
+	$md5_password=md5($password);
+	
+if($email!="" && validChr($email)){
+	if($user= $db->Contacts->findOne(array("Email" => $email, "AllowWebAccess" => true))){
+		if($action=="requestnewpassword"){
+			//to add authentication_token
+			$create_token_entry= array("user_uuid" => $user["uuid"], "created" => time(), "active" => true );
+			$db->authentication_token->insert($create_token_entry);
+			
+			$user_html  = "<table border='0' style='text-align:left; width:95%; padding:5px;'>";
+			$user_html .= "<tr><td colspan='4' style='text-align:left;'>Hi ".$user["First name"]." ".$user["Surname"].",\n\n</td></tr>";
+			$user_html .= "<tr><td colspan='4'>&nbsp;</td></tr>";
+			$user_html .= "<tr><td colspan='4'>To regenerate your password, please click on the link below or copy the line and paste it into a web browser (if the ENTIRE line does not look like a link you must copy and paste or you will get an error):</td></tr>";
+			$user_html .= "<tr><td colspan='4'><a href='".SITE_WS_PATH."regenerate_password.php?token=".$create_token_entry['_id']."&".rand()."'>".SITE_WS_PATH."regenerate_password.php?token=".$create_token_entry['_id']."&".rand()."</a></td></tr>";					  
+			$user_html .= "<tr><td colspan='4'>&nbsp;</td></tr>";
+			$user_html .= "<tr><td colspan='4'>If case you don't requested for this action, please contact us!</td></tr>";
+			$user_html .= "</table>";
+			
+			require_once("include/mailer-details.php");	
+			try {
+				$mail->AddReplyTo(ADMIN_EMAIL,SITE_NAME);
+				$mail->AddAddress($user["Email"],$user["First name"]);
+				$mail->SetFrom(ADMIN_EMAIL,SITE_NAME);		
+				$mail->Subject = SITE_NAME." password reset";
+			
+				$mail->MsgHTML($user_html);
+				$mail->Send();
+				$succ_msg = 'A link to reset your password has been sent to you. Please check your email.';
+			}catch (phpmailerException $e) {
+				$err_msg = "Sorry, your request can't be processed now, please try later!";
+			}
+			catch (Exception $e) {
+				$err_msg = "Sorry, your request can't be processed now, please try later!";
+			}
+		}else{
+			if($md5_password==$user['zWebPassword']){
+				$userCurrentIP= __ipAddress();
+							
+				$session_exits = $db->session->findOne(array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])));
+				if($session_exits){
+					$session_update= array("last_loggedIn"=>time(), "user_uuid" => $user['uuid'], "login_status" => true, "ip_address" => $userCurrentIP);
+					
+					$session_details= $db->session->update(array("_id" => $session_exits['_id']), array('$set' => $session_update));
+					
+					if(isset($_POST['referer']) && $_POST['referer']!=''){
+						header("location:".$_POST['referer']."&".rand());
+						exit;
+					}elseif(isset($_REQUEST['redirect']) && $_REQUEST['redirect']!=''){
+						header("location:".$_REQUEST['redirect'].".php?".rand());
+						exit;
+					}else{
+						header("location:index.php?".rand());
+						exit;
+					}
+				}
+			}else{
+				$err_msg="Invalid password!";
+			}
+		}
+	}else{
+		$err_msg= $email."  not a registered user!";	
+	}
+
+}else{  $err_msg = characterMessage("email"); }
+}
+?>
