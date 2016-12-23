@@ -4,10 +4,10 @@
             <div class="col-sm-3">
                  <h2>Quick Links</h2>
                 <ul>
-                 <li><a href="<?php echo gb_fn_linkCacheHandler('about-us.html','content.php?code=about-us');?>" title="Company Profile">Company Profile</a></li>
-                 <li><a href="<?php echo gb_fn_linkCacheHandler('sitemap.php','sitemap.php');?>" title="Sitemap">Sitemap</a></li>
-                 <li><a href="<?php echo gb_fn_linkCacheHandler('news.php','news.php');?>" title="News">News</a></li>
-                 <li><a href="<?php echo gb_fn_linkCacheHandler('contact.php','contact.php');?>" title="Contact">Contact</a></li>
+                 <li><a href="<?php echo gb_fn_linkCacheHandler('about-us.html','content.htm?code=about-us');?>" title="Company Profile">Company Profile</a></li>
+                 <li><a href="<?php echo gb_fn_linkCacheHandler('sitemap.htm','sitemap.htm');?>" title="Sitemap">Sitemap</a></li>
+                 <li><a href="<?php echo gb_fn_linkCacheHandler('news.htm','news.htm');?>" title="News">News</a></li>
+                 <li><a href="<?php echo gb_fn_linkCacheHandler('contact.htm','contact.htm');?>" title="Contact">Contact</a></li>
                  </ul>
             </div>
             <?php $latestProductsList = $db->Products->find(array('publish_on_web' => true))->sort(array("created_timestamp" => 1))->limit(5);
@@ -20,7 +20,7 @@
                  		if(isset($prod['product_code']) && $prod['product_code']){
                  			$link=$prod["product_code"];
                  		}	?>
-                     <li><a href="<?php echo gb_fn_linkCacheHandler($link.'.html','product.php?code='.$link);?>" title="<?php echo $prod['ProductName']; ?>"><?php echo ucfirst($prod['ProductName']); ?></a></li>
+                     <li><a href="<?php echo gb_fn_linkCacheHandler($link.'.html','product.htm?code='.$link);?>" title="<?php echo $prod['ProductName']; ?>"><?php echo ucfirst($prod['ProductName']); ?></a></li>
                 	<?php	}	?>
                   	</ul>
             	</div>
