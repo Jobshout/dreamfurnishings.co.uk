@@ -42,7 +42,7 @@ if(!empty($_POST['submit'])){
           		<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb ">
-             				<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+             				<li><a href="<?php echo gb_fn_linkCacheHandler('index.php','index.php');?>" title="Home">Home</a></li>
 							<li class="active">Cart</li>
             			</ol>
 					</div>
@@ -176,7 +176,7 @@ function load_data(){
 				var linkStr='gb_fn_linkCacheHandlerJS(\'product.php?uuid='+item.id+'\',\'product.php?uuid='+item.id+'\')';
           		var buyCodeStr=item.id, buyStr="uuid";
           		if(item.code){
-          			linkStr='gb_fn_linkCacheHandlerJS(\''+item.code+'.html\',\'product.php?code='+item.code+'\')';
+          			linkStr='gb_fn_linkCacheHandlerJS(\'product-'+item.code+'.html\',\'product.php?code='+item.code+'\')';
           			buyCodeStr=item.code;
           			buyStr="code";
           		}

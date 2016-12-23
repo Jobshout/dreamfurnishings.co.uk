@@ -345,7 +345,7 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 											$defaultImage=findDefaultImage($dbProductData);
 								?>
 								<tr>
-									<td WIDTH="27%" class="col-sm-3 text-center"><a href="javascript:void(0)" onclick="gb_fn_linkCacheHandlerJS('<?php echo $dbProductData["product_code"].'.html';?>','product.php?code=<?php echo $dbProductData["product_code"];?>')" class="cart-prdt-link"><img src="<?php echo $defaultImage; ?>" CLASS="img-responsive" STYLE="height:170px;"  onerror="this.src='images/default-product-small.png'"></a></td>
+									<td WIDTH="27%" class="col-sm-3 text-center"><a href="javascript:void(0)" onclick="gb_fn_linkCacheHandlerJS('<?php echo 'product-'.$dbProductData["product_code"].'.html';?>','product.php?code=<?php echo $dbProductData["product_code"];?>')" class="cart-prdt-link"><img src="<?php echo $defaultImage; ?>" CLASS="img-responsive" STYLE="height:170px;"  onerror="this.src='images/default-product-small.png'"></a></td>
 									<td WIDTH="69%" class=" col-sm-7"><strong><?php echo ucfirst($dbProductData["ProductName"]); ?></strong><br>
 									<?php if(isset($dbProductData["sku"]) && $dbProductData["sku"]!=""){
                 							echo "<strong>SKU :</strong> ".$dbProductData["sku"]."<br>";
