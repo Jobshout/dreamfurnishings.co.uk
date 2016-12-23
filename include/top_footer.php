@@ -4,10 +4,10 @@
             <div class="col-sm-3">
                  <h2>Quick Links</h2>
                 <ul>
-                 <li><a onclick="gb_fn_linkCacheHandlerJS('about-us.html','content.php?code=about-us')" href="javascript:void(0)" title="Company Profile">Company Profile</a></li>
-                 <li><a onclick="gb_fn_linkCacheHandlerJS('sitemap.php','sitemap.php')" href="javascript:void(0)" title="Sitemap">Sitemap</a></li>
-                 <li><a onclick="gb_fn_linkCacheHandlerJS('news.php','news.php')" href="javascript:void(0)" title="News">News</a></li>
-                 <li><a onclick="gb_fn_linkCacheHandlerJS('contact.php','contact.php')" href="javascript:void(0)" title="Contact">Contact</a></li>
+                 <li><a href="<?php echo gb_fn_linkCacheHandler('about-us.html','content.php?code=about-us');?>" title="Company Profile">Company Profile</a></li>
+                 <li><a href="<?php echo gb_fn_linkCacheHandler('sitemap.php','sitemap.php');?>" title="Sitemap">Sitemap</a></li>
+                 <li><a href="<?php echo gb_fn_linkCacheHandler('news.php','news.php');?>" title="News">News</a></li>
+                 <li><a href="<?php echo gb_fn_linkCacheHandler('contact.php','contact.php');?>" title="Contact">Contact</a></li>
                  </ul>
             </div>
             <?php $latestProductsList = $db->Products->find(array('publish_on_web' => true))->sort(array("created_timestamp" => 1))->limit(5);
@@ -20,7 +20,7 @@
                  		if(isset($prod['product_code']) && $prod['product_code']){
                  			$link=$prod["product_code"];
                  		}	?>
-                     <li><a href="javascript:void(0)" onclick="gb_fn_linkCacheHandlerJS('<?php echo $link.'.html';?>','product.php?code=<?php echo $link;?>')" title="<?php echo $prod['ProductName']; ?>"><?php echo ucfirst($prod['ProductName']); ?></a></li>
+                     <li><a href="<?php echo gb_fn_linkCacheHandler($link.'.html','product.php?code='.$link);?>" title="<?php echo $prod['ProductName']; ?>"><?php echo ucfirst($prod['ProductName']); ?></a></li>
                 	<?php	}	?>
                   	</ul>
             	</div>
@@ -47,7 +47,7 @@
             	© 2016 Dream Furnishings. All Rights Reserved.
                 <?php } ?>
         		 <?php if($termsPage= $db->web_content->findOne(array("code" => "terms-and-conditions", "status" => "true"))){	?>
-        			<a onclick="gb_fn_linkCacheHandlerJS('terms-and-conditions.html','content.php?code=terms-and-conditions')" href="javascript:void(0)" title="Terms & Conditions" class="golden-link">Terms & Conditions</a>
+        			<a href="<?php echo gb_fn_linkCacheHandler('terms-and-conditions.html','content.php?code=terms-and-conditions'); ?>" title="Terms & Conditions" class="golden-link">Terms & Conditions</a>
         		<?php } ?>
             </div>
             

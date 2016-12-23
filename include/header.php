@@ -81,7 +81,7 @@ color: #000;
             	<span class="icon-bar"></span>
             	<span class="icon-bar"></span>
          	</button>
-         	<a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home"><img src="images/logo.jpg" class="logo-st img-responsive" ></a>
+         	<a href="<?php echo gb_fn_linkCacheHandler('index.php','index.php');?>" title="Home"><img src="images/logo.jpg" class="logo-st img-responsive" ></a>
         </div>
         <div class="navbar-collapse collapse main-nav">
         	<div STYLE="float:right;" CLASS="hidden-sm hidden-xs">
@@ -103,7 +103,7 @@ color: #000;
   			
 			<!-- Right nav -->
          	<ul class="nav navbar-nav navbar-right ">
-            	<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+            	<li><a href="<?php echo gb_fn_linkCacheHandler('index.php','index.php');?>" href="javascript:void(0)" title="Home">Home</a></li>
             	<li><a id="ProductMainMenu" href="javascript:void(0)" title="Products">Products<span class="caret"></span></a>
             		<ul class="dropdown-menu">
             			<?php if(isset($menuHTMLStr) && $menuHTMLStr!=""){  ?>
@@ -112,10 +112,10 @@ color: #000;
          				<li><a href="products.php" title="View all products">View all products</a></li>
       				</ul>
             	</li>
-            	<li><a onclick="gb_fn_linkCacheHandlerJS('about-us.html','content.php?code=about-us')" href="javascript:void(0)" title="Company Profile">Company Profile</a></li>
-            	<li><a onclick="gb_fn_linkCacheHandlerJS('blogs.php','blogs.php')" href="javascript:void(0)" title="Blog">Blog </a></li>
-				<li><a onclick="gb_fn_linkCacheHandlerJS('contact.php','contact.php')" href="javascript:void(0)" title="Contact">Contact</a></li>
-				<li id="wishlistMenu" style="display:none;"><a onclick="gb_fn_linkCacheHandlerJS('wishlist.php','wishlist.php')" href="javascript:void(0)" title="Wishlist"><i class="glyphicon glyphicon-heart"></i></a></li>
+            	<li><a href="<?php echo gb_fn_linkCacheHandler('about-us.html','content.php?code=about-us');?>" title="Company Profile">Company Profile</a></li>
+            	<li><a href="<?php echo gb_fn_linkCacheHandler('blogs.php','blogs.php'); ?>" title="Blog">Blog </a></li>
+				<li><a href="<?php echo gb_fn_linkCacheHandler('contact.php','contact.php'); ?>" title="Contact">Contact</a></li>
+				<li id="wishlistMenu" style="display:none;"><a href="<?php echo gb_fn_linkCacheHandler('wishlist.php','wishlist.php');?>" title="Wishlist"><i class="glyphicon glyphicon-heart"></i></a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
