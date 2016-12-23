@@ -126,7 +126,7 @@ xhr=$.getJSON(jsonRow,function(result){
           			var linkStr='gb_fn_linkCacheHandlerJS(\'product.php?uuid='+item.id+'\',\'product.php?uuid='+item.id+'\')';
           			var buyStr="contact.php?u="+item.id;
           			if(item.code){
-          				linkStr='gb_fn_linkCacheHandlerJS(\'products-'+item.code+'.html\',\'product.php?code='+item.code+'\')';
+          				linkStr='gb_fn_linkCacheHandlerJS(\'product-'+item.code+'.html\',\'product.php?code='+item.code+'\')';
 						buyStr="contact.php?c="+item.code;
           			}
             		htmlStr+='<div style="background:#fff;"><a onClick="'+linkStr+'" href="javascript:void(0)" title="'+item.name+'"><img src="'+item.image+'" class="img-responsive prdt-listing-pg-img"  alt="'+item.name+'" onerror="this.src=\'images/default-product-large.png\'"></a></div>';
