@@ -1,6 +1,6 @@
 <?php 
 require_once("include/config_inc.php");
-$defaultImage=""; $referrerBreadCrumbStr="";
+$defaultImage=""; $referrerBreadCrumbStr=""; $defaultImageUUIDStr="";
 $referrerBreadCrumbLinkStr="";
 if(!isset($code)) { $code = isset($_GET['code']) ? $_GET['code'] : ''; $code = str_replace(".html", "", $code); }
 if(!isset($uuidStr)) { $uuidStr = isset($_GET['uuid']) ? $_GET['uuid'] : ''; }
@@ -136,16 +136,18 @@ require_once("include/main_header.php"); ?>
  								if($hasDefaultBool){
 									if($product_images["default"]=="yes"){
 										$defaultImage=$product_images["path"];
-										$firstCarouselImagesStr='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
+										$defaultImageUUIDStr=$product_images["uuid"];
+										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
 									}else{
- 										$carouselImagesStr.='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
+ 										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
 									}
 								}else{
 									if($countNum==1){
  										$defaultImage=$product_images["path"];
-										$firstCarouselImagesStr='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
+ 										$defaultImageUUIDStr=$product_images["uuid"];
+										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
 									}else{
- 										$carouselImagesStr.='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
+ 										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
 									}
 								}
 							}elseif(isset($product_images["encoded_image"]) && $product_images["encoded_image"]!=""){
@@ -157,39 +159,43 @@ require_once("include/main_header.php"); ?>
 								if($hasDefaultBool){
  									if($product_images["default"]=="yes"){
  										$defaultImage=$imageSrc;
-										$firstCarouselImagesStr='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
+ 										$defaultImageUUIDStr=$product_images["uuid"];
+										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
 									}else{
-										$carouselImagesStr.='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
+										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
 									}
 								}else{
 									if($countNum==1){
 										$defaultImage=$imageSrc;
-										$firstCarouselImagesStr='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
+										$defaultImageUUIDStr=$product_images["uuid"];
+										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
 									}else{
- 										$carouselImagesStr.='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
+ 										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
 									}
 								}
 							}else{
 								if($hasDefaultBool){
 									if($product_images["default"]=="yes"){
 										$defaultImage=$product_images["path"];
-										$firstCarouselImagesStr='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
+										$defaultImageUUIDStr=$product_images["uuid"];
+										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
 									}else{
- 										$carouselImagesStr.='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
+ 										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
 									}
 								}else{
 									if($countNum==1){
  										$defaultImage=$product_images["path"];
-										$firstCarouselImagesStr='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
+ 										$defaultImageUUIDStr=$product_images["uuid"];
+										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
 									}else{
- 										$carouselImagesStr.='<li><a href="#"><img onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
+ 										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
 									}
 								}
 							}
  						}
  						$carouselStr=$firstCarouselImagesStr.$carouselImagesStr;
  					?>
-					<span class="demowrap"><img id="main_image" src="<?php echo $defaultImage; ?>"  onerror="this.src='images/default-product-large.png'"/></span>
+					<span class="demowrap"><img id="main_image" src="<?php echo $defaultImage; ?>" class="<?php echo $defaultImageUUIDStr; ?>" onerror="this.src='images/default-product-large.png'"/></span>
                     <a href='javascript:void(0)' onClick='pop_up()' title='View Full Image' style="padding: 8px 8px;" class='btn btn-danger'>View Full Image</a> 
 						<?php if($carouselStr!=""){ ?>
 						<ul id="imagesCarousel" class="elastislide-list">
@@ -203,7 +209,7 @@ require_once("include/main_header.php"); ?>
           		</div>
          		<?php }else{ ?>
          		<div class="col-md-8 "> 
-         			<span class="demowrap"><img id="main_image" src="images/default-product-large.png"  /></span>
+         			<span class="demowrap"><img id="main_image" src="images/default-product-large.png" class="" /></span>
          		</div>
          		<?php } ?>
          		<div class="col-md-4">
@@ -445,9 +451,9 @@ require_once("include/footer.php");
 <script type="text/javascript" src="js/jquery.elastislide.js"></script>
 <script type="text/javascript">
 function pop_up(){
-    var imgsrc=$('#main_image').attr('src'); 
+    var imgsrc=$('#main_image').attr('class'); 
     if(imgsrc!=''){
-        imgsrc='popupimage.php?src='+imgsrc+'&name=<?php if(isset($pWindowTitleTxt)){ echo $pWindowTitleTxt; } ?>';
+        imgsrc='popupimage.php?guid='+imgsrc;
         window.open(imgsrc,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=1076,height=668,directories=no,location=no');
     }
 }
@@ -525,6 +531,7 @@ function add_user_preferences(id, actionStr){
 				var imgSrc=el.find('img').attr('src');
 				
 				var demo2obj = $('#main_image').data('imagezoom');
+				$("#main_image").attr("class", el.find('img').attr('id'));
 				demo2obj.changeImage(imgSrc,el.find('img').data('largeimg'));
 				//$('#demo2').ImageZoom({bigImageSrc:imgSrc});
 			},

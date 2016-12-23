@@ -33,8 +33,11 @@ if($db->products_search->ensureIndex( array("product_category" =>1) )){
 if($db->Products->ensureIndex(array( "$**" => "text") , array( "name" => "TextIndex" ) )){
 	echo "Text index created for Products table <br>";
 }
+if($db->Products->ensureIndex( array( "product_images.uuid" => 1))){
+	echo "Index of 'Products' created successfully!<br>";
+}
 if($db->Products->ensureIndex( array( "product_category.uuid" => 1, "publish_on_web" => 1))){
-	echo "Compound Index of 'Products' created successfully!<br>";
+	echo "Compound Index of 'Products : product_images.uuid' created successfully!<br>";
 }
 if($db->Products->ensureIndex( array("product_code" =>1) )){
 	echo "Index on '[Products]product_code' created successfully!<br>";

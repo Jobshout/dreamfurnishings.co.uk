@@ -1,6 +1,40 @@
 <?php
-$src = isset($_GET["src"]) ? $_GET["src"] : "";
-$name = isset($_GET["name"]) ? $_GET["name"] : "Dream Furnishings";
+require_once("include/config_inc.php");
+$guid = isset($_GET["guid"]) ? $_GET["guid"] : "";
+$windowTitle = isset($_GET["name"]) ? $_GET["name"] : "Dream Furnishings";
+$imageSrc="images/default-product-large.png";
+
+//$images_root_disk_path="/var/www/html/vhosts/dreamfurnishings.co.uk/public_ftp/";
+$images_root_disk_path="/";
+
+if($guid!=""){
+	$textFileNameStr=$images_root_disk_path."images/products/".$guid.".txt";
+	
+	if($dbProductData = $db->Products->findOne(array("product_images.uuid" => $guid))){
+		$windowTitle=$dbProductData['ProductName'];
+		if(isset($dbProductData['product_images']) && count($dbProductData['product_images'])>0){ 
+			foreach($dbProductData['product_images'] as $product_images){
+ 				if($product_images["uuid"]==$guid){
+ 					if(isset($product_images["encoded_image"]) && $product_images["encoded_image"]!=""){
+ 						$imagebase64=$product_images["encoded_image"];
+ 						$imgdata = base64_decode($imagebase64);
+						$mimetype = getImageMimeType($imgdata);
+						$imageSrc="data:image/".$mimetype.";base64,".$imagebase64;
+					}elseif(file_exists($textFileNameStr)){
+						$getFileContents=file_get_contents($findTxtFile);
+           				$uncompressed = gzuncompress($getFileContents);
+            			$decodeImageBlob=base64_decode($uncompressed);
+            			$mimetype = getImageMimeType($decodeImageBlob);
+						$imageSrc="data:image/".$mimetype.";base64,".$uncompressed;
+					}elseif(isset($product_images["path"]) && $product_images["path"]!=""){
+						$imageSrc=$product_images["path"];
+					}
+ 				}
+ 			}
+		}
+	}
+}
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +42,7 @@ $name = isset($_GET["name"]) ? $_GET["name"] : "Dream Furnishings";
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
-		<title><?php echo $name; ?></title>
+		<title><?php echo $windowTitle; ?></title>
 
 
 
@@ -72,7 +106,7 @@ $name = isset($_GET["name"]) ? $_GET["name"] : "Dream Furnishings";
 				<!--[DEMO:START-CONTENT]-->
 
 				<div class="zoomer_wrapper zoomer_basic">
-					<img src="<?php echo $src;?>">
+					<img src="<?php echo $imageSrc;?>" >
                 </div>
 				
 		  </div>
