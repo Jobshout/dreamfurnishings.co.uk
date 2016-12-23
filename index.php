@@ -74,15 +74,15 @@ $latestProducts = $db->Products->find(array('publish_on_web' => true, 'product_c
         		<div class="col-sm-6">
             		<div class="row">
                 		<div class="col-md-5 col-sm-12 col-xs-12">
-                			<a href="javascript:void(0)" onclick="gb_fn_linkCacheHandlerJS('<?php echo $latestProduct["product_code"].'.html';?>','product.php?code=<?php echo $latestProduct["product_code"];?>')">
+                			<a href="<?php echo gb_fn_linkCacheHandler('product-'.$latestProduct["product_code"].'.html','product.php?code='.$latestProduct["product_code"]); ?>">
                 			<img src="<?php echo $defaultImage; ?>" class="img-responsive" onerror="this.src='images/default-product-small.png'">
               			</a>
                 		</div>
                     	<div class="col-md-7 col-sm-12 col-xs-12">
-                			<h4 class="feature-hding"><a href="javascript:void(0)" onclick="gb_fn_linkCacheHandlerJS('<?php echo $latestProduct["product_code"].'.html';?>','product.php?code=<?php echo $latestProduct["product_code"];?>')">
+                			<h4 class="feature-hding"><a href="<?php echo gb_fn_linkCacheHandler('product-'.$latestProduct["product_code"].'.html','product.php?code='.$latestProduct["product_code"]); ?>">
                 				<?php echo ucfirst($latestProduct["ProductName"]);	?></a></h4>
                 			<p><?php echo $bodyStr; ?></p>
-               				<a href="javascript:void(0)" onclick="gb_fn_linkCacheHandlerJS('<?php echo $latestProduct["product_code"].'.html';?>','product.php?code=<?php echo $latestProduct["product_code"];?>')" class="view-more">Read more</a>
+               				<a href="<?php echo gb_fn_linkCacheHandler('product-'.$latestProduct["product_code"].'.html','product.php?code='.$latestProduct["product_code"]); ?>" class="view-more">Read more</a>
                     	</div>
                 	</div>
             	</div>

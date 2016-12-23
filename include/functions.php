@@ -1,4 +1,12 @@
 <?php 
+function gb_fn_linkCacheHandler($seoFriendlyUrlStr, $realUrlStr){
+	if(SEOFRIENDLYFLAG){
+		return $seoFriendlyUrlStr;
+	}else{
+		return $realUrlStr;
+	}
+}
+
 function save_email_queue($recipientEmailAddr, $senderEmailAddr, $subject, $emailContent){
 	global $db;
 	$insert_data= array("created_timestamp" => time(), "modified_timestamp" => time(), "status" => 0, "sender_email_address" => $senderEmailAddr, "recipient_email_adddress" => $recipientEmailAddr, "subject" => $subject, "email_content" => $emailContent);
