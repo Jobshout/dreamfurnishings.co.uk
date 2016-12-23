@@ -2,9 +2,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once("include/config_inc.php");
+$codeStr = isset($_GET['code']) ? $_GET['code'] : '';
+$codeStr = str_replace(".html", "", $codeStr);
 
-if(isset($_GET['code']) && $_REQUEST['code']<>''){
-	if($documentdetail = $db->web_content->findOne(array("code" => $_GET['code'], '$or' => array(array("status" => "true"), array("status" => true))))){
+if($codeStr<>''){
+	if($documentdetail = $db->web_content->findOne(array("code" => $codeStr, '$or' => array(array("status" => "true"), array("status" => true))))){
 		$pWindowTitleTxt = $documentdetail['windowtitle'];
 		
 		$pMetaKeywordsTxt = $documentdetail['meta_tag_keywords'];
