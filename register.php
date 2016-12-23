@@ -2,6 +2,7 @@
 require_once("include/config_inc.php");
 require_once("include/main_header.php");
 require_once('include/class.phpmailer.php');
+
 if(!empty($_POST['submit'])){
 	if(!$_POST['first_name']){ $err_msg = "Please enter your first name"; }
 	elseif(isset($_POST['first_name']) && $_POST['first_name']!="" && !validChr($_POST['first_name'])){ $err_msg = characterMessage('first name'); }
@@ -39,7 +40,7 @@ if(!empty($_POST['submit'])){
 				
 				$time = time();
 				
-				$records= $db->Contacts->find(array("email_address" => $email_address ));
+				$records= $db->Contacts->find(array("Email" => $email_address ));
 				if($records->count() == 0){
 					$encoded_uuid=md5($GUID);
 					
@@ -108,7 +109,11 @@ if(!empty($_POST['submit'])){
 						$HTMLEmailBodyTxt .= "<tr><td colspan='4'><div><strong>IP:</strong> <em>".__ipAddress()."</em></div></td></tr>";
 						
 						$admin_html = $admin_header.$HTMLEmailBodyTxt.'</table>';
+						$user_html = $user_header.$user_footer;
 						require_once("include/mailer-details.php");
+						
+					//admin email
+					if(isset($mailerDetailsAvailableInDbFlag) && $mailerDetailsAvailableInDbFlag==true){
 						try {
 							$mail->AddReplyTo($email_address,$first_name);
 							$mail->AddAddress(ADMIN_EMAIL,SITE_NAME);
@@ -119,17 +124,19 @@ if(!empty($_POST['submit'])){
 							$mail->MsgHTML($admin_html);
 							$mail->Send();
 							$mail->ClearAddresses();
-							$returnSuccMsgFlag=true;
+							
 						}catch (phpmailerException $e) {
-							$returnSuccMsgFlag=false;
+							save_email_queue(ADMIN_EMAIL, $email_address, $subject, $admin_html); // sendto, sendfrom, subject and content
 						}
 						catch (Exception $e) {
-							$returnSuccMsgFlag=false;
+							save_email_queue(ADMIN_EMAIL, $email_address, $subject, $admin_html); // sendto, sendfrom, subject and content
 						}
-						
-						//user email
-						$user_html = $user_header.$user_footer;
-						
+					}else{
+						save_email_queue(ADMIN_EMAIL, $email_address, $subject, $admin_html); // sendto, sendfrom, subject and content
+					}
+					
+					//user email
+					if(isset($mailerDetailsAvailableInDbFlag) && $mailerDetailsAvailableInDbFlag==true){
 						try {
 							$mail->AddReplyTo(ADMIN_EMAIL,SITE_NAME);
 							$mail->AddAddress($email_address,$first_name);
@@ -140,18 +147,25 @@ if(!empty($_POST['submit'])){
 							$mail->MsgHTML($user_html);
 							$mail->Send();
 							$mail->ClearAddresses();
-							$returnSuccMsgFlag=true;
 						}catch (phpmailerException $e) {
 							$returnSuccMsgFlag=false;
+							save_email_queue($email_address, ADMIN_EMAIL, $subject, $user_html);	// sendto, sendfrom, subject and content
 						}
 						catch (Exception $e) {
 							$returnSuccMsgFlag=false;
+							save_email_queue($email_address, ADMIN_EMAIL, $subject, $user_html);	// sendto, sendfrom, subject and content
 						}
+					}else{
+						$returnSuccMsgFlag=false;
+						save_email_queue($email_address, ADMIN_EMAIL, $subject, $user_html);	// sendto, sendfrom, subject and content
+					}
+					
 						if($returnSuccMsgFlag){
 							$succ_msg = 'Thank you for registration with '.SITE_NAME.'. Please check your email.';
 						}else{
 							$err_msg = "Sorry, your request can't be processed now, please try later!";
 						}
+						
 					}
 				}else{
 					$err_msg = "User with this email already exists, please confirm your registration from email sent to you or contact us!";

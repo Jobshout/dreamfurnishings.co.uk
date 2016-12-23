@@ -11,17 +11,10 @@ $remoteIPStr= __ipAddress();
 
 $res= array();
 if ($c_name!="" && $c_email!="" && $comment!=""){
-		require_once("include/mailer-details.php");
-		
-		$debugModeBool = false;
-		try {
-			$mail->AddReplyTo($c_email,$c_name);
-			$mail->AddAddress(ADMIN_EMAIL,SITE_NAME);
-			//$mail->AddCC(CC_MAIL);
-			$mail->SetFrom($c_email,$c_name);			
-			
-			$mail->Subject = $c_name." has an enquiry";
-			
+	$insert_data= array("created_timestamp" => time(), "modified_timestamp" => time(), "status" => 0, "user_name" => $c_name, "user_email_address" => $c_email, "comment" => $comment);
+	$query_insert = $db->web_enquiries->insert($insert_data);
+	if($query_insert){
+		$subjectStr=$c_name." has an enquiry";
 			$message='<div style="font-family:\'Helvetica Neue\',Helvetica,Arial,sans-serif;font-size:13;color:#333">We have just received the following message from the <a href="'.SITE_WS_PATH.'" target="_blank">'.SITE_WS_PATH.'</a> website:</div>';
 			$message.="<br/><table border='0' cellpadding='5' cellspacing='0'>
 			<tr><td style=\"font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:12px;color:#666\">Name</td><td style=\"font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;color:#333\">".$c_name."</td></tr>
@@ -35,18 +28,32 @@ if ($c_name!="" && $c_email!="" && $comment!=""){
 			$message.="<tr><td style=\"font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:12px;color:#666\">IP Address</td><td style=\"font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;color:#333\">".$remoteIPStr."</td></tr>";
 			$message.='</table>';
 			
-			$mail->MsgHTML($message);
-			$mail->Send();
-			$mail->ClearAddresses();
-			$result['success']= "Hi ".$c_name.", your enquiry has been successfully sent. We will contact you soon!";
-				
-		}catch (phpmailerException $e) {
-			$result['error']= "Sorry, your request can't be processed now, please try later!";
+		require_once("include/mailer-details.php");
+		
+		if(isset($mailerDetailsAvailableInDbFlag) && $mailerDetailsAvailableInDbFlag==true){
+			try {
+				$mail->AddReplyTo($c_email,$c_name);
+				$mail->AddAddress(ADMIN_EMAIL,SITE_NAME);
+				$mail->SetFrom($c_email,$c_name);			
+				$mail->Subject = $subjectStr;
+			
+				$mail->MsgHTML($message);
+				$mail->Send();
+					
+			}catch (phpmailerException $e) {
+				save_email_queue(ADMIN_EMAIL, $c_email, $subjectStr, $message); // sendto, sendfrom, subject and content
+			}
+			catch (Exception $e) {
+				save_email_queue(ADMIN_EMAIL, $c_email, $subjectStr, $message); // sendto, sendfrom, subject and content
+			}
+		}else{
+			save_email_queue(ADMIN_EMAIL, $c_email, $subjectStr, $message); // sendto, sendfrom, subject and content
 		}
-		catch (Exception $e) {
-			$result['error']= "Sorry, your request can't be processed now, please try later!";
-		}
-
+		
+		$result['success']= "Hi ".$c_name.", your enquiry has been successfully sent. We will contact you soon!";
+	}else{
+		$result['error']= "Sorry, your request can't be processed now, please try later!";
+	}
 }else{
 	$result['required']= "Please enter value for all fields!";
 }

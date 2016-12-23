@@ -112,7 +112,7 @@ How much is <span class="rand1"></span>+<span class="rand2"></span>?</label> <sp
 	<?php $getLandlineStr=get_token_value('dreamfurnishing-landline');
 if($getLandlineStr!=""){	?>
       <p><STRONG> Landline :</STRONG></p>
-      <p><a href="tel:<?php echo LANDLINE;?>" title="Click to call us"><?php echo $getLandlineStr;?></a></p>
+      <p><a href="tel:<?php echo $getLandlineStr;?>" title="Click to call us"><?php echo $getLandlineStr;?></a></p>
 	<?php } ?> 
 	<?php $getSkypeStr=get_token_value('dreamfurnishing-skype');
 	if($getSkypeStr!=""){	?>

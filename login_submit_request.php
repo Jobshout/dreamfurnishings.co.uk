@@ -10,7 +10,9 @@ if($email!="" && validChr($email)){
 		if($action=="requestnewpassword"){
 			//to add authentication_token
 			$create_token_entry= array("user_uuid" => $user["uuid"], "created" => time(), "active" => true );
-			$db->authentication_token->insert($create_token_entry);
+			if($db->authentication_token->insert($create_token_entry)){
+			
+			$succ_msg = 'A link to reset your password has been sent to you. Please check your email.';
 			
 			$user_html  = "<table border='0' style='text-align:left; width:95%; padding:5px;'>";
 			$user_html .= "<tr><td colspan='4' style='text-align:left;'>Hi ".$user["First name"]." ".$user["Surname"].",\n\n</td></tr>";
@@ -21,20 +23,34 @@ if($email!="" && validChr($email)){
 			$user_html .= "<tr><td colspan='4'>If case you don't requested for this action, please contact us!</td></tr>";
 			$user_html .= "</table>";
 			
-			require_once("include/mailer-details.php");	
-			try {
-				$mail->AddReplyTo(ADMIN_EMAIL,SITE_NAME);
-				$mail->AddAddress($user["Email"],$user["First name"]);
-				$mail->SetFrom(ADMIN_EMAIL,SITE_NAME);		
-				$mail->Subject = SITE_NAME." password reset";
+			$subjectStr=SITE_NAME." password reset";	
 			
-				$mail->MsgHTML($user_html);
-				$mail->Send();
-				$succ_msg = 'A link to reset your password has been sent to you. Please check your email.';
-			}catch (phpmailerException $e) {
-				$err_msg = "Sorry, your request can't be processed now, please try later!";
-			}
-			catch (Exception $e) {
+			require_once("include/mailer-details.php");
+			
+				if(isset($mailerDetailsAvailableInDbFlag) && $mailerDetailsAvailableInDbFlag==true){	
+					try {
+						$mail->AddReplyTo(ADMIN_EMAIL,SITE_NAME);
+						$mail->AddAddress($user["Email"],$user["First name"]);
+						$mail->SetFrom(ADMIN_EMAIL,SITE_NAME);	
+						
+						$mail->Subject = $subjectStr;
+			
+						$mail->MsgHTML($user_html);
+						$mail->Send();
+				
+					}catch (phpmailerException $e) {
+						$err_msg = "Sorry, your request can't be processed now, please try later!";
+						save_email_queue($user["Email"], ADMIN_EMAIL, $subjectStr, $user_html); // sendto, sendfrom, subject and content
+					}
+					catch (Exception $e) {
+						$err_msg = "Sorry, your request can't be processed now, please try later!";
+						save_email_queue($user["Email"], ADMIN_EMAIL, $subjectStr, $user_html); // sendto, sendfrom, subject and content
+					}
+				}else{
+					$err_msg = "Sorry, your request can't be processed now, please try later!";
+					save_email_queue($user["Email"], ADMIN_EMAIL, $subjectStr, $user_html); // sendto, sendfrom, subject and content
+				}
+			}else{
 				$err_msg = "Sorry, your request can't be processed now, please try later!";
 			}
 		}else{

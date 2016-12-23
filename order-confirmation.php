@@ -41,7 +41,10 @@ if(!empty($_POST['StatusCode'])){
 			$userEmailHtml = $HTMLEmailBodyTxt;					  
 			$adminEmailHtml = $HTMLEmailBodyTxt;
 			$adminEmailHtml .= "<div><strong>IP:</strong> <em>".__ipAddress()."</em></div>";
+			
 			require_once("include/mailer-details.php");
+			// send email to user
+			if(isset($mailerDetailsAvailableInDbFlag) && $mailerDetailsAvailableInDbFlag==true){
 						try {
 							$mail->AddReplyTo(ADMIN_EMAIL,SITE_NAME);
 							$mail->AddAddress($userLoggedIn["Email"]);
@@ -52,15 +55,18 @@ if(!empty($_POST['StatusCode'])){
 							$mail->MsgHTML($userEmailHtml);
 							$mail->Send();
 							$mail->ClearAddresses();
-							$returnSuccMsgFlag=true;
 						}catch (phpmailerException $e) {
-							$returnSuccMsgFlag=false;
+							save_email_queue($userLoggedIn["Email"], ADMIN_EMAIL, $subject, $userEmailHtml);	// sendto, sendfrom, subject and content
 						}
 						catch (Exception $e) {
-							$returnSuccMsgFlag=false;
+							save_email_queue($userLoggedIn["Email"], ADMIN_EMAIL, $subject, $userEmailHtml);	// sendto, sendfrom, subject and content
 						}
-						
-						
+				}else{
+					save_email_queue($userLoggedIn["Email"], ADMIN_EMAIL, $subject, $userEmailHtml);	// sendto, sendfrom, subject and content
+				}		
+					
+				//send this email to admin	
+				if(isset($mailerDetailsAvailableInDbFlag) && $mailerDetailsAvailableInDbFlag==true){
 						try {
 							$mail->AddReplyTo($userLoggedIn["Email"]);
 							$mail->AddAddress(ADMIN_EMAIL,SITE_NAME);
@@ -71,13 +77,16 @@ if(!empty($_POST['StatusCode'])){
 							$mail->MsgHTML($adminEmailHtml);
 							$mail->Send();
 							$mail->ClearAddresses();
-							$returnSuccMsgFlag=true;
 						}catch (phpmailerException $e) {
-							$returnSuccMsgFlag=false;
+							save_email_queue(ADMIN_EMAIL, $userLoggedIn["Email"], $subject, $adminEmailHtml);	// sendto, sendfrom, subject and content
 						}
 						catch (Exception $e) {
-							$returnSuccMsgFlag=false;
+							save_email_queue(ADMIN_EMAIL, $userLoggedIn["Email"], $subject, $adminEmailHtml);	// sendto, sendfrom, subject and content
 						}
+				}else{
+					save_email_queue(ADMIN_EMAIL, $userLoggedIn["Email"], $subject, $adminEmailHtml);	// sendto, sendfrom, subject and content
+				}
+				
 			$succ_msg="Thank you, your order has been placed successfully.";
 		}else{
 			header("Location: cart.php?error=Add some items in your cart!"); exit;
@@ -87,13 +96,28 @@ if(!empty($_POST['StatusCode'])){
 	}	
 }
 
+$showPurchaseBtnBool=false;
 if(isset($orderDetails["status"]) && $orderDetails["status"]<=1){
-/*merchants details*/
 
-$MerchantID = MERCHANTID;
-$Password = MERCHANTPWD;
-$PreSharedKey = MERCHANTSECUREKEY;
-	
+/*merchants details*/
+$tokensQry= $db->Tokens->find(array("code" => array('$in' => array('payment-sense-merchantid','payment-sense-password','payment-sense-securekey'))));
+if($tokensQry->count()>0){
+	foreach($tokensQry as $token){	
+		if(isset($token["contentTxt"]) && $token["contentTxt"]!=""){
+			
+			if(isset($token["code"]) && $token["code"]=="payment-sense-merchantid"){
+				$MerchantID=$token["contentTxt"];
+			}elseif(isset($token["code"]) && $token["code"]=="payment-sense-password"){
+				$PaymentSensePwd=$token["contentTxt"];
+			}elseif(isset($token["code"]) && $token["code"]=="payment-sense-securekey"){
+				$PreSharedKey=$token["contentTxt"];
+			}
+		}
+	}
+}
+if(isset($MerchantID) && isset($PaymentSensePwd) && isset($PreSharedKey) && $MerchantID!="" && $PaymentSensePwd!="" && $PreSharedKey!=""){
+$showPurchaseBtnBool=true; //set true because merchant login details are given
+
 // This method MUST match the hash method set for the merchant in the MMS
 $HashMethod = 'SHA1';
 	
@@ -196,7 +220,7 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 
 	// get the string to be hashed
 	$szStringToHash = PaymentFormHelper::generateStringToHash($MerchantID,
-			        										  $Password,
+			        										  $PaymentSensePwd,
 			        										  $szAmount,
 															  $szCurrencyCode,
 															  $szEchoCardType,
@@ -232,6 +256,7 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 
 	// pass this string into the hash function to create the hash digest
 	$szHashDigest = PaymentFormHelper::calculateHashDigest($szStringToHash, $PreSharedKey, $HashMethod);
+}
 }
 ?>
 </head>
@@ -360,7 +385,7 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 							</tbody>
 						</table>
 					</div>
-				<?php if(isset($orderDetails["status"]) && $orderDetails["status"]<=1){	?>
+				<?php if($showPurchaseBtnBool){	?>
 				<form role="form" action="<?php echo $FormAction; ?>" method="post" name="form" id="frm_main_content">
 	<input type="hidden" name="HashDigest" value="<?php echo $szHashDigest; ?>" />
 	<input type="hidden" name="MerchantID" value="<?php echo $MerchantID; ?>" />

@@ -1,4 +1,15 @@
 <?php 
+function save_email_queue($recipientEmailAddr, $senderEmailAddr, $subject, $emailContent){
+	global $db;
+	$insert_data= array("created_timestamp" => time(), "modified_timestamp" => time(), "status" => 0, "sender_email_address" => $senderEmailAddr, "recipient_email_adddress" => $recipientEmailAddr, "subject" => $subject, "email_content" => $emailContent);
+	$query_insert = $db->email_queue->insert($insert_data);
+	if($query_insert){
+		return true;
+	}else{
+		return false;
+	}
+}
+
 function find_sub_categories($e,$displayBool=false,$level=1){
 	global $db;
 	$returnMenuStr="";
