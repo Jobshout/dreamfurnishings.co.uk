@@ -237,7 +237,7 @@ require_once("include/main_header.php"); ?>
              		<?php	} ?>
 					<div CLASS="row">
 		   				<div CLASS="col-md-6">
-		   					<a href="mailto:?subject=Product from the <?php echo SITE_NAME; ?>&body=<?php echo SITE_WS_PATH."code=".$dbProductData['product_code']; ?>" title="Email this page" STYLE="width:100%; margin-bottom:10px;"  class="btn btn-default btn-xs"><i CLASS="fa fa-envelope"></i> Email this page</a>
+		   					<a href="mailto:?subject=Product from the <?php echo SITE_NAME; ?>&body=<?php echo SITE_WS_PATH.$dbProductData['product_code'].'.html'; ?>" title="Email this page" STYLE="width:100%; margin-bottom:10px;"  class="btn btn-default btn-xs"><i CLASS="fa fa-envelope"></i> Email this page</a>
 		   				</div>
 						<div CLASS="col-md-6" style="padding-left: 0px;">
 							<a data-toggle="modal" data-backdrop="static" href="#modal_form" class="btn btn-default btn-xs" STYLE="width:100%; margin-bottom:10px;"><i CLASS="fa fa-link"></i> Link this page</a>
@@ -265,10 +265,10 @@ require_once("include/main_header.php"); ?>
             			<?php if(isset($dbProductData['Unit_Price']) && $dbProductData['Unit_Price']>0){ ?>
             				<div CLASS="col-sm-3"><input class="form-control text-center" value="1"  min="1" type="number" id="qunatityID" style="height: 43px;margin-bottom: 13px;border-radius: 0px;"></div>
            					<div CLASS="col-sm-5 pading-lft" ><a href="javascript:void(0)" onClick="add_user_preferences('<?php echo $dbProductData['uuid']; ?>', 'cart'); return false;" class="add-to-cart-btn"><i class="fa fa-cart-plus"></i> Add to cart</a></div>
-            			<div class="col-sm-4 pading-lft displayCartsClass">
+            			<div class="col-sm-4 pading-lft displayCartsClass" style="display:none;">
             			<?php }else{ ?>
             			
-            			<div class="col-sm-12 displayCartsClass">
+            			<div class="col-sm-12 displayCartsClass" style="display:none;">
             			<?php } ?>
             				<a href="cart.php" class="btn btn-danger btn-sm " style=" border-radius:1px; line-height:30px; margin-bottom:10px; position: relative; width:100%;">
             					View cart<span class="cart_items cartItemsClass">0</span>

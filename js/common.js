@@ -1,4 +1,4 @@
-var devBool=true;
+var devBool=false;
 function gb_fn_linkCacheHandlerJS(pCachedURLStr, pRealURLStr) {
 	if(devBool){
 		window.location=pRealURLStr;
