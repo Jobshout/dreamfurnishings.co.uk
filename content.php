@@ -29,11 +29,11 @@ if($codeStr<>''){
 		$related_documents = $db->web_content->find(array("type" => $docTypeStr, "status" => true, "code" => array('$ne' => $documentdetail['code']) ));
 
 	}else{
-		header("location:404.php");
+		header("location:404.htm");
 		exit;
 	}
 }else{
-	header("location:404.php");
+	header("location:404.htm");
 	exit;
 }
 require_once("include/main_header.php");
@@ -51,15 +51,15 @@ require_once("include/main_header.php");
 				<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb ">
-              				<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+              				<li><a onclick="gb_fn_linkCacheHandlerJS('index.htm','index.htm')" href="javascript:void(0)" title="Home">Home</a></li>
 							<?php switch ($docTypeStr) {
     								case "news":
     							?>
-    								<li><a onclick="gb_fn_linkCacheHandlerJS('news.php','news.php')" href="javascript:void(0)" title="News">News</a></li>
+    								<li><a onclick="gb_fn_linkCacheHandlerJS('news.htm','news.htm')" href="javascript:void(0)" title="News">News</a></li>
     							<?php	break;
     								case "blog":
     							?>
-    								<li><a onclick="gb_fn_linkCacheHandlerJS('blogs.php','blogs.php')" href="javascript:void(0)" title="Blogs">Blogs</a></li>
+    								<li><a onclick="gb_fn_linkCacheHandlerJS('blogs.htm','blogs.htm')" href="javascript:void(0)" title="Blogs">Blogs</a></li>
     							<?php break;
     								default:
     							}
@@ -104,7 +104,7 @@ require_once("include/main_header.php");
 											echo $bodyStr;
 											?>
 											<?php //echo substr($related_document["body"],50)."..."; ?>
-											<div class="text-right"><a onclick="gb_fn_linkCacheHandlerJS('<?php echo $related_document["code"];?>.html','content.php?code=<?php echo $related_document["code"];?>')" href="javascript:void(0)">Read more...</a></div>
+											<div class="text-right"><a onclick="gb_fn_linkCacheHandlerJS('<?php echo $related_document["code"];?>.html','content.htm?code=<?php echo $related_document["code"];?>')" href="javascript:void(0)">Read more...</a></div>
 										</li>
 										<?php	} ?>
 									</ul>
@@ -122,10 +122,10 @@ require_once("include/main_header.php");
 						<?php if(isset($documentdetail['posted_timestamp']) && $documentdetail['posted_timestamp']!=""){	
 							$postedTimestampStr= date("F d,Y",$documentdetail['posted_timestamp']);
 						?>
-							&nbsp;on&nbsp;<a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('news.php?on=<?php echo $documentdetail['posted_timestamp'];?>','news.php?on=<?php echo $documentdetail['posted_timestamp'];?>')"><?php echo $postedTimestampStr;?></a>
+							&nbsp;on&nbsp;<a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('news.htm?on=<?php echo $documentdetail['posted_timestamp'];?>','news.htm?on=<?php echo $documentdetail['posted_timestamp'];?>')"><?php echo $postedTimestampStr;?></a>
 						<?php } ?>
 						<?php if(isset($documentdetail['owner']) && $documentdetail['owner']!=""){	?>
-							&nbsp;by&nbsp;<a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('news.php?by=<?php echo $documentdetail['owner'];?>','news.php?by=<?php echo $documentdetail['owner'];?>')"><?php echo $documentdetail['owner'];?></a>
+							&nbsp;by&nbsp;<a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('news.htm?by=<?php echo $documentdetail['owner'];?>','news.htm?by=<?php echo $documentdetail['owner'];?>')"><?php echo $documentdetail['owner'];?></a>
 						<?php } ?>
 					</div>
 					<?php } ?>
@@ -156,8 +156,8 @@ require_once("include/main_header.php");
 					if($nextNews!="" || $previousNews!=""){
 					?>
 					<div id="nav-below" class="navigation">
-						<?php if($previousNews!=""){ ?><div class="nav-prev"><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('<?php echo $previousNews;?>.html','content.php?code=<?php echo $previousNews;?>')">Previous</a></div><?php } ?>
-						<?php if($nextNews!=""){ ?><div class="nav-next"><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('<?php echo $nextNews;?>.html','content.php?code=<?php echo $nextNews;?>')">Next</a></div><?php } ?>
+						<?php if($previousNews!=""){ ?><div class="nav-prev"><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('<?php echo $previousNews;?>.html','content.htm?code=<?php echo $previousNews;?>')">Previous</a></div><?php } ?>
+						<?php if($nextNews!=""){ ?><div class="nav-next"><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('<?php echo $nextNews;?>.html','content.htm?code=<?php echo $nextNews;?>')">Next</a></div><?php } ?>
 					</div>
       				<?php } ?>
 					<!--<div id="nav-below" class="navigation"><div class="nav-prev"><a href="#">Previous Post</a></div><div class="nav-next"><a href="#">Next Post </a></div></div>-->
@@ -180,7 +180,7 @@ require_once("include/main_header.php");
         					$count++;
         						if($count==7){ break; }
         					?>
-							<li><a href="javascript:void(0)" title="<?php echo $related_document["title"];?>" onClick="gb_fn_linkCacheHandlerJS('<?php echo $related_document["code"];?>.html','content.php?code=<?php echo $related_document["code"];?>')"><?php echo $related_document["title"];?></a></li>
+							<li><a href="javascript:void(0)" title="<?php echo $related_document["title"];?>" onClick="gb_fn_linkCacheHandlerJS('<?php echo $related_document["code"];?>.html','content.htm?code=<?php echo $related_document["code"];?>')"><?php echo $related_document["title"];?></a></li>
 							<?php 	} 	?>
         				</ul>
       				</div>
@@ -197,10 +197,10 @@ require_once("include/main_header.php");
 							$curryear= date('Y',$documentdetail["posted_timestamp"]);
 							$currmonth= date('m',$documentdetail["posted_timestamp"]);
 						?>
-							<b>Posted: </b><a class="meta-link" href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('blogs.php?y=<?php echo $curryear;?>&m=<?php echo $currmonth;?>','blogs.php?y=<?php echo $curryear;?>&m=<?php echo $currmonth;?>')"><?php echo $postedTimestampStr;?></a>
+							<b>Posted: </b><a class="meta-link" href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('blogs.htm?y=<?php echo $curryear;?>&m=<?php echo $currmonth;?>','blogs.htm?y=<?php echo $curryear;?>&m=<?php echo $currmonth;?>')"><?php echo $postedTimestampStr;?></a>
 						<?php } ?>
 						<?php if(isset($documentdetail['owner']) && $documentdetail['owner']!=""){	?>
-							&nbsp;| &nbsp;<b>Author: </b><a class="meta-link" href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('news.php?by=<?php echo $documentdetail['owner'];?>','news.php?by=<?php echo $documentdetail['owner'];?>')"><?php echo $documentdetail['owner'];?></a>
+							&nbsp;| &nbsp;<b>Author: </b><a class="meta-link" href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('news.htm?by=<?php echo $documentdetail['owner'];?>','news.htm?by=<?php echo $documentdetail['owner'];?>')"><?php echo $documentdetail['owner'];?></a>
 						<?php } ?>   
 						<?php if(isset($documentdetail['objects']) && count($documentdetail['objects'])>0){
 								$countCommentsNum=0;
@@ -285,8 +285,8 @@ require_once("include/main_header.php");
 					if($nextBlog!="" || $previousBlog!=""){
 					?>
 					<div class="pager"><div class="text-right">
-						<?php if($previousBlog!=""){ ?><span><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('<?php echo $previousBlog;?>.html','content.php?code=<?php echo $previousBlog;?>')">&lt; Previous</a></span><?php } ?>
-						<?php if($nextBlog!=""){ ?><span><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('<?php echo $nextBlog;?>.html','content.php?code=<?php echo $nextBlog;?>')">Next &gt; </a></span><?php } ?>
+						<?php if($previousBlog!=""){ ?><span><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('<?php echo $previousBlog;?>.html','content.htm?code=<?php echo $previousBlog;?>')">&lt; Previous</a></span><?php } ?>
+						<?php if($nextBlog!=""){ ?><span><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('<?php echo $nextBlog;?>.html','content.htm?code=<?php echo $nextBlog;?>')">Next &gt; </a></span><?php } ?>
 					</div></div>
       				<?php } ?>
       			</div>
