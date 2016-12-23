@@ -68,7 +68,7 @@ $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"
           <div class="col-md-4 col-sm-4 ">
 		  <div class="text-right bred-crumb-xs clearfix">
             <ol class="breadcrumb ">
-             		<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+             		<li><a href="<?php echo gb_fn_linkCacheHandler('index.php','index.php'); ?>" title="Home">Home</a></li>
 					<li class="active">Sitemap</li>
             </ol>
 			</div>
@@ -83,12 +83,12 @@ $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"
 		        	
                     <div class="clearfix">
                     	<ul class="site-map-list">
-                            <li><a onClick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
-                            <li><a onclick="gb_fn_linkCacheHandlerJS('products.php','products.php')" href="javascript:void(0)" title="Products">Products</a>
-                            <li><a onclick="gb_fn_linkCacheHandlerJS('about-us.html','content.php?code=about-us')" href="javascript:void(0)" title="Company Profile">Company Profile</a></li>
-            				<li><a onclick="gb_fn_linkCacheHandlerJS('blogs.php','blogs.php')" href="javascript:void(0)" title="Blog">Blog </a></li>
-            				<li><a onclick="gb_fn_linkCacheHandlerJS('news.php','news.php')" href="javascript:void(0)" title="News">News </a></li>
-							<li><a onclick="gb_fn_linkCacheHandlerJS('contact.php','contact.php')" href="javascript:void(0)" title="Contact">Contact</a></li>
+                            <li><a href="<?php echo gb_fn_linkCacheHandler('index.php','index.php'); ?>"  title="Home">Home</a></li>
+                            <li><a href="<?php echo gb_fn_linkCacheHandler('products.php','products.php'); ?>"  title="Products">Products</a>
+                            <li><a href="<?php echo gb_fn_linkCacheHandler('about-us.html','content.php?code=about-us');?>"  title="Company Profile">Company Profile</a></li>
+            				<li><a href="<?php echo gb_fn_linkCacheHandler('blogs.php','blogs.php');?>"  title="Blog">Blog </a></li>
+            				<li><a href="<?php echo gb_fn_linkCacheHandler('news.php','news.php');?>"  title="News">News </a></li>
+							<li><a href="<?php echo gb_fn_linkCacheHandler('contact.php','contact.php');?>"  title="Contact">Contact</a></li>
    					   </ul>
    					 </div>
    					<?php if($fetchCategories = $db->categories->find(array("is_active" => true, "uuid_top_level_category" => ""))->sort(array("name" => 1))){ 
@@ -116,7 +116,7 @@ $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"
                            		<?php if($dbProductsForCat->count()>0){	?>
                        	 		<ul class="site-map-list-2 <?php if(isset($subMenuStr) && $subMenuStr!=""){ echo 'sub-cat' ; } ?>">
                        	 		<?php foreach($dbProductsForCat as $productDetails){	?>
-                          			<li><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS('product-<?php echo $productDetails["product_code"];?>.html','product.php?code=<?php echo $productDetails["product_code"];?>')"><?php echo $productDetails["ProductName"];?></a></li>
+                          			<li><a  href="<?php echo gb_fn_linkCacheHandler('product-'.$productDetails["product_code"].'.html','product.php?code='.$productDetails["product_code"]);?>"><?php echo $productDetails["ProductName"];?></a></li>
                           			<?php }	?>
 								</ul>
 								<?php } ?>
@@ -133,7 +133,8 @@ $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"
 					foreach($webPages as $webPage){
 						if($webPage['type']=="blog"){ 
 							$countBlogs++;
-							$blogsHTmlStr.='<li><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS(\''.$webPage['code'].'.html\',\'content.php?code='.$webPage['code'].'\')">'.$webPage['title'].'</a></li>';
+							$urlStr=gb_fn_linkCacheHandler($webPage['code'].'.html','content.php?code='.$webPage['code']);
+							$blogsHTmlStr.='<li><a href="'.$urlStr.'">'.$webPage['title'].'</a></li>';
 						}
 					}
 					if($countBlogs>0 && $blogsHTmlStr!=""){
@@ -152,7 +153,8 @@ $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"
 					foreach($webPages as $webPage){
 						if($webPage['type']=="news"){ 
 							$countNews++;
-							$newsHTmlStr.='<li><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS(\''.$webPage['code'].'.html\',\'content.php?code='.$webPage['code'].'\')">'.$webPage['title'].'</a></li>';
+							$urlStr=gb_fn_linkCacheHandler($webPage['code'].'.html','content.php?code='.$webPage['code']);
+							$newsHTmlStr.='<li><a href="'.$urlStr.'">'.$webPage['title'].'</a></li>';
 						}
 					}
 					if($countNews>0 && $newsHTmlStr!=""){
