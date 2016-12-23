@@ -265,9 +265,12 @@ require_once("include/main_header.php"); ?>
             			<?php if(isset($dbProductData['Unit_Price']) && $dbProductData['Unit_Price']>0){ ?>
             				<div CLASS="col-sm-3"><input class="form-control text-center" value="1"  min="1" type="number" id="qunatityID" style="height: 43px;margin-bottom: 13px;border-radius: 0px;"></div>
            					<div CLASS="col-sm-5 pading-lft" ><a href="javascript:void(0)" onClick="add_user_preferences('<?php echo $dbProductData['uuid']; ?>', 'cart'); return false;" class="add-to-cart-btn"><i class="fa fa-cart-plus"></i> Add to cart</a></div>
-            			<?php } ?>
             			<div class="col-sm-4 pading-lft displayCartsClass">
-            				<a href="cart.php" class="btn btn-danger btn-sm " style=" border-radius:1px; line-height:30px; margin-bottom:10px; font-size: 12px; position: relative; width:100%;">
+            			<?php }else{ ?>
+            			
+            			<div class="col-sm-12 displayCartsClass">
+            			<?php } ?>
+            				<a href="cart.php" class="btn btn-danger btn-sm " style=" border-radius:1px; line-height:30px; margin-bottom:10px; position: relative; width:100%;">
             					View cart<span class="cart_items cartItemsClass">0</span>
             				</a>
             			</div>
