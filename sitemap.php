@@ -68,7 +68,7 @@ $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"
           <div class="col-md-4 col-sm-4 ">
 		  <div class="text-right bred-crumb-xs clearfix">
             <ol class="breadcrumb ">
-             		<li><a href="<?php echo gb_fn_linkCacheHandler('index.php','index.php'); ?>" title="Home">Home</a></li>
+             		<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm'); ?>" title="Home">Home</a></li>
 					<li class="active">Sitemap</li>
             </ol>
 			</div>
@@ -83,12 +83,12 @@ $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"
 		        	
                     <div class="clearfix">
                     	<ul class="site-map-list">
-                            <li><a href="<?php echo gb_fn_linkCacheHandler('index.php','index.php'); ?>"  title="Home">Home</a></li>
-                            <li><a href="<?php echo gb_fn_linkCacheHandler('products.php','products.php'); ?>"  title="Products">Products</a>
-                            <li><a href="<?php echo gb_fn_linkCacheHandler('about-us.html','content.php?code=about-us');?>"  title="Company Profile">Company Profile</a></li>
-            				<li><a href="<?php echo gb_fn_linkCacheHandler('blogs.php','blogs.php');?>"  title="Blog">Blog </a></li>
-            				<li><a href="<?php echo gb_fn_linkCacheHandler('news.php','news.php');?>"  title="News">News </a></li>
-							<li><a href="<?php echo gb_fn_linkCacheHandler('contact.php','contact.php');?>"  title="Contact">Contact</a></li>
+                            <li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm'); ?>"  title="Home">Home</a></li>
+                            <li><a href="<?php echo gb_fn_linkCacheHandler('products.htm','products.htm'); ?>"  title="Products">Products</a>
+                            <li><a href="<?php echo gb_fn_linkCacheHandler('about-us.html','content.htm?code=about-us');?>"  title="Company Profile">Company Profile</a></li>
+            				<li><a href="<?php echo gb_fn_linkCacheHandler('blogs.htm','blogs.htm');?>"  title="Blog">Blog </a></li>
+            				<li><a href="<?php echo gb_fn_linkCacheHandler('news.htm','news.htm');?>"  title="News">News </a></li>
+							<li><a href="<?php echo gb_fn_linkCacheHandler('contact.htm','contact.htm');?>"  title="Contact">Contact</a></li>
    					   </ul>
    					 </div>
    					<?php if($fetchCategories = $db->categories->find(array("is_active" => true, "uuid_top_level_category" => ""))->sort(array("name" => 1))){ 
@@ -116,7 +116,7 @@ $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"
                            		<?php if($dbProductsForCat->count()>0){	?>
                        	 		<ul class="site-map-list-2 <?php if(isset($subMenuStr) && $subMenuStr!=""){ echo 'sub-cat' ; } ?>">
                        	 		<?php foreach($dbProductsForCat as $productDetails){	?>
-                          			<li><a  href="<?php echo gb_fn_linkCacheHandler('product-'.$productDetails["product_code"].'.html','product.php?code='.$productDetails["product_code"]);?>"><?php echo $productDetails["ProductName"];?></a></li>
+                          			<li><a  href="<?php echo gb_fn_linkCacheHandler('product-'.$productDetails["product_code"].'.html','product.htm?code='.$productDetails["product_code"]);?>"><?php echo $productDetails["ProductName"];?></a></li>
                           			<?php }	?>
 								</ul>
 								<?php } ?>
