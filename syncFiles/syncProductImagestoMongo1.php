@@ -46,54 +46,54 @@ if($tablename!="" && $dbname!=""){
 						$prodImagesArr=array();
 						if(SAVEIMAGESONDISK){
                         			$prod_images=$row;
-                                    
-                                    $realPathStr="";
-                                    foreach($prod_images as $key=>$value){
-                                        if($key=="encoded_image"){
-                                            $imageBlob = base64_decode($prod_images->encoded_image);
 
-                                            $pos = strpos($prod_images->name, ".");
-                                            if ($pos !== false) {
-                                                $imageExtension=substr($prod_images->name,intval($pos)+1) ;
-                                            }
+$realPathStr="";
+foreach($prod_images as $key=>$value){
+     if($key=="encoded_image"){
+        $imageBlob = base64_decode($prod_images->encoded_image);
 
-                                            $directory='../images/products/';
-                                            $txtImageDirectory='../images/images_data_as_txt/';
-                                            if (is_dir($directory)) {
-                                                if($imageExtension!=""){
-                                                    //save image as txt with gz compression
-                                                    if (is_dir($txtImageDirectory)) {
-                                                        //$txtfilenameStr=$txtImageDirectory.$prod_images->uuid.".".$imageExtension.".txt";
-                                                        $txtfilenameStr=$txtImageDirectory.$prod_images->uuid.".txt";
-                                                        $compressImage = gzcompress($prod_images->encoded_image, 9); 
-                                                        $generateImageTxtBool=file_put_contents($txtfilenameStr, $compressImage);
-                                                    }
+        $pos = strpos($prod_images->name, ".");
+        if ($pos !== false) {
+            $imageExtension=substr($prod_images->name,intval($pos)+1) ;
+        }
 
-                                                    //generate image 
-                                                    $filenameStr=$directory.$prod_images->uuid.".".$imageExtension;
-                                                    $generateImageBool=file_put_contents($filenameStr, $imageBlob);
-                                                    if ( $generateImageBool === false ){
-                                                        $prodImagesArr[$key]=$value;
-                                                    }else{
-                                                        $prodImagesArr["encoded_image"]="";
-                                                        $realPathStr='/images/products/'.$prod_images->uuid.".".$imageExtension;
-                                                        $prodImagesArr["path"]=$realPathStr;
-                                                        $log->lwrite("Generated product image from blob at disk path: ".$realPathStr."at line ".__LINE__); //log message
-                                                    }	
-                                                }else{
-                                                    $prodImagesArr[$key]=$value;
-                                                }
-                                            }
-                                        }elseif($key=="path"){
-                                            if($realPathStr!=""){
-                                                $prodImagesArr["path"]=$realPathStr;
-                                            }else{
-                                                $prodImagesArr[$key]=$value;
-                                            }
-                                        }else{
-                                            $prodImagesArr[$key]=$value;
-                                        }
-                                    }
+        $directory='../images/products/';
+        $txtImageDirectory='../images/images_data_as_txt/';
+        if (is_dir($directory)) {
+            if($imageExtension!=""){
+                //save image as txt with gz compression
+                if (is_dir($txtImageDirectory)) {
+                    //$txtfilenameStr=$txtImageDirectory.$prod_images->uuid.".".$imageExtension.".txt";
+                    $txtfilenameStr=$txtImageDirectory.$prod_images->uuid.".txt";
+                    $compressImage = gzcompress($prod_images->encoded_image, 9); 
+                    $generateImageTxtBool=file_put_contents($txtfilenameStr, $compressImage);
+                }
+
+                //generate image 
+                $filenameStr=$directory.$prod_images->uuid.".".$imageExtension;
+                $generateImageBool=file_put_contents($filenameStr, $imageBlob);
+                if ( $generateImageBool === false ){
+                    $prodImagesArr[$key]=$value;
+                }else{
+                    $prodImagesArr["encoded_image"]="";
+                    $realPathStr='/images/products/'.$prod_images->uuid.".".$imageExtension;
+                    $prodImagesArr["path"]=$realPathStr;
+                    $log->lwrite("Generated product image from blob at disk path: ".$realPathStr."at line ".__LINE__); //log message
+                }	
+            }else{
+                $prodImagesArr[$key]=$value;
+            }
+        }
+    }elseif($key=="path"){
+        if($realPathStr!=""){
+            $prodImagesArr["path"]=$realPathStr;
+        }else{
+            $prodImagesArr[$key]=$value;
+        }
+    }else{
+        $prodImagesArr[$key]=$value;
+    }
+}
                            
                     	}
                     	

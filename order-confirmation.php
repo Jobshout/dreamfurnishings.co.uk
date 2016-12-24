@@ -1,4 +1,4 @@
-<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+<?php
 require_once("include/config_inc.php");
 require_once("include/main_header.php");
 require_once ('PaymentFormHelper.php');
