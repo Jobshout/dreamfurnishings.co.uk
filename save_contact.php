@@ -121,6 +121,9 @@ if(!empty($_POST['submit'])){
 							if($check_for_existingTrans->count() >0){
 								foreach($check_for_existingTrans as $existingTrans){
 									$trans_uuid=$existingTrans['uuid'];
+									if(!isset($existingTrans['order_history'])){
+										$trans_entry["order_history"]=array();
+									}
 									$db->orders->update(array("uuid" => $existingTrans['uuid']), array('$set' => $trans_entry));
 									break;
 								}
@@ -133,6 +136,7 @@ if(!empty($_POST['submit'])){
 								$trans_entry["order_date"]=date("Y-m-d");
 								$trans_uuid=NewGuid();
 								$trans_entry["uuid"]=$trans_uuid;
+								$trans_entry["order_history"]=array();
 								$db->orders->insert($trans_entry);
 							}
 				

@@ -73,25 +73,41 @@ if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
                 	</div>
                 </div>
 				<!--My activity-->
-				<!--div class="row" id="transaction_activity">
+				<?php 	$transactions= $db->orders->find(array('uuid_client' => $session_values['user_uuid']))->sort(array('order_date' => -1));
+						$total_trans=$transactions->count();
+						if($total_trans>0) {
+				?>
+				<div class="row" id="transaction_activity">
 					<div class="col-sm-12 ">
                   		<div class="my-account-pg-hding"><span class="glyphicon glyphicon-list-alt"></span> My Activity</div>   
                  		<div style="padding:0 15px;">
-				 			<div class="row">
-								<div class="col-sm-12"><strong>1.</strong> <span style="font-style:italic;"><span style="font-weight:600; margin-left:5px;">Order ID:</span> <a href="activity.htm?uuid=A15DFF2013BA5A4EABC17A58F802DC37">6092</a>, <span style="font-weight:600;margin-left:5px;">Dated: </span>17 Jul 2015, <span style="font-weight:600;margin-left:5px;">Current Status:</span> <span class="status-code2">Checkout form submitted, viewing confirmation page</span> </span></div>
+                 			<?php	 $i=0;
+							foreach($transactions as $trans) {
+								$i++;
+								switch ($trans['status']) {
+    								case 2:
+        								$statusStr='<span class="alert-success">Completed</span>';
+        								break;
+    								case 2:
+        								$statusStr='<span class="status-code2">Checkout form submitted, viewing confirmation page</span>';
+        								break;
+    								default:
+        								$statusStr='<span class="status-code2">Added items in cart</span>';
+								}
+							?>
+				 			<div class="row <?php if($i>15){ echo 'showhidekeys'; } ?>">
+								<div class="col-sm-12"><strong><?php echo $i;?>.</strong> <span style="font-style:italic;"><span style="font-weight:600; margin-left:5px;">Order ID:</span> <a href="activity.htm?uuid=<?php echo $trans['uuid'];?>"><?php echo $trans['full_order_number']; ?></a>, <span style="font-weight:600;margin-left:5px;">Dated: </span><?php if(isset($trans["order_date"]) && $trans["order_date"]!=""){ echo date("d M Y", strtotime($trans["order_date"]));	} ?>, <span style="font-weight:600;margin-left:5px;">Current Status:</span> <?php echo $statusStr; ?> </span></div>
                 			</div>
-							<div class="row">
-								<div class="col-sm-12"><strong>2.</strong> <span style="font-style:italic;"><span style="font-weight:600; margin-left:5px;">Order ID:</span> <a href="activity.htm?uuid=8F0315B44B984342984278CFB401CE5C">6352</a>, <span style="font-weight:600;margin-left:5px;">Dated: </span>11 Sep 2014, <span style="font-weight:600;margin-left:5px;">Current Status:</span> <span class="status-code2">Checkout form submitted, viewing confirmation page</span> </span></div>
-                			</div>
-							<div class="row">
-								<div class="col-sm-12"><strong>3.</strong> <span style="font-style:italic;"><span style="font-weight:600; margin-left:5px;">Order ID:</span> <a href="activity.htm?uuid=8A5FD39C92DE8D4D908833E19EA21FB0">6344</a>, <span style="font-weight:600;margin-left:5px;">Dated: </span>09 Sep 2014, <span style="font-weight:600;margin-left:5px;">Current Status:</span> <span class="status-code4">Card not Approved, Declined</span> </span></div>
-                			</div>
-							<div class="row">
-								<div class="col-sm-12"><strong>4.</strong> <span style="font-style:italic;"><span style="font-weight:600; margin-left:5px;">Order ID:</span> <a href="activity.htm?uuid=F0E22D3279871A4FA09659255DAF6201">6094</a>, <span style="font-weight:600;margin-left:5px;">Dated: </span>25 Apr 2014, <span style="font-weight:600;margin-left:5px;">Current Status:</span> <span class="status-code4">Card not Approved, Declined</span> </span></div>
-                			</div>
+							
+                			<?php } ?>
+                			<?php if($total_trans>15){ ?>
+								<br/>
+								<a href="javascript:void(0)" onClick="moreOrders(); return false;" id="show_more">+ additional orders</a>
+							<?php } ?>
 						</div>
 					</div>
- 				</div>-->
+ 				</div>
+ 				<?php } ?>
     		 </div>
 		</div>
 	</div>
@@ -101,5 +117,22 @@ if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
 require_once("include/top_footer.php");
 require_once("include/footer.php");
 ?>
+<script>
+var showBool=false;
+function moreOrders(){
+	if(showBool){
+		showBool=false;
+		$("#show_more").html("+ additional orders ");
+	}else{
+		showBool=true;
+		$("#show_more").html("- additional orders ");
+	}
+	$('.showhidekeys').toggle();
+}
+
+$(document).ready(function(){
+	$('.showhidekeys').hide();
+});
+</script>
 </body>
 </html>

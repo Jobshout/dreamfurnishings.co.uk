@@ -26,6 +26,10 @@ if(!empty($_POST['StatusCode'])){
 		if($db->orders->update(array("uuid" => $session_values['transaction_uuid']), array('$set' => array("status"=>2, "approved_date"=>date("Y-m-d"))))){
 			$orderDetails = $db->orders->findOne(array("uuid" =>  $session_values['transaction_uuid'],  "order_items" => array('$exists' => true)));
 			
+			//create history
+			$orderHistoryArr=array("Message"=>$_POST['Message'], "modified_timestamp"=>time(), "StatusCode"=>$_POST['StatusCode']);
+			$update_order_history = $db->orders->update(array("uuid" => $session_values['transaction_uuid']), array('$push' => array( "order_history" => $orderHistoryArr )) );
+			
 			// clear all options
 			$session_update= array("checkout_state"=>-1, "subtotal"=> 0, "total_tax" =>  0, "tax_rate"=> 0, "tax_code"=> 0, "total"=> 0, "discount"=>0, "transaction_uuid"=>"", "cart"=>array()); // checkout_state=1 confirmation of address, checkout_state=0 items are in cart, -1 for clear 
 			$db->session->update(array("_id" => $session_values['_id']), array('$set' => $session_update));
@@ -92,6 +96,10 @@ if(!empty($_POST['StatusCode'])){
 			header("Location: cart.htm?error=Add some items in your cart!"); exit;
 		}
 	}else{
+		//create history
+		$orderHistoryArr=array("Message"=>$_POST['Message'], "modified_timestamp"=>time(), "StatusCode"=>$_POST['StatusCode']);
+		$update_order_history = $db->orders->update(array("uuid" => $session_values['transaction_uuid']), array('$push' => array( "order_history" => $orderHistoryArr )) );
+			
 		$err_msg="Sorry, ".$_POST['Message'];
 	}	
 }
