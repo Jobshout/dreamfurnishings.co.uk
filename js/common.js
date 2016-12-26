@@ -6,6 +6,15 @@ function gb_fn_linkCacheHandlerJS(pCachedURLStr, pRealURLStr) {
 		window.location=pCachedURLStr;
 	}
 }
+
+function gb_fn_linkHandlerJS(pCachedURLStr, pRealURLStr, seoBool=true) {
+	if(seoBool==true || seoBool=="true" || seoBool=="1" || seoBool==1){
+		return pCachedURLStr;
+	} else {
+		return pRealURLStr;
+	}
+}
+
 // jquery extend function
 $.extend(
 {
@@ -30,15 +39,15 @@ function enquire_about(para,valStr){
 		}
 	});
 	if(para=="code"){
-		$.redirectPost('contact.php', {'ava_options': available_options, 'code': valStr});
+		$.redirectPost('contact.htm', {'ava_options': available_options, 'code': valStr});
 	}else{
-		$.redirectPost('contact.php', {'ava_options': available_options, 'uuid': valStr});
+		$.redirectPost('contact.htm', {'ava_options': available_options, 'uuid': valStr});
 	}
 }
 
 function fetchUserPreferences(actionStr){
 	$.ajax({
-		url: 'fetchUserPreferences.php',
+		url: 'fetchUserPreferences.htm',
 		type: 'POST',
 		data: {"action" : actionStr },
 		dataType: 'json',
@@ -76,7 +85,7 @@ function randomnum(){
 
 function generate_session(){
 	$.ajax({
-		url: 'addUserPreferences.php',
+		url: 'addUserPreferences.htm',
 		type: 'POST',
 		data: {"uuid" : "", "action" : "cart" },
 		dataType: 'json',
@@ -89,7 +98,7 @@ function generate_session(){
 
 function productMenuReset(){
 	if($( window ).width()>=980){
-		$("#ProductMainMenu").attr("onClick", "gb_fn_linkCacheHandlerJS('products.php','products.php')");
+		$("#ProductMainMenu").attr("onClick", "gb_fn_linkCacheHandlerJS('products.htm','products.htm')");
 	}else{
 		$("#ProductMainMenu").removeAttr("onClick");
 	}

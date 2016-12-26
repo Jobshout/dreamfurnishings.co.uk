@@ -40,7 +40,7 @@ require_once("include/main_header.php");
           		<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb">
-              				<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+              				<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 							<li class="active topHeadingsClass">Login</li>
             			</ol>
 					</div>
@@ -76,7 +76,7 @@ require_once("include/main_header.php");
                 		</label>
 						<input class="btn btn-lg btn-danger btn-block" type="submit" name="sign_in" id="sign_in" value="Sign In">
 						<div STYLE="padding-top:10px;"> Don't have an account yet?
-                    		<a title="Register" href="register.php">
+                    		<a title="Register" href="register.htm">
                         		Create an account
                     		</a>
                 		</div>

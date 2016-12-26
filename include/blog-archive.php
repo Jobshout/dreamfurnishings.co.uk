@@ -38,7 +38,7 @@
  							if($i!=0){
   								$data.='('.$i.')</a></li>';
  							}
- 							$data.='<li><a href="blogs.php?y='.$curr_year.'&m='.$curr_month.'">'. date('M',$BlogResult["posted_timestamp"]);
+ 							$data.='<li><a href="blogs.htm?y='.$curr_year.'&m='.$curr_month.'">'. date('M',$BlogResult["posted_timestamp"]);
  							$prev_month= $curr_month;
   							$i=1;
   						}else{

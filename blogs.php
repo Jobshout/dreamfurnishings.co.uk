@@ -18,7 +18,7 @@ $dbNewsData = $db->web_content->find(array('$or' => array(array("status" => "tru
           		<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb ">
-              				<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+              				<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 							<li class="active">Blogs</li>
             			</ol>
 					</div>
@@ -35,7 +35,7 @@ $dbNewsData = $db->web_content->find(array('$or' => array(array("status" => "tru
         <h2><span>Latest News</span></h2>
         <ul class="recent-post">
         <?php foreach($dbNewsData as $rowData){	?>
-			<li><a onclick="gb_fn_linkCacheHandlerJS('<?php echo $rowData["code"]; ?>.html','content.php?code=<?php echo $rowData["code"]; ?>')" href="javascript:void(0)" title="Read more"><?php echo $rowData["title"];?></a></li>
+			<li><a href="<?php echo gb_fn_linkCacheHandler($rowData["code"].'.html','content.htm?code='.$rowData["code"]);?>" title="Read more"><?php echo $rowData["title"];?></a></li>
 		<?php } ?>
         </ul>
       </div>
@@ -75,7 +75,7 @@ function load_more_records(){
 }
 
 function load_data(){
-	var jsonRow="json-blogs.php?start="+start+"&end="+nPageSize+"&year="+y+"&mon="+m;
+	var jsonRow="json-blogs.htm?start="+start+"&end="+nPageSize+"&year="+y+"&mon="+m;
 	
 	if(xhr) xhr.abort();
 	xhr=$.getJSON(jsonRow,function(result){
@@ -98,9 +98,10 @@ function load_data(){
                 htmlStr+='<div class="comments-count"> '+item.comments+'</div>';
                 htmlStr+='</div>';
                 htmlStr+='<div class="col-xs-9 col-sm-8 col-md-9">';
-                htmlStr+='<h3><a onclick="gb_fn_linkCacheHandlerJS(\''+item.code+'.html\',\'content.php?code='+item.code+'\')" href="javascript:void(0)">'+item.title+'</a></h3>';
+                var linkStr= gb_fn_linkHandlerJS(item.code+'.html','content.htm?code='+item.code, linkHandlerBool);
+                htmlStr+='<h3><a href="'+linkStr+'">'+item.title+'</a></h3>';
                 htmlStr+='<p>'+item.body+'</p>';
-            	htmlStr+='<a onclick="gb_fn_linkCacheHandlerJS(\''+item.code+'.html\',\'content.php?code='+item.code+'\')" href="javascript:void(0)" class="readmore">Read more &raquo; </a> </div>';
+            	htmlStr+='<a href="'+linkStr+'" class="readmore">Read more &raquo; </a> </div>';
               	htmlStr+='</div>';
             	htmlStr+='</div>';
           		htmlStr+='</div>';

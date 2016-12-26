@@ -11,7 +11,7 @@ if(isset($_COOKIE["DreamFurnishingVisitor"]) && $_COOKIE["DreamFurnishingVisitor
 			if($userLoggedIn= $db->Contacts->findOne(array("uuid" => $session_values['user_uuid'], "AllowWebAccess" => true))){
 				$isUserSignedInBool=true;
 			}else{
-				header("Location: logout.php");
+				header("Location: logout.htm");
 			}
 		}
 	}else{

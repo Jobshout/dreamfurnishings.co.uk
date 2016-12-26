@@ -74,7 +74,7 @@ if(!empty($_POST['submit'])){
 						$user_header .= "<tr><td colspan='4'>This e-mail is to confirm your registration with <a href='".SITE_WS_PATH."' target='_blank'>".SITE_WS_PATH."</a> Dream Furnishings.</td></tr>";
 						$user_header .= "<tr><td colspan='4'>&nbsp;</td></tr>";
 						$user_header .= "<tr><td colspan='4'>To validate the e-mail address you entered on <a href='".SITE_WS_PATH."' target='_blank'>".SITE_WS_PATH."</a>, click on the link below or copy the line and paste it into a web browser (if the ENTIRE line does not look like a link you must copy and paste or you will get an error):</td></tr>";
-						$user_header .= "<tr><td colspan='4'><a href='".SITE_WS_PATH."login.php?cc=".$create_token_entry['_id']."&".rand()."'>".SITE_WS_PATH."login.php?cc=".$create_token_entry['_id']."&".rand()."</a></td></tr>";					  
+						$user_header .= "<tr><td colspan='4'><a href='".SITE_WS_PATH."login.htm?cc=".$create_token_entry['_id']."&".rand()."'>".SITE_WS_PATH."login.htm?cc=".$create_token_entry['_id']."&".rand()."</a></td></tr>";					  
 						$user_header .= "<tr><td colspan='4'>&nbsp;</td></tr>";
 						
 						$HTMLEmailBodyTxt .= "<tr><td colspan='4'>&nbsp;</td></tr>";
@@ -198,7 +198,7 @@ if(!empty($_POST['submit'])){
           		<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb">
-              				<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+              				<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 							<li class="active">Register</li>
             			</ol>
 					</div>
@@ -303,7 +303,7 @@ if(!empty($_POST['submit'])){
                     	</label>-->
                     	<input class="btn btn-lg btn-danger btn-block" type="submit" name="submit" value="Submit">
 						<div STYLE="padding-top:10px;">Already Registered ?
-                        	<a title="Login" href="login.php">Login</a>
+                        	<a title="Login" href="login.htm">Login</a>
                     	</div>
                 	</div>
            		</form>

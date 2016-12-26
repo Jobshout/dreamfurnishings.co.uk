@@ -17,7 +17,7 @@ require_once("include/main_header.php");
           <div class="col-md-4 col-sm-4 ">
 		  <div class="text-right bred-crumb-xs clearfix">
             <ol class="breadcrumb ">
-             <li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+            <li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 			<li class="active">
                 Wishlist
               </li>
@@ -49,7 +49,7 @@ require_once("include/main_header.php");
 <script>
 var xhr;
 function load_data(){
-	var jsonRow="return_preferences_json.php?action=wishlist";
+	var jsonRow="return_preferences_json.htm?action=wishlist";
 	if(xhr) xhr.abort();
 	xhr=$.getJSON(jsonRow,function(result){
 
@@ -60,10 +60,10 @@ function load_data(){
 			var htmlStr="";		
 			$.each(result.aaData, function(i,item){
 				htmlStr+='<div CLASS="row wishlist-row" >';
-				var linkStr='gb_fn_linkCacheHandlerJS(\'product.php?uuid='+item.id+'\',\'product.php?uuid='+item.id+'\')';
+				var linkStr=gb_fn_linkHandlerJS('product.htm?uuid='+item.id,'product.htm?uuid='+item.id, linkHandlerBool);
           		var buyCodeStr=item.id, buyStr="uuid";
           		if(item.code){
-          			linkStr='gb_fn_linkCacheHandlerJS(\''+item.code+'.html\',\'product.php?code='+item.code+'\')';
+          			linkStr=gb_fn_linkHandlerJS('product-'+item.code+'.html','product.htm?code='+item.code, linkHandlerBool);
           			buyCodeStr=item.code;
           			buyStr="code";
           		}
@@ -83,7 +83,7 @@ function load_data(){
 function remove_wishlist(id){
 	$(".alert").remove();
 	$.ajax({
-		url: 'removeUserPreferences.php',
+		url: 'removeUserPreferences.htm',
 		type: 'POST',
 		data: {"uuid" : id, "action" : "wishlist"},
 		dataType: 'json',

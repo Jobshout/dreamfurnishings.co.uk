@@ -19,7 +19,7 @@ $dbBlogsData = $db->web_content->find(array('$or' => array(array("status" => "tr
           		<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb ">
-              				<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+              				<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 							<li class="active">News</li>
             			</ol>
 					</div>
@@ -54,7 +54,7 @@ $dbBlogsData = $db->web_content->find(array('$or' => array(array("status" => "tr
 									<li class="news-item">
 										<h4><?php echo $blogData["title"]; ?></h4>
 										<p><?php echo $bodyStr; ?></p>
-										<div class="text-right"><a onclick="gb_fn_linkCacheHandlerJS('<?php echo $blogData["code"]; ?>.html','content.php?code=<?php echo $blogData["code"]; ?>')" href="javascript:void(0)" title="Read more">Read more...</a></div>
+										<div class="text-right"><a href="<?php echo gb_fn_linkCacheHandler($blogData["code"].'.html','content.htm?code='.$blogData["code"]); ?>" title="Read more">Read more...</a></div>
 									</li>
 									<?php } ?>
 								</ul>
@@ -98,7 +98,7 @@ $dbBlogsData = $db->web_content->find(array('$or' => array(array("status" => "tr
 		$('#ImageLoadingDiv').show();
 		$.ajax({
 		  type : "GET",
-		  url: "json-news.php?pageNum="+pageNum,
+		  url: "json-news.htm?pageNum="+pageNum,
 		  cache: false,
 		  success: function(html){
 			//alert(html);return false;

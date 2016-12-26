@@ -45,7 +45,7 @@ function find_sub_categories($e,$displayBool=false,$level=1){
 			
 			if($displayCategoryBool){
 				$displayCategorywithProductsBool=$displayCategoryBool;
-				$returnMenuStr.= '<li><a href="products.php?category='.$dbSubCategory['uuid'].'">'.ucfirst($dbSubCategory['name']);
+				$returnMenuStr.= '<li><a href="products.htm?category='.$dbSubCategory['uuid'].'">'.ucfirst($dbSubCategory['name']);
 				$returnProductsStr.= '<li><a href="javascript:void(0)" onClick="fetch_cat_products(\''.$catUUIDStr.'\')">'.ucfirst($dbSubCategory['name']);
 				
 				if($subMenuStr!="" && $subMenuStr!='<ul class="dropdown-menu"></ul>'){

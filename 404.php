@@ -24,8 +24,8 @@ for was not found.</span></h2>
 
 <ul>
 <li>If you typed in the address, check your spelling. Could just be a typo.</li>
-<li>Go to <a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">main page.</a></li>
-<li>Get to know us a little better - <a onclick="gb_fn_linkCacheHandlerJS('about-us.html','content.php?code=about-us')" href="javascript:void(0)" title="About uus">About us</a>, or visit our full website Site Map here.</li>
+<li>Go to <a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm'); ?>" title="Home">main page.</a></li>
+<li>Get to know us a little better - <a href="<?php echo gb_fn_linkCacheHandler('about-us.html','content.htm?code=about-us'); ?>" title="About uus">About us</a>, or visit our full website Site Map here.</li>
 <li><a href="#">Visit us on Facebook</a>, <a href="#">follow our tweets.</a></li>
 
 

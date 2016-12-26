@@ -9,7 +9,7 @@ if(isset($code) && $code!=''){
 	$dbProductData = $db->Products->findOne(array("product_code" => $code));
 	if(count($dbProductData)>0){
 	}else{
-		header("location:404.php");
+		header("location:404.htm");
 		exit;
 	}
 }elseif(isset($uuidStr) && $uuidStr!=''){
@@ -17,11 +17,11 @@ if(isset($code) && $code!=''){
 	if(count($dbProductData)>0){
 	
 	}else{
-		header("location:404.php");
+		header("location:404.htm");
 		exit;
 	}
 }else{
-	header("location:404.php");
+	header("location:404.htm");
 	exit;
 }
 
@@ -43,13 +43,13 @@ if(isset($dbProductData['Description']) && $dbProductData['Description']!=""){
 	$pMetaDescriptionTxt = $QuickbodyStr;
 }
 if(isset($_SERVER["HTTP_REFERER"]) && $_SERVER["HTTP_REFERER"]!=""){
-	$findpro  = 'products.php';
+	$findpro  = 'products.htm';
 	$posIn = strpos($_SERVER["HTTP_REFERER"], $findpro);
 	if ($posIn !== false) {
    		$referrerBreadCrumbLinkStr=$findpro;
    		$referrerBreadCrumbStr="Products";
 	}
-	$findwish   = 'wishlist.php';
+	$findwish   = 'wishlist.htm';
 	$posWish = strpos($_SERVER["HTTP_REFERER"], $findwish);
 	if ($posWish !== false) {
 		$referrerBreadCrumbStr="Wishlist";
@@ -100,9 +100,9 @@ require_once("include/main_header.php"); ?>
           		<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb ">
-              				<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+              				<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 							<?php if(isset($referrerBreadCrumbStr) && $referrerBreadCrumbStr!="" && isset($referrerBreadCrumbLinkStr) && $referrerBreadCrumbLinkStr!=""){	?>
-							<li><a onclick="gb_fn_linkCacheHandlerJS('<?php echo $referrerBreadCrumbLinkStr; ?>','<?php echo $referrerBreadCrumbLinkStr; ?>')" href="javascript:void(0)" title="<?php echo $referrerBreadCrumbStr; ?>"><?php echo $referrerBreadCrumbStr; ?></a></li>
+							<li><a href="<?php echo gb_fn_linkCacheHandler($referrerBreadCrumbLinkStr, $referrerBreadCrumbLinkStr); ?>" title="<?php echo $referrerBreadCrumbStr; ?>"><?php echo $referrerBreadCrumbStr; ?></a></li>
 							<?php } ?>
 							<li class="active"><?php if(isset($dbProductData['ProductName']) && $dbProductData['ProductName']!=""){ echo ucfirst($dbProductData['ProductName']);	}?></li>
             			</ol>
@@ -270,7 +270,7 @@ require_once("include/main_header.php"); ?>
             			
             			<div class="col-sm-12 displayCartsClass" style="display:none;">
             			<?php } ?>
-            				<a href="cart.php" class="btn btn-danger btn-sm " style=" border-radius:1px; line-height:30px; margin-bottom:10px; position: relative; width:100%;">
+            				<a href="cart.htm" class="btn btn-danger btn-sm " style=" border-radius:1px; line-height:30px; margin-bottom:10px; position: relative; width:100%;">
             					View cart<span class="cart_items cartItemsClass">0</span>
             				</a>
             			</div>
@@ -460,14 +460,14 @@ require_once("include/footer.php");
 function pop_up(){
     var imgsrc=$('#main_image').attr('class'); 
     if(imgsrc!=''){
-        imgsrc='popupimage.php?guid='+imgsrc;
+        imgsrc='popupimage.htm?guid='+imgsrc;
         window.open(imgsrc,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=1076,height=668,directories=no,location=no');
     }
 }
 function remove_user_preferences(id, actionStr){
 	$(".alert").remove();
 	$.ajax({
-		url: 'removeUserPreferences.php',
+		url: 'removeUserPreferences.htm',
 		type: 'POST',
 		data: {"uuid" : id,  "action" : actionStr },
 		dataType: 'json',
@@ -506,7 +506,7 @@ function add_user_preferences(id, actionStr){
 	var availableOptions=JSON.stringify(availableOptionsObj);
 	
 	$.ajax({
-		url: 'addUserPreferences.php',
+		url: 'addUserPreferences.htm',
 		type: 'POST',
 		data: {"uuid" : id, "action" : actionStr, "availableOptions" : availableOptions, "unit_price" : unitPriceOfProduct, "quantity" :quantityNum },
 		dataType: 'json',

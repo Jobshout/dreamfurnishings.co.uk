@@ -4,11 +4,11 @@ require_once("include/main_header.php");
 
 if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
 	if(!isset($userLoggedIn)){
-		header("Location: logout.php");
+		header("Location: logout.htm");
 		exit;
 	}
 }else{
-	header("Location: login.php?redirect=myaccount");
+	header("Location: login.htm?redirect=myaccount");
 	exit;
 }
 ?>
@@ -25,7 +25,7 @@ if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
           		<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb ">
-             				<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+             				<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 							<li class="active">My account</li>
             			</ol>
 					</div>
@@ -66,7 +66,7 @@ if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
                 				</div>
 			    				<div class="row">
                     				<div class="col-xs-3 col-sm-2"></div>
-                    					<div class="col-xs-9 col-sm-10"><p>[ <a href="account.php">Edit</a> ]</p>
+                    					<div class="col-xs-9 col-sm-10"><p>[ <a href="account.htm">Edit</a> ]</p>
                     			</div>
                 			</div>
 						</div>

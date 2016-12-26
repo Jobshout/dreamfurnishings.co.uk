@@ -64,7 +64,7 @@ color: #000;
 			<?php if(isset($isUserSignedInBool) && $isUserSignedInBool==true && isset($userLoggedIn)){	?>
 				<a HREF="myaccount.htm" STYLE="color:#000; font-size: 13px;" >Hi, <?php echo $userLoggedIn['First name']." ".$userLoggedIn["Surname"];	?></a> | <a HREF="logout.htm" STYLE="color:#000; font-size: 13px;" > <i CLASS="fa fa-sign-in" ></i> Logout</a>
 			<?php } else	{	?>
-				<a HREF="login.htm" STYLE="color:#000; font-size: 13px;" > <i CLASS="fa fa-sign-in" ></i> Sign In</a> | <a HREF="register.php" STYLE="color:#000; font-size: 13px;" > <i CLASS="fa fa-edit"></i> Register</a>
+				<a HREF="login.htm" STYLE="color:#000; font-size: 13px;" > <i CLASS="fa fa-sign-in" ></i> Sign In</a> | <a HREF="register.htm" STYLE="color:#000; font-size: 13px;" > <i CLASS="fa fa-edit"></i> Register</a>
 			<?php } ?>
 			<!-- |
 			<a HREF="#" STYLE="color:#000; font-size: 13px;" > <i CLASS="fa fa-sign-out"></i> Sign Out</a>-->

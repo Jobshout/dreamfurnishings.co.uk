@@ -9,16 +9,16 @@ if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
 			if($orderDetails = $db->orders->findOne(array("uuid" =>  $session_values['transaction_uuid'],  "order_items" => array('$exists' => true)))){
 			
 			}else{
-				header("Location: cart.php?error=Add some items in your cart!"); exit;
+				header("Location: cart.htm?error=Add some items in your cart!"); exit;
 			}
 		}else{
-			header("Location: cart.php?error=Add some items in your cart!"); exit;
+			header("Location: cart.htm?error=Add some items in your cart!"); exit;
 		}
 	}else{
-		header("Location: checkout.php?error=Confirm billing address before payment!"); exit;
+		header("Location: checkout.htm?error=Confirm billing address before payment!"); exit;
 	}
 }else{
-	header("Location: login.php?redirect=confirm_billing"); exit;
+	header("Location: login.htm?redirect=confirm_billing"); exit;
 }
 
 if(!empty($_POST['StatusCode'])){
@@ -89,7 +89,7 @@ if(!empty($_POST['StatusCode'])){
 				
 			$succ_msg="Thank you, your order has been placed successfully.";
 		}else{
-			header("Location: cart.php?error=Add some items in your cart!"); exit;
+			header("Location: cart.htm?error=Add some items in your cart!"); exit;
 		}
 	}else{
 		$err_msg="Sorry, ".$_POST['Message'];
@@ -272,7 +272,7 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
           		<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb ">
-              				<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+              				<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 							<li class="active">Order Confirmation</li>
             			</ol>
 					</div>
@@ -345,7 +345,7 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 											$defaultImage=findDefaultImage($dbProductData);
 								?>
 								<tr>
-									<td WIDTH="27%" class="col-sm-3 text-center"><a href="javascript:void(0)" onclick="gb_fn_linkCacheHandlerJS('<?php echo 'product-'.$dbProductData["product_code"].'.html';?>','product.php?code=<?php echo $dbProductData["product_code"];?>')" class="cart-prdt-link"><img src="<?php echo $defaultImage; ?>" CLASS="img-responsive" STYLE="height:170px;"  onerror="this.src='images/default-product-small.png'"></a></td>
+									<td WIDTH="27%" class="col-sm-3 text-center"><a href="<?php echo gb_fn_linkCacheHandlerJS('product-'.$dbProductData["product_code"].'.html','product.php?code='.$dbProductData["product_code"]); ?>" class="cart-prdt-link"><img src="<?php echo $defaultImage; ?>" CLASS="img-responsive" STYLE="height:170px;"  onerror="this.src='images/default-product-small.png'"></a></td>
 									<td WIDTH="69%" class=" col-sm-7"><strong><?php echo ucfirst($dbProductData["ProductName"]); ?></strong><br>
 									<?php if(isset($dbProductData["sku"]) && $dbProductData["sku"]!=""){
                 							echo "<strong>SKU :</strong> ".$dbProductData["sku"]."<br>";

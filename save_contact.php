@@ -138,7 +138,7 @@ if(!empty($_POST['submit'])){
 				
 							$session_update= array("checkout_state"=>1, "transaction_uuid" => $trans_uuid); // checkout_state=1 confirmation of address, checkout_state=0 items are in cart
 							if($db->session->update(array("_id" => $session_values['_id']), array('$set' => $session_update))){
-								header("Location: order-confirmation.php");
+								header("Location: order-confirmation.htm");
 								exit;
 							}
 						}else{

@@ -192,7 +192,7 @@ $(document).ready(function(){
 						avalStr=$("#c_options").val();
 					<?php } ?>
 					$.ajax({
-						url: 'submit-enquiry.php',
+						url: 'submit-enquiry.htm',
 						type: 'POST',
 						data: {"name" : $("#c_name").val(), "email" : $("#c_email").val(), "message" : $("#c_message").val() , "options" : avalStr  },
 						dataType: 'json',

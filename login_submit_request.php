@@ -18,7 +18,7 @@ if($email!="" && validChr($email)){
 			$user_html .= "<tr><td colspan='4' style='text-align:left;'>Hi ".$user["First name"]." ".$user["Surname"].",\n\n</td></tr>";
 			$user_html .= "<tr><td colspan='4'>&nbsp;</td></tr>";
 			$user_html .= "<tr><td colspan='4'>To regenerate your password, please click on the link below or copy the line and paste it into a web browser (if the ENTIRE line does not look like a link you must copy and paste or you will get an error):</td></tr>";
-			$user_html .= "<tr><td colspan='4'><a href='".SITE_WS_PATH."regenerate_password.php?token=".$create_token_entry['_id']."&".rand()."'>".SITE_WS_PATH."regenerate_password.php?token=".$create_token_entry['_id']."&".rand()."</a></td></tr>";					  
+			$user_html .= "<tr><td colspan='4'><a href='".SITE_WS_PATH."regenerate_password.htm?token=".$create_token_entry['_id']."&".rand()."'>".SITE_WS_PATH."regenerate_password.htm?token=".$create_token_entry['_id']."&".rand()."</a></td></tr>";					  
 			$user_html .= "<tr><td colspan='4'>&nbsp;</td></tr>";
 			$user_html .= "<tr><td colspan='4'>If case you don't requested for this action, please contact us!</td></tr>";
 			$user_html .= "</table>";
@@ -67,10 +67,10 @@ if($email!="" && validChr($email)){
 						header("location:".$_POST['referer']."&".rand());
 						exit;
 					}elseif(isset($_REQUEST['redirect']) && $_REQUEST['redirect']!=''){
-						header("location:".$_REQUEST['redirect'].".php?".rand());
+						header("location:".$_REQUEST['redirect'].".htm?".rand());
 						exit;
 					}else{
-						header("location:index.php?".rand());
+						header("location:index.htm?".rand());
 						exit;
 					}
 				}

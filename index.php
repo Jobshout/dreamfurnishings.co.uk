@@ -75,15 +75,15 @@ $latestProducts = $db->Products->find(array('publish_on_web' => true, 'product_c
         		<div class="col-sm-6">
             		<div class="row">
                 		<div class="col-md-5 col-sm-12 col-xs-12">
-                			<a href="<?php echo gb_fn_linkCacheHandler('product-'.$latestProduct["product_code"].'.html','product.php?code='.$latestProduct["product_code"]); ?>">
+                			<a href="<?php echo gb_fn_linkCacheHandler('product-'.$latestProduct["product_code"].'.html','product.htm?code='.$latestProduct["product_code"]); ?>">
                 			<img src="<?php echo $defaultImage; ?>" class="img-responsive" onerror="this.src='images/default-product-small.png'">
               			</a>
                 		</div>
                     	<div class="col-md-7 col-sm-12 col-xs-12">
-                			<h4 class="feature-hding"><a href="<?php echo gb_fn_linkCacheHandler('product-'.$latestProduct["product_code"].'.html','product.php?code='.$latestProduct["product_code"]); ?>">
+                			<h4 class="feature-hding"><a href="<?php echo gb_fn_linkCacheHandler('product-'.$latestProduct["product_code"].'.html','product.htm?code='.$latestProduct["product_code"]); ?>">
                 				<?php echo ucfirst($latestProduct["ProductName"]);	?></a></h4>
                 			<p><?php echo $bodyStr; ?></p>
-               				<a href="<?php echo gb_fn_linkCacheHandler('product-'.$latestProduct["product_code"].'.html','product.php?code='.$latestProduct["product_code"]); ?>" class="view-more">Read more</a>
+               				<a href="<?php echo gb_fn_linkCacheHandler('product-'.$latestProduct["product_code"].'.html','product.htm?code='.$latestProduct["product_code"]); ?>" class="view-more">Read more</a>
                     	</div>
                 	</div>
             	</div>
@@ -120,7 +120,7 @@ if($latestCategories->count()>0){ ?>
      		?>
      	<div class="col-sm-4 ">
         	<div class="service-blk">
-        		<a HREF="products.php?category=<?php echo $fetchCat["uuid"];?>"><img src="<?php echo $defaultImgSrc;?>"></a>
+        		<a HREF="products.htm?category=<?php echo $fetchCat["uuid"];?>"><img src="<?php echo $defaultImgSrc;?>"></a>
                 <h4><?php echo $fetchCat["name"];?></h4>
                 <?php if(isset($fetchCat["description"]) && $fetchCat["description"]!=""){ ?>
                 <p><?php 
@@ -138,7 +138,7 @@ if($latestCategories->count()>0){ ?>
                 	echo $bodyStr;
                 ?></p>
                 <?php }	?>
-                <div CLASS="view-product"><a HREF="products.php?category=<?php echo $fetchCat["uuid"];?>">View Products</a></div>
+                <div CLASS="view-product"><a HREF="products.htm?category=<?php echo $fetchCat["uuid"];?>">View Products</a></div>
                 
              </div>   
             
@@ -225,10 +225,11 @@ function load_data(){
 				if(countNum==1 || countLiNum==1){
 					htmlStr+='<div class="item '+activeClassStr+'"><ul><div class="row">';
 				}
-				htmlStr+='<li class="col-sm-4 col-md-4 blog-listing-blk"><div class="blog-listing-img"><a onClick="gb_fn_linkCacheHandlerJS(\''+item.code+'.html\',\'content.php?code='+item.code+'\')" href="javascript:void(0)"><img src="'+item.image+'" class="img-responsive" alt=""></a></div>';
+				var linkStr=gb_fn_linkCacheHandlerJS(item.code+'.html','content.htm?code='+item.code, linkHandlerBool);
+				htmlStr+='<li class="col-sm-4 col-md-4 blog-listing-blk"><div class="blog-listing-img"><a href="'+linkStr+'"><img src="'+item.image+'" class="img-responsive" alt=""></a></div>';
             	htmlStr+='<div class="caption"><div class="row"><div class="col-xs-3 col-sm-4 col-md-3"><div class="blog-pub-dt"><span class="date">'+item.date+'</span><span class="mnth">'+item.month+'</span></div>';
                 htmlStr+='<div class="comments-count"> '+item.comments+'</div></div>';
-                htmlStr+='<div class="col-xs-9 col-sm-8 col-md-9"><h3><a onClick="gb_fn_linkCacheHandlerJS(\''+item.code+'.html\',\'content.php?code='+item.code+'\')" href="javascript:void(0)">'+item.title+'</a></h3><p>'+item.body+'</p></div></div></div></li>';
+                htmlStr+='<div class="col-xs-9 col-sm-8 col-md-9"><h3><a href="'+linkStr+'">'+item.title+'</a></h3><p>'+item.body+'</p></div></div></div></li>';
         
         		if(countLiNum==3){
         			htmlStr+='</div></ul></div>';	

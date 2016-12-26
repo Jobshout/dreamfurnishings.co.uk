@@ -8,18 +8,18 @@ if(!empty($_POST['submit'])){
 			if(isset($_POST['items_subtotal']) && $_POST['items_subtotal']>=1){
 				$session_update= array("checkout_state"=>0, "subtotal"=> $_POST['items_subtotal'], "total_tax" =>  $_POST['total_tax'], "tax_rate"=> $_POST['tax_rate'], "tax_code"=> $_POST['tax_code'], "total"=> $_POST['grand_total'], "discount"=>0); // checkout_state=1 confirmation of address, checkout_state=0 items are in cart
 				if($db->session->update(array("_id" => $session_values['_id']), array('$set' => $session_update))){
-					header("location:checkout.php?".rand());
+					header("location:checkout.htm?".rand());
 					exit;
 				}
 			}else{
 				$err_msg="Add some products in your cart!";
 			}
 		}else{
-			header("Location: checkout.php?redirect=cart");
+			header("Location: checkout.htm?redirect=cart");
 			exit;
 		}
 	}else{
-		header("Location: checkout.php?redirect=cart");
+		header("Location: checkout.htm?redirect=cart");
 		exit;
 	}
 }
@@ -42,7 +42,7 @@ if(!empty($_POST['submit'])){
           		<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb ">
-             				<li><a href="<?php echo gb_fn_linkCacheHandler('index.php','index.php');?>" title="Home">Home</a></li>
+             				<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 							<li class="active">Cart</li>
             			</ol>
 					</div>
@@ -119,7 +119,7 @@ if(!empty($_POST['submit'])){
 									</TR>
 									<TR>
 										<td class="actions text-right" >
-											<a HREF="products.php" CLASS=" btn btn-default">Continue Shopping </a>
+											<a HREF="products.htm" CLASS=" btn btn-default">Continue Shopping </a>
 											<input id="items_subtotal" name="items_subtotal" type="hidden" value="0">
 											<input id="tax_rate" name="tax_rate" type="hidden" value="<?php echo $taxRate; ?>">
 											<input id="tax_code" name="tax_code" type="hidden" value="<?php echo $taxCode; ?>">
@@ -159,7 +159,7 @@ $(function () {
 });
 var xhr;
 function load_data(){
-	var jsonRow="return_preferences_json.php?action=cart";
+	var jsonRow="return_preferences_json.htm?action=cart";
 	if(xhr) xhr.abort();
 	xhr=$.getJSON(jsonRow,function(result){
 		if(result.iTotalRecords==0){
@@ -173,15 +173,16 @@ function load_data(){
 			var htmlStr="";		
 			$.each(result.aaData, function(i,item){
 				htmlStr+='<tr id="'+item.id+'" >';
-				var linkStr='gb_fn_linkCacheHandlerJS(\'product.php?uuid='+item.id+'\',\'product.php?uuid='+item.id+'\')';
+				var linkStr=gb_fn_linkHandlerJS('product.htm?uuid='+item.id,'product.htm?uuid='+item.id, linkHandlerBool);
           		var buyCodeStr=item.id, buyStr="uuid";
           		if(item.code){
-          			linkStr='gb_fn_linkCacheHandlerJS(\'product-'+item.code+'.html\',\'product.php?code='+item.code+'\')';
+          			linkStr=gb_fn_linkHandlerJS('product-'+item.code+'.html','product.htm?code='+item.code);
           			buyCodeStr=item.code;
           			buyStr="code";
           		}
-            	htmlStr+='<td><a onClick="'+linkStr+'" href="javascript:void(0)"><img src="'+item.image+'" alt="'+item.name+'" onerror="this.src=\'images/default-product-small.png\'" style="height:170px;"></a></td>';
-            	htmlStr+='<td><a onClick="'+linkStr+'" href="javascript:void(0)" class="prdt-name">'+item.name+'</a><br><strong>Product SKU</strong>: '+item.sku;
+          		
+            	htmlStr+='<td><a href="'+linkStr+'"><img src="'+item.image+'" alt="'+item.name+'" onerror="this.src=\'images/default-product-small.png\'" style="height:170px;"></a></td>';
+            	htmlStr+='<td><a href="'+linkStr+'" class="prdt-name">'+item.name+'</a><br><strong>Product SKU</strong>: '+item.sku;
             	if(item.options){
             		htmlStr+='<br><strong>Selected Option(s)</strong>: '+item.options;
             	}
@@ -209,7 +210,7 @@ function changeQuantity(id, val){
 	var unit_price=parseFloat($("#unit_"+id).val());
 	var subtotalFloat=parseFloat(unit_price)*val;
 	$.ajax({
-		url: 'updateUserPreferences.php',
+		url: 'updateUserPreferences.htm',
 		type: 'POST',
 		data: {"uuid" : id, "quantity" : val, "unitPrice" : unit_price },
 		dataType: 'json',
@@ -229,7 +230,7 @@ function changeQuantity(id, val){
 function remove_user_preferences(id, actionStr='cart'){
 	$(".alert").remove();
 	$.ajax({
-		url: 'removeUserPreferences.php',
+		url: 'removeUserPreferences.htm',
 		type: 'POST',
 		data: {"uuid" : id,  "action" : actionStr },
 		dataType: 'json',

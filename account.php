@@ -4,11 +4,11 @@ require_once("include/main_header.php");
 
 if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
 	if(!isset($userLoggedIn)){
-		header("Location: logout.php");
+		header("Location: logout.htm");
 		exit;
 	}
 }else{
-	header("Location: login.php?redirect=myaccount");
+	header("Location: login.htm?redirect=myaccount");
 	exit;
 }
 
@@ -28,7 +28,7 @@ require_once("save_contact.php");
           		<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb ">
-             				<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+             				<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 							<li class="active">My account</li>
             			</ol>
 					</div>

@@ -28,7 +28,7 @@ color:#515151;
           <div class="col-md-4 col-sm-4 ">
 		  <div class="text-right bred-crumb-xs clearfix">
             <ol class="breadcrumb">
-              	<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+              	<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 				<li class="active">Products</li>
             </ol>
 			</div>
@@ -44,7 +44,7 @@ color:#515151;
       			<nav class="sidebar-nav">
 					<?php if(isset($productCatHtmlStr) && $productCatHtmlStr!=""){  ?>
 					<ul class="metismenu" id="menu">
-						<li STYLE="background-color: #333; padding: 4px 2px;" ><a href="products.php" title="View All Products">View All Products</a></li>
+						<li STYLE="background-color: #333; padding: 4px 2px;" ><a href="products.htm" title="View All Products">View All Products</a></li>
          				<?php echo $productCatHtmlStr; ?>
 					</ul>
       				<?php } ?>
@@ -99,7 +99,7 @@ function fetch_cat_products(e){
 }
 
 function load_data(){
-var jsonRow="return_products.php?start="+start+"&limit="+nPageSize+"&category="+category+"&keyword="+keyword;
+var jsonRow="return_products.htm?start="+start+"&limit="+nPageSize+"&category="+category+"&keyword="+keyword;
 if(xhr) xhr.abort();
 xhr=$.getJSON(jsonRow,function(result){
 	totalNum=result.iTotalRecords;
@@ -115,7 +115,7 @@ xhr=$.getJSON(jsonRow,function(result){
 		}else{
 			if(totalNum>0 && result.iTotalReturnedRecords>0){
 				if(result.breadcrumb){
-					var breadCrumbStr='<li><a onclick="gb_fn_linkCacheHandlerJS(\'index.php\',\'index.php\')" href="javascript:void(0)" title="Home">Home</a></li><li><a onclick="gb_fn_linkCacheHandlerJS(\'products.php\',\'products.php\')" href="javascript:void(0)" title="List All Products">Products</a></li>';
+					var breadCrumbStr='<li><a href="index.htm" title="Home">Home</a></li><li><a href="products.htm" title="List All Products">Products</a></li>';
 					 breadCrumbStr+=result.breadcrumb;
 					 $('.breadcrumb').html(breadCrumbStr);
 				}
@@ -123,15 +123,15 @@ xhr=$.getJSON(jsonRow,function(result){
 				$.each(result.aaData, function(i,item){
 					htmlStr+='<div class="col-sm-6 col-md-6 col-lg-4 column">';
           			htmlStr+='<div class="productbox">';
-          			var linkStr='gb_fn_linkCacheHandlerJS(\'product.php?uuid='+item.id+'\',\'product.php?uuid='+item.id+'\')';
-          			var buyStr="contact.php?u="+item.id;
+          			var linkStr=gb_fn_linkHandlerJS('product.htm?uuid='+item.id,'product.htm?uuid='+item.id, linkHandlerBool);
+          			var buyStr="contact.htm?u="+item.id;
           			if(item.code){
-          				linkStr='gb_fn_linkCacheHandlerJS(\'product-'+item.code+'.html\',\'product.php?code='+item.code+'\')';
-						buyStr="contact.php?c="+item.code;
+          				linkStr=gb_fn_linkHandlerJS('product-'+item.code+'.html','product.htm?code='+item.code, linkHandlerBool);
+						buyStr="contact.htm?c="+item.code;
           			}
-            		htmlStr+='<div style="background:#fff;"><a onClick="'+linkStr+'" href="javascript:void(0)" title="'+item.name+'"><img src="'+item.image+'" class="img-responsive prdt-listing-pg-img"  alt="'+item.name+'" onerror="this.src=\'images/default-product-large.png\'"></a></div>';
-              		htmlStr+='<div class="producttitle">  <a onClick="'+linkStr+'" href="javascript:void(0)" title="'+item.name+'">'+item.name+'</a></div>';
-               	 	htmlStr+='<div class="pull-right"><a onClick="'+linkStr+'" href="javascript:void(0)" title="View full details" role="button"><span class="glyphicon glyphicon-info-sign" style="font-size:16px;"></span></a>';
+            		htmlStr+='<div style="background:#fff;"><a href="'+linkStr+'" title="'+item.name+'"><img src="'+item.image+'" class="img-responsive prdt-listing-pg-img"  alt="'+item.name+'" onerror="this.src=\'images/default-product-large.png\'"></a></div>';
+              		htmlStr+='<div class="producttitle">  <a href="'+linkStr+'" title="'+item.name+'">'+item.name+'</a></div>';
+               	 	htmlStr+='<div class="pull-right"><a href="'+linkStr+'" title="View full details" role="button"><span class="glyphicon glyphicon-info-sign" style="font-size:16px;"></span></a>';
                	 	htmlStr+='<a href="javascript:void(0)" onClick="alterWishlist(\''+item.id+'\')" title="Wishlist" class="wclass_'+item.id;
                	 	if(item.fav==true || item.fav=="true"){
                	 	htmlStr+=' whishlist_sel';
@@ -159,7 +159,7 @@ function alterWishlist(e){
 	var actionStr="wishlist";
 	if($(".wclass_"+e).hasClass("whishlist_sel")){
 		$.ajax({
-			url: 'removeUserPreferences.php',
+			url: 'removeUserPreferences.htm',
 			type: 'POST',
 			data: {"uuid" : e, "action" : actionStr },
 			dataType: 'json',
@@ -173,7 +173,7 @@ function alterWishlist(e){
 		});
 	}else{
 		$.ajax({
-			url: 'addUserPreferences.php',
+			url: 'addUserPreferences.htm',
 			type: 'POST',
 			data: {"uuid" : e, "action" : actionStr },
 			dataType: 'json',

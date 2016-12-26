@@ -213,9 +213,10 @@ h3{
 			<?php foreach($orderDetails["order_items"] as $order_item){
 										if($dbProductData = $db->Products->findOne(array('publish_on_web' => true, "uuid" => $order_item['uuid_product'])))	{
 											$defaultImage=findDefaultImage($dbProductData);
+											$productLinkStr=gb_fn_linkCacheHandler('product-'.$dbProductData["product_code"].'.html','product.php?code='.$dbProductData["product_code"]);
 								?>
 								<tr>
-									<td><a href="SITE_PATH.'/'.product.php?code=<?php echo $dbProductData["product_code"];?>"><img src="<?php echo SITE_PATH.$defaultImage; ?>" CLASS="img-responsive" STYLE="height:170px;"  onerror="this.src='<?php echo SITE_PATH; ?>/images/default-product-small.png'"></a></td>
+									<td><a href="<?php echo SITE_PATH.'/'.$productLinkStr;?>"><img src="<?php echo SITE_PATH.$defaultImage; ?>" CLASS="img-responsive" STYLE="height:170px;"  onerror="this.src='<?php echo SITE_PATH; ?>/images/default-product-small.png'"></a></td>
 									<td><strong><?php echo ucfirst($dbProductData["ProductName"]); ?></strong><br>
 									<?php if(isset($dbProductData["sku"]) && $dbProductData["sku"]!=""){
                 							echo "<strong>SKU :</strong> ".$dbProductData["sku"]."<br>";

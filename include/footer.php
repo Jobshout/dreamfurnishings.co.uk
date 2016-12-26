@@ -10,3 +10,6 @@
 <script src="js/common.js"></script>
 <script src="js/classie.js"></script>
 <script src="js/jquery.cookie.js"></script>
+<script type="text/javascript">
+var linkHandlerBool='<?php if(defined("SEOFRIENDLYFLAG")){	echo SEOFRIENDLYFLAG;	}	?>';
+</script>

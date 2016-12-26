@@ -22,7 +22,7 @@ require_once("save_contact.php");
           		<div class="col-md-4 col-sm-4 ">
 		  			<div class="text-right bred-crumb-xs clearfix">
             			<ol class="breadcrumb ">
-             				<li><a onclick="gb_fn_linkCacheHandlerJS('index.php','index.php')" href="javascript:void(0)" title="Home">Home</a></li>
+             				<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" title="Home">Home</a></li>
 							<li class="active">Checkout</li>
             			</ol>
 					</div>
@@ -61,8 +61,8 @@ require_once("save_contact.php");
                         			<div CLASS="form-group"><input placeholder="Email" id="email_address" name="email_address" type="text" CLASS="form-control"></div>
                           			<div CLASS="form-group"><input placeholder="Password" type="password" id="password" name="password" CLASS="form-control"></div>
                           			<input type="submit" name="sign_in" class="btn btn-danger" value="Sign In">
-                       				<span class="aa-lost-password"><a href="login.php?action=requestnewpassword">Lost your password?</a></span>
-                       				<span class="aa-lost-password">Don't have an account yet? <a href="register.php">Create an account</a></span>
+                       				<span class="aa-lost-password"><a href="login.htm?action=requestnewpassword">Lost your password?</a></span>
+                       				<span class="aa-lost-password">Don't have an account yet? <a href="register.htm">Create an account</a></span>
                         		</div>
                         	</form>
 						</dd>
@@ -198,7 +198,7 @@ $(function () {
 
 var xhr;
 function load_data(){
-	var jsonRow="return_preferences_json.php?action=cart";
+	var jsonRow="return_preferences_json.htm?action=cart";
 	if(xhr) xhr.abort();
 	xhr=$.getJSON(jsonRow,function(result){
 		if(result.error){

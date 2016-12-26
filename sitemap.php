@@ -133,7 +133,7 @@ $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"
 					foreach($webPages as $webPage){
 						if($webPage['type']=="blog"){ 
 							$countBlogs++;
-							$urlStr=gb_fn_linkCacheHandler($webPage['code'].'.html','content.php?code='.$webPage['code']);
+							$urlStr=gb_fn_linkCacheHandler($webPage['code'].'.html','content.htm?code='.$webPage['code']);
 							$blogsHTmlStr.='<li><a href="'.$urlStr.'">'.$webPage['title'].'</a></li>';
 						}
 					}
@@ -153,7 +153,7 @@ $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"
 					foreach($webPages as $webPage){
 						if($webPage['type']=="news"){ 
 							$countNews++;
-							$urlStr=gb_fn_linkCacheHandler($webPage['code'].'.html','content.php?code='.$webPage['code']);
+							$urlStr=gb_fn_linkCacheHandler($webPage['code'].'.html','content.htm?code='.$webPage['code']);
 							$newsHTmlStr.='<li><a href="'.$urlStr.'">'.$webPage['title'].'</a></li>';
 						}
 					}
