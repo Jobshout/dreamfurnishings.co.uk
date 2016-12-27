@@ -1,31 +1,35 @@
 <?php
-ini_set('display_errors',1);
+include_once("config.php");
+$result=array();
 
-include_once("../include/mongo_connection.php");
-include_once("logging.php");
+if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['token'])){
+	
+	$log->lfile('logs/log_'.date("j-n-Y").'.txt');
 
-$log = new Logging();
-$log->lfile('logs/log_'.date("j-n-Y").'.txt');
+	// write message to the log file
+	$log->lwrite('------------------------------------------------------');		//log message
 
-// write message to the log file
-$log->lwrite('------------------------------------------------------');		//log message
-
-$dbname=isset($_GET['dbname']) ? $_GET['dbname'] : "DreamFurnishings";
-$mon_db= $conn->$dbname;
-
-$uuid = isset($_GET['uuid']) ? $_GET['uuid'] : '';
-if($uuid!=''){
-	$result=array();	
-	if($one_row= $mon_db->collectionToSync->findOne(array("uuid" => $uuid))){
-		$update_entry=$mon_db->collectionToSync->update(array("uuid" => $uuid), array('$set' => array("sync_state" => 1)));
-		$log->lwrite('Updated [collectionToSync]uuid successfully at line '.__LINE__);	//log message
-		$result['Success']= "Updated successfully!";
+	$uuid = isset($_GET['uuid']) ? $_GET['uuid'] : '';
+	if($uuid!=''){
+		if($one_row= $mon_db->collectionToSync->findOne(array("uuid" => $uuid))){
+			$update_entry=$mon_db->collectionToSync->update(array("uuid" => $uuid), array('$set' => array("sync_state" => 1)));
+			$msgStr='Updated [collectionToSync]uuid successfully at line '.__LINE__;
+			$log->lwrite($msgStr);	//log message
+			$result['Success']= $msgStr;
+		}else{
+			$msgStr='No matching results found in [collectionToSync] collection  at line '.__LINE__;
+			$result['Error']= $msgStr;
+			$log->lwrite($msgStr);	//log message
+		}
 	}else{
-		$log->lwrite('No matching results found in [collectionToSync] collection  at line '.__LINE__);	//log message
-		$result['Error']= "No record found !";
+		$msgStr='Error: Request can\'t be processed because required parameters are missing at line '.__LINE__;
+		$result['Error']= $msgStr;
+		$log->lwrite($msgStr);	//log message
 	}
-	echo json_encode($result);
 }else{
-	$log->lwrite('Error: Request can\'t be processed because required parameters are missing at line '.__LINE__);	//log message
+	$msgStr='Error: Request can\'t be processed because of security reasons at line '.__LINE__;
+	$result['Error']= $msgStr;
+	$log->lwrite($msgStr);	//log message
 }
+echo json_encode($result);
 ?>

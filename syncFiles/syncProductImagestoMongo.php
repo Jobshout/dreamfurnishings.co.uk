@@ -1,26 +1,23 @@
 <?php
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
-//echo ini_get('memory_limit');exit;
-ini_set('display_errors',1);
+
 define("SAVEIMAGESONDISK", true);
 date_default_timezone_set("Europe/London");
-include_once("../include/mongo_connection.php");
-include_once("logging.php");
+include_once("config.php");
+
+if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['token'])){
 
 $images_root_disk_path="/var/www/html/vhosts/dreamfurnishings.co.uk/public_ftp/";
 
-$log = new Logging();
 $log->lfile('logs/log_'.date("j-n-Y").'.txt');
 
 // write message to the log file
 $log->lwrite('------------------------------------------------------');		//log message
 
 $tablename=isset($_REQUEST['tablename']) ? $_REQUEST['tablename'] : "Products";
-$dbname=isset($_REQUEST['dbname']) ? $_REQUEST['dbname'] : "DreamFurnishings";
 if($tablename!="" && $dbname!=""){
 	$file_path='php://input';
-	$mon_db= $conn->$dbname;
 	$collection = $mon_db->$tablename;
 	$log->lwrite('Established connection with mongodb at line '.__LINE__); //log message
 	
@@ -174,5 +171,11 @@ if($tablename!="" && $dbname!=""){
 }else{
 	$log->lwrite('Error: DB or Table name not passed at line '.__LINE__);	//log message
 	echo "error at line ".__LINE__;
+}
+
+}else{
+	$msgStr=' Request can\'t be processed because of security reasons at line '.__LINE__;
+	echo 'error:'.$msgStr;
+	$log->lwrite('Error:'.$msgStr);	//log message
 }
 ?>
