@@ -1,6 +1,6 @@
 <?php
 $mailerDetailsAvailableInDbFlag=false;
-$defaultSettingsFile="/var/www/html/vhosts/dreamfurnishings.co.uk/public_ftp/includes/config_mailer.php";
+$defaultSettingsFile="/var/www/html/vhosts/dreamfurnishings.co.uk/public_ftp/includes/mailer-details.php";
 
 if (file_exists($defaultSettingsFile)) {
 	require_once($defaultSettingsFile);

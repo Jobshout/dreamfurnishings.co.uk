@@ -1,5 +1,5 @@
 <?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-require_once("include/config_inc.htm");
+require_once("include/config_inc.php");
 
 if($db->session->findOne(array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])))){
 	echo "exists";
