@@ -1,5 +1,7 @@
 <?php
 $mailerDetailsAvailableInDbFlag=false;
+$smtpservice="gmail";
+
 $defaultSettingsFile="../public_ftp/includes/mailer-details.php";
 
 if (file_exists($defaultSettingsFile)) {
@@ -37,4 +39,10 @@ if (file_exists($defaultSettingsFile)) {
 	}
 
 }
+
+if(isset($smtpservice) && $smtpservice=="gmail"){
+	$mail->SMTPSecure = 'tls';
+	$mail->Port = 587;
+}
+
 ?>
