@@ -3,15 +3,9 @@ require_once("include/config_inc.php");
 
 $userUUIDStr="";
 if(isset($_GET['token'])){
-	if($chkToken= $db->authentication_token->findOne(array("_id" => new MongoId($_GET['token']), "active" => true))){
-		if($findUser= $db->Contacts->findOne(array("uuid" => $chkToken['user_uuid']))){
+	if($chkToken = $mongoCRUDClass->db_findone("authentication_token", array("_id" => new MongoId($_GET['token']), "active" => true))){
+		if($findUser = $mongoCRUDClass->db_findone("Contacts", array("uuid" => $chkToken['user_uuid']))){
 			if($findUser["AllowWebAccess"]==true){
-				/**$update_data= array("AllowWebAccess" => true);
-				$update_status= $db->Contacts->update(array("uuid" => $chkToken['user_uuid']), array('$set' => $update_data));
-				if($update_status){
-					$db->authentication_token->remove(array("_id" => new MongoId($cc)));
-					$succMsg = 'Your account has been successfully activated.';
-				}**/
 				$userUUIDStr=$chkToken['user_uuid'];
 			}else{
 				$err_msg = 'Your link has been expired!';
@@ -33,8 +27,8 @@ if(!empty($_POST['submit'])){
 		if($password!=""){
 			$md5_password=md5($password);
 			$updateArr= array("zWebPassword" => $md5_password);
-			if($db->Contacts->update(array("uuid" => $userUUIDStr), array('$set' => $updateArr))){
-				$db->authentication_token->remove(array("_id" => new MongoId($_GET['token'])));
+			if($mongoCRUDClass->db_update("Contacts", array("uuid" => $userUUIDStr), $updateArr)){
+				$mongoCRUDClass->db_delete("authentication_token", array("_id" => new MongoId($_GET['token'])));
 				$succMsg = 'Your password has been successfully changed.';
 			}else{
 				$errMsg = "Sorry, your request can't be processed now, please try later!";

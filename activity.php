@@ -3,17 +3,17 @@ require_once("include/config_inc.php");
 require_once("include/main_header.php");
 if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
 	if(!isset($userLoggedIn)){
-		header("Location: logout.php");
+		header("Location: logout.htm");
 		exit;
 	}
 }else{
-	header("Location: login.php?redirect=myaccount");
+	header("Location: login.htm?redirect=myaccount");
 	exit;
 }
 $statusStr="";
 $uuid= isset($_GET['uuid']) ? $_GET['uuid'] : '';
 if($uuid!=""){
-	if($orderDetails = $db->orders->findOne(array("uuid" => $_GET['uuid']))){
+	if($orderDetails = $mongoCRUDClass->db_findone("orders", array("uuid" => $_GET['uuid']))){
 		switch ($orderDetails['status']) {
     								case 2:
         								$statusStr='<span class="alert-success">Completed</span>';
@@ -102,7 +102,8 @@ if($uuid!=""){
 							</thead>
 							<tbody>
 								<?php foreach($orderDetails["order_items"] as $order_item){
-										if($dbProductData = $db->Products->findOne(array('publish_on_web' => true, "uuid" => $order_item['uuid_product'])))	{
+										if($dbProductData = $mongoCRUDClass->db_findone("Products", array('publish_on_web' => true, "uuid" => $order_item['uuid_product']))){
+										//if($dbProductData = $db->Products->findOne(array('publish_on_web' => true, "uuid" => $order_item['uuid_product'])))	{
 											$defaultImage=findDefaultImage($dbProductData);
 								?>
 								<tr>

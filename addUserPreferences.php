@@ -1,5 +1,6 @@
 <?php
 require_once("include/config_inc.php");
+
 $result=array();
 $uuid= isset($_POST['uuid']) ? $_POST['uuid'] : '';
 $action= isset($_POST['action']) ? $_POST['action'] : '';
@@ -27,7 +28,7 @@ $realmongoid="";
 if($cookie!=''){
     $realmongoid = new MongoId($cookie);
 
-    if($dbResultsData = $db->session->findOne(array("_id" => $realmongoid, "ip_address" => $ipAddressStr))){
+    if($dbResultsData = $mongoCRUDClass->db_findone("session", array("_id" => $realmongoid, "ip_address" => $ipAddressStr))){
         if(isset($dbResultsData[$objectName]) && count($dbResultsData[$objectName])>0){
             $existBool=false; $existRecord=array();
             foreach($dbResultsData[$objectName] as $subObjects)  {   
@@ -41,7 +42,7 @@ if($cookie!=''){
             //check product exists or not
             if($existBool) {
 				$set_v= array($objectName => $existRecord);
-        		if($db->session->update(array("_id" => $realmongoid), array('$pull' => $set_v))){
+				if($mongoCRUDClass->db_update("session", array("_id" => $realmongoid), $set_v, '$pull')){
         			$productsArr=array("uuid" => $uuid, "Quantity" => $quantity);
         			if(isset($availableOptionsObj) && count($availableOptionsObj)>0){
 						foreach($availableOptionsObj as $obj){
@@ -51,7 +52,7 @@ if($cookie!=''){
 						}
 					}
     				$productsArr['UnitPrice']=$unit_price;
-    				$db->session->update(array("_id" => $realmongoid), array('$push' => array($objectName => $productsArr)));	
+    				$mongoCRUDClass->db_update("session", array("_id" => $realmongoid), array($objectName => $productsArr), '$push');
     				$result['success']= "Updated this product in your ".$action."!";
         		}
                 
@@ -83,8 +84,8 @@ if($setUserPreference==1){
     }else{
     	$session_values= array("ip_address" => $ipAddressStr);
     }
-    if($db->session->insert($session_values)){
-        $result["success"]="Added this product successfully to your ".$action."!";
+    if($mongoCRUDClass->db_insert("session", $session_values)){
+    	$result["success"]="Added this product successfully to your ".$action."!";
         setcookie("DreamFurnishingVisitor", $session_values['_id'], time()+60*60*24*365);
     }else{
         $result["error"]="Please try after sometime!";
@@ -99,8 +100,9 @@ if($setUserPreference==1){
 		}
 	}
     $productsArr['UnitPrice']=$unit_price;
-    if($db->session->update(array("_id" => $realmongoid), array('$push' => array($objectName => $productsArr)))){
-       $result["success"]="Added this product successfully to your ".$action."!";
+    
+    if($mongoCRUDClass->db_update("session", array("_id" => $realmongoid), array($objectName => $productsArr), '$push')){
+  	   $result["success"]="Added this product successfully to your ".$action."!";
     }else{
         $result["error"]="Please try after sometime!";
     }

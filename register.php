@@ -45,18 +45,17 @@ if(!empty($_POST['submit'])){
 					$encoded_uuid=md5($GUID);
 					
 					$insert_data= array("uuid" => $GUID, "DateAdded" => $time, "First name" => $first_name, "Surname" => $last_name, "Email" => $email_address, "zWebPassword" => $md5_password, "address_line_1" => $addr1, "address_line_2" => $addr2, "address_line_3" => $city, "county_or_state" => $state, "post_zip_code" => $postcode, "country" => $country, "Mobile" => $telephone, "AllowWebAccess" => false);
-					$query_insert = $db->Contacts->insert($insert_data);
+					$query_insert = $mongoCRUDClass->db_insert("Contacts", $insert_data);
 					if($query_insert){
 					
 					//to add authentication_token
 					$create_token_entry= array("user_uuid" => $GUID, "created" => time(), "active" => true );
-					$db->authentication_token->insert($create_token_entry);
+					$mongoCRUDClass->db_insert("authentication_token", $create_token_entry);
 					
 					//to add in collectionToSync
 					$collectionIDStr=NewGuid();
 					$create_sync_entry= array("uuid" => $collectionIDStr, "modified" => time(), "table_uuid" => $GUID, "table_name" =>"Contacts", "event_type" => 1, "sync_state" => 0 );
-					$db->collectionToSync->insert($create_sync_entry);
-					
+					$mongoCRUDClass->db_insert("collectionToSync", $create_sync_entry);
 					
 					//Create HTML For Email 
 						$returnSuccMsgFlag=true;

@@ -15,7 +15,7 @@ if($cookie!=''){
 
     $realmongoid = new MongoId($cookie);
    
-    if($dbResultsData = $db->session->findOne(array("_id" => $realmongoid, "ip_address" => $ipAddressStr))){
+   	if($dbResultsData = $mongoCRUDClass->db_findone("session", array("_id" => $realmongoid, "ip_address" => $ipAddressStr))){
         if(isset($dbResultsData[$objectName]) && count($dbResultsData[$objectName])>0){
         	//$countNum=count($dbResultsData[$objectName]);
         	$countNum=0;

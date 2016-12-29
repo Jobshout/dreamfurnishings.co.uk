@@ -6,12 +6,23 @@ $codeStr = isset($_GET['code']) ? $_GET['code'] : '';
 $codeStr = str_replace(".html", "", $codeStr);
 
 if($codeStr<>''){
-	if($documentdetail = $db->web_content->findOne(array("code" => $codeStr, '$or' => array(array("status" => "true"), array("status" => true))))){
-		$pWindowTitleTxt = $documentdetail['windowtitle'];
+	if($documentdetail = $mongoCRUDClass->db_findone("web_content", array("code" => $codeStr, '$or' => array(array("status" => "true"), array("status" => true))))){
 		
-		$pMetaKeywordsTxt = $documentdetail['meta_tag_keywords'];
-		$pMetaDescriptionTxt = $documentdetail['meta_tag_description'];
-		$docTypeStr=$documentdetail['type'];
+		$pWindowTitleTxt = "";
+		if(isset($documentdetail['windowtitle']) && $documentdetail['windowtitle']!=""){
+			$pWindowTitleTxt = $documentdetail['windowtitle'];
+		}
+		if(isset($documentdetail['meta_tag_keywords']) && $documentdetail['meta_tag_keywords']!=""){
+			$pMetaKeywordsTxt = $documentdetail['meta_tag_keywords'];
+		}
+		if(isset($documentdetail['meta_tag_description']) && $documentdetail['meta_tag_description']!=""){
+			$pMetaDescriptionTxt = $documentdetail['meta_tag_description'];
+		}
+		
+		$docTypeStr="page";
+		if(isset($documentdetail['type']) && $documentdetail['type']!=""){
+			$docTypeStr=$documentdetail['type'];
+		}
 		$docSortOrderNum=0;
 		if(isset($documentdetail['sort_order']) && $documentdetail['sort_order']!=""){
 			$docSortOrderNum=$documentdetail['sort_order'];

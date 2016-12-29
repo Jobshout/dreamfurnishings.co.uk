@@ -15,7 +15,7 @@ if($cookie!=''){
     $ipAddressStr= __ipAddress();
     $realmongoid = new MongoId($cookie);
     $result=array();
-    if($dbResultsData = $db->session->findOne(array("_id" => $realmongoid, "ip_address" => $ipAddressStr))){
+    if($dbResultsData = $mongoCRUDClass->db_findone("session", array("_id" => $realmongoid, "ip_address" => $ipAddressStr))){
     	$existBool=false; $existRecord=array();
          foreach($dbResultsData[$objectName] as $subObjects)  {   
          	if($subObjects["uuid"]==$uuid){
@@ -28,7 +28,8 @@ if($cookie!=''){
 		//check product exists or not
         if($existBool) {
         	$set_v= array($objectName => $existRecord);
-        	if($db->session->update(array("_id" => $realmongoid), array('$pull' => $set_v))){
+        	
+        	if($mongoCRUDClass->db_update("session",array("_id" => $realmongoid), array('$pull' => $set_v))){
             	$result["success"]="Deleted this product successfully from your ".$action."!";
         	}else{
            		$result["error"]="Please try after sometime!";

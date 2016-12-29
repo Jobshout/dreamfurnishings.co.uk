@@ -7,7 +7,7 @@ if(!empty($_POST['submit'])){
 		if(isset($session_values) && $session_values["user_uuid"]!="" && $session_values["login_status"]==true){
 			if(isset($_POST['items_subtotal']) && $_POST['items_subtotal']>=1){
 				$session_update= array("checkout_state"=>0, "subtotal"=> $_POST['items_subtotal'], "total_tax" =>  $_POST['total_tax'], "tax_rate"=> $_POST['tax_rate'], "tax_code"=> $_POST['tax_code'], "total"=> $_POST['grand_total'], "discount"=>0); // checkout_state=1 confirmation of address, checkout_state=0 items are in cart
-				if($db->session->update(array("_id" => $session_values['_id']), array('$set' => $session_update))){
+				if($mongoCRUDClass->db_update("session", array("_id" => $session_values['_id']), $session_update)){
 					header("location:checkout.htm?".rand());
 					exit;
 				}
@@ -95,7 +95,7 @@ if(!empty($_POST['submit'])){
 									<?php 
 										$taxRate=20; $taxCode="";
 										if(isset($userLoggedIn['country']) && $userLoggedIn['country']!=""){
-											if($countryAb=$db->countries->findOne(array("name" => $userLoggedIn['country']))){
+											if($countryAb = $mongoCRUDClass->db_findone("countries", array("name" => $userLoggedIn['country']))){
 												$taxCode=$countryAb['WMO'];
 												switch ($countryAb['WMO']) {
     												case "UK":

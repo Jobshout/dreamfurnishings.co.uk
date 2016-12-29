@@ -4,13 +4,14 @@ require_once('include/class.phpmailer.php');
 
 if(isset($_GET['cc'])){
 	$cc= $_GET['cc'];
-	if($chkToken= $db->authentication_token->findOne(array("_id" => new MongoId($cc), "active" => true))){
-		if($findUser= $db->Contacts->findOne(array("uuid" => $chkToken['user_uuid']))){
+	
+	if($chkToken=$mongoCRUDClass->db_findone("authentication_token", array("_id" => new MongoId($cc), "active" => true))){
+		if($findUser=$mongoCRUDClass->db_findone("Contacts", array("uuid" => $chkToken['user_uuid']))){
 			if($findUser["AllowWebAccess"]==false){
 				$update_data= array("AllowWebAccess" => true);
-				$update_status= $db->Contacts->update(array("uuid" => $chkToken['user_uuid']), array('$set' => $update_data));
+				$update_status=$mongoCRUDClass->db_update("Contacts", array("uuid" => $chkToken['user_uuid']), $update_data);
 				if($update_status){
-					$db->authentication_token->remove(array("_id" => new MongoId($cc)));
+					$mongoCRUDClass->db_delete("authentication_token", array("_id" => new MongoId($cc)));
 					$succ_msg = 'Your account has been successfully activated.';
 				}
 			}else{

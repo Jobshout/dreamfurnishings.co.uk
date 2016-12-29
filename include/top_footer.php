@@ -46,7 +46,8 @@
                 }else{    ?>
             	© 2016 Dream Furnishings. All Rights Reserved.
                 <?php } ?>
-        		 <?php if($termsPage= $db->web_content->findOne(array("code" => "terms-and-conditions", "status" => "true"))){	?>
+                
+        		 <?php if($termsPage= $mongoCRUDClass->db_findone("web_content", array("code" => "terms-and-conditions", "status" => "true"))){	?>
         			<a href="<?php echo gb_fn_linkCacheHandler('terms-and-conditions.html','content.htm?code=terms-and-conditions'); ?>" title="Terms & Conditions" class="golden-link">Terms & Conditions</a>
         		<?php } ?>
             </div>

@@ -33,23 +33,26 @@ if(!empty($_POST['submit'])){
 				$uuid=$_POST["uuid"];		
 				$time = time();
 				
-				if($contactsRecord= $db->Contacts->findOne(array("uuid" => $uuid ))){
+				if($contactsRecord=$mongoCRUDClass->db_findone("Contacts", array("uuid" => $uuid ))){
+				//if($contactsRecord= $db->Contacts->findOne(array("uuid" => $uuid ))){
 					$updateArr= array("First name" => $first_name, "Surname" => $last_name, "Email" => $email_address, "address_line_1" => $addr1, "address_line_2" => $addr2, "address_line_3" => $city, "county_or_state" => $state, "post_zip_code" => $postcode, "country" => $country, "Mobile" => $telephone);
 					if(isset($_POST['password']) && $_POST['password']!=""){
 						$password=addslashes($_POST["password"]);
 						$md5_password=md5($password);
 						$updateArr["zWebPassword"] = $md5_password;
 					}
-					$update_user_content=$db->Contacts->update(array("uuid" => $contactsRecord['uuid']), array('$set' => $updateArr));
+					
+					$update_user_content=$mongoCRUDClass->db_update("Contacts", array("uuid" => $contactsRecord['uuid']), $updateArr);
+					
 					if($update_user_content){
 						//to add in collectionToSync
-						if($records= $db->collectionToSync->findOne(array("table_uuid" => $uuid, "table_name" => "Contacts"))){
+						if($records=$mongoCRUDClass->db_findone("collectionToSync", array("table_uuid" => $uuid, "table_name" => "Contacts"))){
 							$update_sync_entry= array("modified" => time(), "sync_state" => 0 );
-							$db->collectionToSync->update(array("table_uuid" => $contactsRecord['uuid'], "table_name" => "Contacts"), array('$set' => $update_sync_entry));
+							$mongoCRUDClass->db_update("collectionToSync", array("table_uuid" => $contactsRecord['uuid'], "table_name" => "Contacts"), $update_sync_entry);
 						}else{
 							$collectionIDStr=NewGuid();
 							$create_sync_entry= array("uuid" => $collectionIDStr, "modified" => time(), "table_uuid" => $contactsRecord['uuid'], "table_name" =>"Contacts", "event_type" => 1, "sync_state" => 0 );
-							$db->collectionToSync->insert($create_sync_entry);
+							$mongoCRUDClass->db_insert("collectionToSync", $create_sync_entry);
 						}
 						
 						if($updateBillingAddressBool){
@@ -124,11 +127,11 @@ if(!empty($_POST['submit'])){
 									if(!isset($existingTrans['order_history'])){
 										$trans_entry["order_history"]=array();
 									}
-									$db->orders->update(array("uuid" => $existingTrans['uuid']), array('$set' => $trans_entry));
+									$mongoCRUDClass->db_update("orders", array("uuid" => $existingTrans['uuid']), $trans_entry);
 									break;
 								}
 							}else{
-								$trans_id= nextID("orders");
+								$trans_id= nextID("orders", "order_id");
 								$trans_entry["uuid_client"]=$contactsRecord['uuid'];
 								$trans_entry["full_order_number"]=get_invoice_number($trans_id);
 								$trans_entry["created_timestamp"]=(int)time();
@@ -137,11 +140,11 @@ if(!empty($_POST['submit'])){
 								$trans_uuid=NewGuid();
 								$trans_entry["uuid"]=$trans_uuid;
 								$trans_entry["order_history"]=array();
-								$db->orders->insert($trans_entry);
+								$mongoCRUDClass->db_insert("orders", $trans_entry);
 							}
 				
 							$session_update= array("checkout_state"=>1, "transaction_uuid" => $trans_uuid); // checkout_state=1 confirmation of address, checkout_state=0 items are in cart
-							if($db->session->update(array("_id" => $session_values['_id']), array('$set' => $session_update))){
+							if($mongoCRUDClass->db_update("session", array("_id" => $session_values['_id']), $session_update)){
 								header("Location: order-confirmation.htm");
 								exit;
 							}

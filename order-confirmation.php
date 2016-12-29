@@ -349,11 +349,11 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 							</thead>
 							<tbody>
 								<?php foreach($orderDetails["order_items"] as $order_item){
-										if($dbProductData = $db->Products->findOne(array('publish_on_web' => true, "uuid" => $order_item['uuid_product'])))	{
+										if($dbProductData = $mongoCRUDClass->db_findone("Products", array('publish_on_web' => true, "uuid" => $order_item['uuid_product']))){
 											$defaultImage=findDefaultImage($dbProductData);
 								?>
 								<tr>
-									<td WIDTH="27%" class="col-sm-3 text-center"><a href="<?php echo gb_fn_linkCacheHandlerJS('product-'.$dbProductData["product_code"].'.html','product.php?code='.$dbProductData["product_code"]); ?>" class="cart-prdt-link"><img src="<?php echo $defaultImage; ?>" CLASS="img-responsive" STYLE="height:170px;"  onerror="this.src='images/default-product-small.png'"></a></td>
+									<td WIDTH="27%" class="col-sm-3 text-center"><a href="<?php echo gb_fn_linkCacheHandler('product-'.$dbProductData["product_code"].'.html','product.htm?code='.$dbProductData["product_code"]); ?>" class="cart-prdt-link"><img src="<?php echo $defaultImage; ?>" CLASS="img-responsive" STYLE="height:170px;"  onerror="this.src='images/default-product-small.png'"></a></td>
 									<td WIDTH="69%" class=" col-sm-7"><strong><?php echo ucfirst($dbProductData["ProductName"]); ?></strong><br>
 									<?php if(isset($dbProductData["sku"]) && $dbProductData["sku"]!=""){
                 							echo "<strong>SKU :</strong> ".$dbProductData["sku"]."<br>";

@@ -8,10 +8,10 @@ if(isset($_POST)){
 	$availableOoptionsStr = isset($_POST['ava_options']) ? $_POST['ava_options'] : '';
 	
 	if(isset($code) && $code!=''){
-		$dbProductData = $db->Products->findOne(array("product_code" => $code), array("sku" => 1));
+		$dbProductData = $mongoCRUDClass->db_findone("Products", array("product_code" => $code), array("sku" => 1));
 		$productSKUStr=$dbProductData['sku'];
 	}elseif(isset($uuidStr) && $uuidStr!=''){
-		$dbProductData = $db->Products->findOne(array("uuid" => $uuidStr), array("sku" => 1));
+		$dbProductData = $mongoCRUDClass->db_findone("Products", array("uuid" => $uuidStr), array("sku" => 1));
 		$productSKUStr=$dbProductData['sku'];
 	}
 }

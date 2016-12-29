@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set("Europe/London");
 //ini_set('max_execution_time', 300);
 
 $isSecure = false;
@@ -49,6 +49,12 @@ switch ($_SERVER['SERVER_NAME']) {
 	define("ADMIN_BB_EMAIL","nehak189@gmail.com");
     break;
 }
+
+//mongoCRUD FILE
+require_once('include/MongoCRUD.php');
+
+$mongoCRUDClass = new MongoCRUD;
+$mongoCRUDClass->collectionsAllowedArr=array("Contacts", "authentication_token", "collectionToSync", "email_queue", "orders", "web_content", "web_enquiries");
 
 $getAddrStr=get_token_value('dreamfurnishing-address');
 if($getAddrStr==""){

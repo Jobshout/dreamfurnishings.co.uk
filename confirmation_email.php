@@ -211,7 +211,7 @@ h3{
 		<table  border="0" cellspacing="0" cellpadding="0" >
 			<tr><td>&nbsp;</td><td>Description</td><td>Price</td><td>Quantity</td><td>Subtotal</td></tr>
 			<?php foreach($orderDetails["order_items"] as $order_item){
-										if($dbProductData = $db->Products->findOne(array('publish_on_web' => true, "uuid" => $order_item['uuid_product'])))	{
+										if($dbProductData = $mongoCRUDClass->db_findone("Products", array('publish_on_web' => true, "uuid" => $order_item['uuid_product']))){
 											$defaultImage=findDefaultImage($dbProductData);
 											$productLinkStr=gb_fn_linkCacheHandler('product-'.$dbProductData["product_code"].'.html','product.php?code='.$dbProductData["product_code"]);
 								?>

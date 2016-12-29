@@ -209,7 +209,7 @@ require_once("include/footer.php");
 <script src="js/responsiveslides.min.js"></script>
 <script type="text/javascript">
 function load_data(){
-	$.getJSON("json-blogs.php",function(result){
+	$.getJSON("json-blogs.htm",function(result){
 		if(result.error){
 			
 		}else{

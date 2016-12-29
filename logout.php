@@ -1,13 +1,10 @@
 <?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 require_once("include/config_inc.php");
-
-if($db->session->findOne(array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])))){
-	echo "exists";
-	$db->session->update(array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])), array('$set' => array("login_status" => false)));
+if($findUser=$mongoCRUDClass->db_findone("session", array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])))){
+	$mongoCRUDClass->db_update("session", array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])), array("login_status" => false));
 	header("Location: login.htm?" . rand());
 	exit;
 }else{
-	echo "dnt exists";
 	header("Location: login.htm?" . rand());
 	exit;
 }

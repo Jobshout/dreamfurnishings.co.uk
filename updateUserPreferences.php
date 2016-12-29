@@ -22,8 +22,8 @@ $realmongoid="";
 
 if($cookie!=''){
     $realmongoid = new MongoId($cookie);
-
-    if($dbResultsData = $db->session->findOne(array("_id" => $realmongoid, "ip_address" => $ipAddressStr))){
+	
+	if($dbResultsData = $mongoCRUDClass->db_findone("session", array("_id" => $realmongoid, "ip_address" => $ipAddressStr))){
         if(isset($dbResultsData[$objectName]) && count($dbResultsData[$objectName])>0){
             $existBool=false; $existRecord=array();
             foreach($dbResultsData[$objectName] as $subObjects)  {   
@@ -37,10 +37,10 @@ if($cookie!=''){
             //check product exists or not
             if($existBool) {            	         	
 				$set_v= array($objectName => $existRecord);
-        		if($db->session->update(array("_id" => $realmongoid), array('$pull' => $set_v))){
+				if($mongoCRUDClass->db_update("session", array("_id" => $realmongoid), $set_v, '$pull')){
         			$existRecord['Quantity']=$quantity;
             		$existRecord['UnitPrice']=$unitPrice; 
-    				$db->session->update(array("_id" => $realmongoid), array('$push' => array($objectName => $existRecord)));	
+            		$mongoCRUDClass->db_update("session", array("_id" => $realmongoid), array($objectName => $existRecord), '$push');
     				$result['success']= "Updated quantiy into your ".$action."!";
         		}
             }else{

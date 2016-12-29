@@ -6,11 +6,12 @@ if(!empty($_POST['sign_in'])){
 	$md5_password=md5($password);
 	
 if($email!="" && validChr($email)){
-	if($user= $db->Contacts->findOne(array("Email" => $email, "AllowWebAccess" => true))){
+	if($user = $mongoCRUDClass->db_findone("Contacts", array("Email" => $email, "AllowWebAccess" => true))){
 		if($action=="requestnewpassword"){
 			//to add authentication_token
 			$create_token_entry= array("user_uuid" => $user["uuid"], "created" => time(), "active" => true );
-			if($db->authentication_token->insert($create_token_entry)){
+			
+			if($mongoCRUDClass->db_insert("authentication_token", $create_token_entry)){
 			
 			$succ_msg = 'A link to reset your password has been sent to you. Please check your email.';
 			
@@ -56,12 +57,11 @@ if($email!="" && validChr($email)){
 		}else{
 			if($md5_password==$user['zWebPassword']){
 				$userCurrentIP= __ipAddress();
-							
-				$session_exits = $db->session->findOne(array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])));
+				
+				$session_exits = $mongoCRUDClass->db_findone("session", array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])));
 				if($session_exits){
 					$session_update= array("last_loggedIn"=>time(), "user_uuid" => $user['uuid'], "login_status" => true, "ip_address" => $userCurrentIP);
-					
-					$session_details= $db->session->update(array("_id" => $session_exits['_id']), array('$set' => $session_update));
+					$session_details= $mongoCRUDClass->db_update("session", array("_id" => $session_exits['_id']), $session_update);
 					
 					if(isset($_POST['referer']) && $_POST['referer']!=''){
 						header("location:".$_POST['referer']."&".rand());

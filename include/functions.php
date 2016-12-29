@@ -8,9 +8,9 @@ function gb_fn_linkCacheHandler($seoFriendlyUrlStr, $realUrlStr){
 }
 
 function save_email_queue($recipientEmailAddr, $senderEmailAddr, $subject, $emailContent){
-	global $db;
-	$insert_data= array("created_timestamp" => time(), "modified_timestamp" => time(), "status" => 0, "sender_email_address" => $senderEmailAddr, "recipient_email_adddress" => $recipientEmailAddr, "subject" => $subject, "email_content" => $emailContent);
-	$query_insert = $db->email_queue->insert($insert_data);
+	global $mongoCRUDClass;
+	$insert_data= array("created_timestamp" => time(), "modified_timestamp" => time(), "status" => 0, "sender_email_address" => $senderEmailAddr, "recipient_email_address" => $recipientEmailAddr, "subject" => $subject, "email_content" => $emailContent);
+	$query_insert=$mongoCRUDClass->db_insert("email_queue", $insert_data);
 	if($query_insert){
 		return true;
 	}else{
@@ -148,9 +148,8 @@ function __ipAddress(){
 
 function get_token_value($e){
 	$token_content="";
-	global $db;
-	//if($check_existingToken= $db->Tokens->findOne(array("code" => $code, "Status" => 1))){
-	if($check_existingToken= $db->Tokens->findOne(array("code" => $e))){
+	global $mongoCRUDClass;
+	if($check_existingToken= $mongoCRUDClass->db_findone("Tokens", array("code" => $e))){
 		$token_content=$check_existingToken["contentTxt"];
 	}
 	return $token_content;
@@ -192,13 +191,11 @@ function characterMessage($str) {
     return "Please only use alpha-numeric characters in the ".$str;
 }
 
-function nextID($table_name){
-	global $db;
-	$get_Ids=$db->$table_name->find()->sort(array("ID" => -1))->limit(1);
-	if($get_Ids->count() >0){
-		foreach($get_Ids as $get_Id){
-			$ID= $get_Id['ID'] + 1;
-		}
+function nextID($table_name, $field_name){
+	global $mongoCRUDClass;
+	$get_Ids=$mongoCRUDClass->db_getMax($table_name,array($field_name=>1), $field_name);
+	if($get_Ids>0){
+		$ID= $get_Ids + 1;
 	}else{
 		$ID= 1;
 	}
@@ -277,23 +274,26 @@ function findDefaultImage($product){
         return $defaultImage;
 }
 
-function getBriefText($bodyStr){
+function getBriefText($bodyStr,$returnStingLength=125){
 	$firstSPosNum=stripos($bodyStr,"<p>");
 	if ($firstSPosNum !== false) {
 		$firstEPosNum=stripos($bodyStr,"</p>");
-		$bodyStr=substr($bodyStr,$firstSPosNum,$firstEPosNum);
+		if($firstEPosNum !== false) {
+			$bodyStr=substr($bodyStr,$firstSPosNum,$firstEPosNum);
+		}
 	}
 	$bodyStr=strip_tags($bodyStr);
-	if(strlen($bodyStr)>125){
-		$bodyStr=substr($bodyStr,0,125)."...";
+	if(strlen($bodyStr)>$returnStingLength){
+		$bodyStr=substr($bodyStr,0,$returnStingLength)."...";
 	}
+	
 	return $bodyStr;					
 }
 
 function fetchCountryCode($nameStr){
-	global $db;
 	$countryCodeStr="";
-	if($dbResultsData = $db->countries->findOne(array("name" => $nameStr))){
+	global $mongoCRUDClass;
+	if($dbResultsData= $mongoCRUDClass->db_findone("countries", array("name" => $nameStr))){
 		$countryCodeStr=$dbResultsData['ISO3166-1-numeric'];
 	}
 	return $countryCodeStr;

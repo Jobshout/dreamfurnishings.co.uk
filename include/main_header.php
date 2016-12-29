@@ -6,9 +6,10 @@ if(!isset($pMetaDescriptionTxt))$pMetaDescriptionTxt = "Dream Furnishing";
 
 $isUserSignedInBool=false;
 if(isset($_COOKIE["DreamFurnishingVisitor"]) && $_COOKIE["DreamFurnishingVisitor"]!=""){
-	if($session_values = $db->session->findOne(array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])))){
+
+	if($session_values = $mongoCRUDClass->db_findone("session", array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])))){
 		if(isset($session_values['login_status']) && $session_values['login_status']==true){
-			if($userLoggedIn= $db->Contacts->findOne(array("uuid" => $session_values['user_uuid'], "AllowWebAccess" => true))){
+			if($userLoggedIn= $mongoCRUDClass->db_findone("Contacts", array("uuid" => $session_values['user_uuid'], "AllowWebAccess" => true))){
 				$isUserSignedInBool=true;
 			}else{
 				header("Location: logout.htm");
@@ -17,7 +18,7 @@ if(isset($_COOKIE["DreamFurnishingVisitor"]) && $_COOKIE["DreamFurnishingVisitor
 	}else{
 		$ipAddressStr= __ipAddress();
 		$session_values= array("login_status" => false, "ip_address" => $ipAddressStr);
-		$db->session->insert($session_values);
+		$mongoCRUDClass->db_insert("session", $session_values);
 		setcookie("DreamFurnishingVisitor", $session_values['_id'], time() + (86400 * 30)); // 86400 = 1 day
 	}
 }

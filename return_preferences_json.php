@@ -15,7 +15,7 @@ $cookieStr= isset($_COOKIE["DreamFurnishingVisitor"]) ? $_COOKIE["DreamFurnishin
 if($cookieStr!=''){
     $ipAddressStr= __ipAddress();
     $wishlistItemsArr=array();
-    if($dbWishlistsData = $db->session->findOne(array("_id" => new MongoId($cookieStr), "ip_address" => $ipAddressStr))){
+    if($dbWishlistsData = $mongoCRUDClass->db_findone("session", array("_id" => new MongoId($cookieStr), "ip_address" => $ipAddressStr))){
         if(isset($dbWishlistsData[$objectName]) && count($dbWishlistsData[$objectName])>0){
         	$wishlistItemsArr=$dbWishlistsData[$objectName];
             foreach($dbWishlistsData[$objectName] as $wishlistProds){

@@ -9,8 +9,7 @@ $images_root_disk_path="/";
 
 if($guid!=""){
 	$textFileNameStr=$images_root_disk_path."images/products/".$guid.".txt";
-	
-	if($dbProductData = $db->Products->findOne(array("product_images.uuid" => $guid))){
+	if($dbProductData = $mongoCRUDClass->db_findone("Products", array("product_images.uuid" => $guid))){
 		$windowTitle=$dbProductData['ProductName'];
 		if(isset($dbProductData['product_images']) && count($dbProductData['product_images'])>0){ 
 			foreach($dbProductData['product_images'] as $product_images){

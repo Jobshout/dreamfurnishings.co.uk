@@ -11,7 +11,7 @@ $c_name = isset($_POST['c_name']) ? $_POST['c_name'] : "";
 $remoteIPStr= __ipAddress();
 $res= array();
 if ($c_blog!="" && $comment!="" && $c_email!="" && $c_name!=""){
-	if($documentdetail = $db->web_content->findOne(array("code" => $c_blog))){
+	if($documentdetail = $mongoCRUDClass->db_findone("web_content", array("code" => $c_blog))){
 		$blogTitle =$documentdetail["title"];
 		$blogUUID =$documentdetail["uuid"];
 		
@@ -20,16 +20,16 @@ if ($c_blog!="" && $comment!="" && $c_email!="" && $c_name!=""){
 		//}else{
 			$comment_entry=array("web_content_uuid"=> $blogUUID, "uuid"=> NewGuid(), "name"=> $c_name.'('.$c_email.')', "object_content"=> $comment, "created_timestamp"=> time(), "modified_timestamp"=> time(),  "code"=> $c_name, "status"=> "false", "order_num"=> 0);
 			$set_v= array("objects" => $comment_entry);
-			$update_Blog=$db->web_content->update(array("code" => $c_blog, "uuid" => $blogUUID), array('$push' => $set_v));
+			$update_Blog=$mongoCRUDClass->db_update("web_content", array("code" => $c_blog, "uuid" => $blogUUID), $set_v);
 		//}
 		if($update_Blog){
 			//event type 1 for add and 2 for delete
-			if($checkSyncTable=$db->collectionToSync->findOne(array("table_name" => "web_content", "table_uuid" => $blogUUID))){
+			if($checkSyncTable = $mongoCRUDClass->db_findone("collectionToSync", array("table_name" => "web_content", "table_uuid" => $blogUUID))){
 				$updateArr= array("modified" => time(),"sync_state" => 0,"event_type" => 1);
-				$db->collectionToSync->update(array("uuid" => $checkSyncTable['uuid']), array('$set' => $updateArr));
+				$mongoCRUDClass->db_update("collectionToSync", array("uuid" => $checkSyncTable['uuid']), $updateArr);
 			}else{
 				$insertArr= array("uuid" => NewGuid(), "modified" => time(), "table_name" => 'web_content' ,"event_type" => 1 , "table_uuid" => $blogUUID, "sync_state" => 0, "sub_table_name" => "objects");
-				$query_insert = $db->collectionToSync->insert($insertArr);
+				$query_insert = $mongoCRUDClass->db_insert("collectionToSync", $insertArr);
 			}
 					
 			//email content

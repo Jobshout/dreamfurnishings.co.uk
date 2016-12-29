@@ -26,17 +26,8 @@ if($dbResultsData->count()>0){
        	$row['month']= date('M',$Published_timestamp);
 		$row['date'] = date('d',$Published_timestamp);
 		$bodyStr= $document["body"];
-		$firstSPosNum=stripos($bodyStr,"<p>");
-		if($firstSPosNum !== false) {
-			$firstEPosNum=stripos($bodyStr,"</p>");
-			if($firstEPosNum !== false) {
-				$bodyStr=substr($bodyStr,$firstSPosNum,$firstEPosNum);
-			}
-		}
-		$bodyStr=strip_tags($bodyStr);
-		if(strlen($bodyStr)>115){
-			$bodyStr=substr($bodyStr,0,115)."...";
-		}
+		$bodyStr=getBriefText($bodyStr,115);
+
 		$row['body']=$bodyStr;
 		$row['title']=$document["title"];
 		$row['code']=$document["code"];

@@ -6,14 +6,15 @@ if(!isset($code)) { $code = isset($_GET['code']) ? $_GET['code'] : ''; $code = s
 if(!isset($uuidStr)) { $uuidStr = isset($_GET['uuid']) ? $_GET['uuid'] : ''; }
 
 if(isset($code) && $code!=''){
-	$dbProductData = $db->Products->findOne(array("product_code" => $code));
+	$dbProductData = $mongoCRUDClass->db_findone("Products", array("product_code" => $code));
+	//$dbProductData = $db->Products->findOne(array("product_code" => $code));
 	if(count($dbProductData)>0){
 	}else{
 		header("location:404.htm");
 		exit;
 	}
 }elseif(isset($uuidStr) && $uuidStr!=''){
-	$dbProductData = $db->Products->findOne(array("uuid" => $uuidStr));
+	$dbProductData = $mongoCRUDClass->db_findone("Products", array("uuid" => $uuidStr));
 	if(count($dbProductData)>0){
 	
 	}else{
@@ -285,7 +286,7 @@ require_once("include/main_header.php"); ?>
 						<div CLASS="col-sm-6"><a href="javascript:void(0)" onClick="enquire_about('uuid', '<?php echo $dbProductData['uuid'];?>')" class="buy-now-btn">Enquire Now</a></div>
 	          		<?php } ?>
             		<?php if(isset($_COOKIE["DreamFurnishingVisitor"]) && $_COOKIE["DreamFurnishingVisitor"]!=""){
-            			if($dbfavData = $db->session->findOne(array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"]), "ip_address" => __ipAddress() ))){
+            			if($dbfavData = $mongoCRUDClass->db_findone("session", array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"]), "ip_address" => __ipAddress() ))){
             				$productexistBool=false;
             				if(isset($dbfavData['wishlist_products'])){
 								foreach($dbfavData['wishlist_products'] as $wishlistProds)  {   

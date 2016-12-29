@@ -19,17 +19,8 @@ if($dbResultsData->count()>0){
 		$dateStr = date('d',$Published_timestamp);
 		
 		$bodyStr= $document["body"];
-		$firstSPosNum=stripos($bodyStr,"<p>");
-		if($firstSPosNum !== false) {
-			$firstEPosNum=stripos($bodyStr,"</p>");
-			if($firstEPosNum !== false) {
-				$bodyStr=substr($bodyStr,$firstSPosNum,$firstEPosNum);
-			}
-		}
-		$bodyStr=strip_tags($bodyStr);
-		if(strlen($bodyStr)>250){
-			$bodyStr=substr($bodyStr,0,250)."...";
-		}
+		$bodyStr=getBriefText($bodyStr,250);
+		
 	    $data.='<div class="news-teaser"><div class="post-date"><div class="month">'.$monthStr.'</div><div class="day">'.$dateStr.'</div></div>';
 	    
 	    $data.='<h3><a title="'.$document["title"].'" rel="bookmark" href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS(\''.$document["code"].'\',\'content.php?code='.$document["code"].'\')">'.$document["title"].'</a></h3>';

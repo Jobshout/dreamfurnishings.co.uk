@@ -12,7 +12,8 @@ $remoteIPStr= __ipAddress();
 $res= array();
 if ($c_name!="" && $c_email!="" && $comment!=""){
 	$insert_data= array("created_timestamp" => time(), "modified_timestamp" => time(), "status" => 0, "user_name" => $c_name, "user_email_address" => $c_email, "comment" => $comment);
-	$query_insert = $db->web_enquiries->insert($insert_data);
+	$query_insert = $mongoCRUDClass->db_insert("web_enquiries", $insert_data);
+	
 	if($query_insert){
 		$subjectStr=$c_name." has an enquiry";
 			$message='<div style="font-family:\'Helvetica Neue\',Helvetica,Arial,sans-serif;font-size:13;color:#333">We have just received the following message from the <a href="'.SITE_WS_PATH.'" target="_blank">'.SITE_WS_PATH.'</a> website:</div>';
