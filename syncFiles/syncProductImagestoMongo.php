@@ -2,7 +2,9 @@
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
 
-define("SAVEIMAGESONDISK", true);
+define("SAVE_IMAGES_ON_DISK", true);
+define("SAVE_IMAGES_IN_MONGO", true);
+
 date_default_timezone_set("Europe/London");
 include_once("config.php");
 
@@ -43,7 +45,7 @@ if($tablename!="" && $dbname!=""){
 					
 					if($productFound = $collection->findOne(array($updatecol => $row->uuid_product))){
 						$prodImagesArr=array();
-						if(SAVEIMAGESONDISK){
+						if(SAVE_IMAGES_ON_DISK){
                         			$prod_images=$row;
                                     
                                     $realPathStr="";
@@ -60,8 +62,17 @@ if($tablename!="" && $dbname!=""){
                                            // $txtImageDirectory='../images/images_data_as_txt/';
                                            
                                            $directory=$images_root_disk_path.'images/products/';
+                                           
+                                            if ( !is_dir($directory) ) {
+											mkdir($directory);
+											}                                           
+                                        
                                            $txtImageDirectory= $images_root_disk_path.'images/products/';
                                            
+                                            if ( !is_dir($txtImageDirectory) ) {
+											mkdir($txtImageDirectory);
+											}                                           
+
                                             if (is_dir($directory)) {
                                                 if($imageExtension!=""){
                                                     //save image as txt with gz compression

@@ -1,7 +1,7 @@
 <?php
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
-define("SAVEIMAGESONDISK", true);
+define("SAVE_IMAGES_ON_DISK", true);
 date_default_timezone_set("Europe/London");
 include_once("config.php");
 
@@ -36,7 +36,7 @@ if($tablename!="" && $dbname!=""){
 				if(isset($_REQUEST['updatecol']) && $_REQUEST['updatecol']!=""){
 					$updatecol=$_REQUEST['updatecol'];
 					$log->lwrite("Record with [".$tablename."]".$updatecol." : ".$row->$updatecol);	//log message
-                    if(SAVEIMAGESONDISK){
+                    if(SAVE_IMAGES_ON_DISK){
                         if(isset($row->product_images) && $row->product_images!=""){
 
                             if(count($row->product_images)>0){
