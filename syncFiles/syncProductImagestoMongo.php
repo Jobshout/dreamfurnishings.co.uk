@@ -8,7 +8,7 @@ include_once("config.php");
 
 if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['token'])){
 
-$images_root_disk_path="../public_ftp/";
+$images_root_disk_path="../../public_ftp/";
 
 $log->lfile('logs/log_'.date("j-n-Y").'.txt');
 
