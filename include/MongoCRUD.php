@@ -3,8 +3,9 @@
 //sync_state, 0 means not synced and 1 means synced
 
 class MongoCRUD	{
-	var $maintainChangeLog=true;
-	var $collectionsAllowedArr      = array();
+
+	var $maintainChangeLog				=	true;
+	var $collectionsAllowedArr			=	array();
 	
 	function db_maintain_change_log($values)
 	{
