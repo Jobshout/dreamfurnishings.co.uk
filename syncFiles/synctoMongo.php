@@ -25,46 +25,47 @@ if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['t
 
 			if(count($arr_tbl_data)>0){
 				$log->lwrite('Decoded the json successfully at line '.__LINE__); //log message
-			
-				foreach($arr_tbl_data as $row){
-					if(isset($_GET['updatecol']) && $_GET['updatecol']!=""){
-						$updatecol=$_GET['updatecol'];
-						$log->lwrite("Record with [".$tablename."]".$updatecol." : ".$row->$updatecol);	//log message
-						echo "Record with ".$updatecol." : ".$row->$updatecol." has been ";
+				
+			foreach($arr_tbl_data as $row){
+				if(isset($_GET['updatecol']) && $_GET['updatecol']!=""){
+					$updatecol=$_GET['updatecol'];
+					$log->lwrite("Record with [".$tablename."]".$updatecol." : ".$row->$updatecol);	//log message
+					echo "Record with ".$updatecol." : ".$row->$updatecol." has been ";
 
-						$sameRowExist = $collection->find(array($updatecol => $row->$updatecol));
-						$num_exist = $sameRowExist->count();
-						if($num_exist>0){
-							//if($collection->update(array($updatecol => $row->$updatecol), array('$set' => $row))){
-							// the following will replace the existing json
-							if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->$updatecol), $row)){
-								$log->lwrite('Data updated successfully at line '.__LINE__); //log message
-								echo "updated";
-							}else{
-								$log->lwrite('Error: Data updation failed at line '.__LINE__); //log message
-								echo "updation failed";
-							}
-						}	else{
-							if($mongoCRUDClass->db_insert($tablename, $row)){
-								$log->lwrite('Data inserted successfully at line '.__LINE__); //log message
-								echo "inserted";
-							}else{
-								$log->lwrite('Error: Data insertion failed at line '.__LINE__); //log message
-								echo "insertion fail";
-							}
+					$sameRowExist = $collection->find(array($updatecol => $row->$updatecol));
+					$num_exist = $sameRowExist->count();
+					if($num_exist>0){
+						//if($collection->update(array($updatecol => $row->$updatecol), array('$set' => $row))){
+						// the following will replace the existing json
+						if($collection->update(array($updatecol => $row->$updatecol), $row)){
+							$log->lwrite('Data updated successfully at line '.__LINE__); //log message
+							echo "updated";
+						}else{
+							$log->lwrite('Error: Data updation failed at line '.__LINE__); //log message
+							echo "updation failed";
 						}
-					}else{
-						try {
-							$mongoCRUDClass->db_insert($tablename, $row);
-							$log->lwrite('Data inserted successfully at line '.__LINE__); //log message	
+					}	else{
+						if($collection->insert($row)){
+							$log->lwrite('Data inserted successfully at line '.__LINE__); //log message
 							echo "inserted";
-						}catch(MongoCursorException $e) {
+						}else{
 							$log->lwrite('Error: Data insertion failed at line '.__LINE__); //log message
 							echo "insertion fail";
 						}
 					}
- 				echo ": ".date('d/m/Y H:i:s')."<br/>";
+				}else{
+					try {
+						$collection->insert($row);
+						$log->lwrite('Data inserted successfully at line '.__LINE__); //log message	
+						echo "inserted";
+					}catch(MongoCursorException $e) {
+						$log->lwrite('Error: Data insertion failed at line '.__LINE__); //log message
+						echo "insertion fail";
+					}
 				}
+ 			echo ": ".date('d/m/Y H:i:s')."<br/>";
+			}
+				
 			}else{
 				$log->lwrite('Error: No data retrieved from server at line '.__LINE__);	//log message
 				echo 'error : No data retrieved from server at line '.__LINE__;
