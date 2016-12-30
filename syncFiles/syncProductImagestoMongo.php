@@ -2,11 +2,15 @@
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 define("SAVE_IMAGES_ON_DISK", true);
 define("SAVE_IMAGES_IN_MONGO", true);
 
 date_default_timezone_set("Europe/London");
+=======
+define("SAVEIMAGESONDISK", true);
+>>>>>>> origin/master
 =======
 define("SAVEIMAGESONDISK", true);
 >>>>>>> origin/master
