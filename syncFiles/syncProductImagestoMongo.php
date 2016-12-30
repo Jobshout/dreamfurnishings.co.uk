@@ -54,12 +54,8 @@ if($tablename!="" && $dbname!=""){
                                                 $imageExtension=substr($prod_images->name,intval($pos)+1) ;
                                             }
 
-                                           // $directory='../images/products/';
-                                           // $txtImageDirectory='../images/images_data_as_txt/';
-                                           
-                                           $directory=$images_root_disk_path.'images/products/';
-                                           $txtImageDirectory= $images_root_disk_path.'images/products/';
-                                           
+                                            $directory=$images_root_disk_path.'images/products/';
+                                            $txtImageDirectory= $images_root_disk_path.'images/products/';
                                             if (is_dir($directory)) {
                                                 if($imageExtension!=""){
                                                     //save image as txt with gz compression
@@ -114,8 +110,7 @@ if($tablename!="" && $dbname!=""){
 
             				//check product exists or not
            					if($existBool) {
-           						$del_item= $mongoCRUDClass->db_update($tablename, array($updatecol => $row->uuid_product), array( "product_images"=> $get_image_Details), '$pull');
-           						//$del_item= $collection->update(array($updatecol => $row->uuid_product), array('$pull'=> array( "product_images"=> $get_image_Details)));
+           						$del_item= $collection->update(array($updatecol => $row->uuid_product), array('$pull'=> array( "product_images"=> $get_image_Details)));
 								if($del_item){
 									// insert d same row							
 									$set_v= array('product_images' => $prodImagesArr);
@@ -129,8 +124,8 @@ if($tablename!="" && $dbname!=""){
 								}
             				}else{
                 				$set_v= array('product_images' => $prodImagesArr);
-                				if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->uuid_product), $set_v, '$push')){
-                					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
+                				if($collection->update(array($updatecol => $row->uuid_product), array('$push' => $set_v))){
+                   					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
 									echo "updated at line ".__LINE__;
                 				}else{
                     				$log->lwrite('Error: No such product found in database, failed at line '.__LINE__);	//log message
@@ -139,8 +134,8 @@ if($tablename!="" && $dbname!=""){
            					}
         				}else{
             				$set_v= array('product_images' => $prodImagesArr);
-            				if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->uuid_product), $set_v, '$push')){
-            					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
+            				if($collection->update(array($updatecol => $row->uuid_product), array('$push' => $set_v))){
+               					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
 								echo "updated at line ".__LINE__;
             				}else{
                 				$log->lwrite('Error: No such product found in database, failed at line '.__LINE__);	//log message

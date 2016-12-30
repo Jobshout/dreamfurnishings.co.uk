@@ -35,7 +35,7 @@ if($tablename!="" && $dbname!=""){
 				if(isset($_REQUEST['updatecol']) && $_REQUEST['updatecol']!=""){
 					$updatecol=$_REQUEST['updatecol'];
 					$log->lwrite("Record with [".$tablename."]".$updatecol." : ".$row->$updatecol);	//log message
-                    if( SAVE_IMAGES_ON_DISK ){
+                    if(SAVE_IMAGES_ON_DISK){
                         if(isset($row->product_images) && $row->product_images!=""){
 
                             if(count($row->product_images)>0){
@@ -58,7 +58,6 @@ if($tablename!="" && $dbname!=""){
 
                                             $directory=$images_root_disk_path.'images/products/';
                                             $txtImageDirectory= $images_root_disk_path.'images/products/';
-                                            
                                             if (is_dir($directory)) {
                                                 if($imageExtension!=""){
                                                     //save image as txt with gz compression
@@ -106,7 +105,7 @@ if($tablename!="" && $dbname!=""){
 					$num_exist = $exist->count();
 					if($num_exist>0){
 						try {
-							if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->$updatecol), $row)){
+							if($collection->update(array($updatecol => $row->$updatecol), $row)){
 								$log->lwrite('Data updated successfully at line '.__LINE__); //log message
 								echo "updated";
 							}else{
@@ -119,7 +118,7 @@ if($tablename!="" && $dbname!=""){
 						}
 					}	else{
 						try {
-							if($mongoCRUDClass->db_insert($tablename, $row)){
+							if($collection->insert($row)){
 								$log->lwrite('Data inserted successfully at line '.__LINE__); //log message
 								echo "inserted";
 							}else{
@@ -133,7 +132,7 @@ if($tablename!="" && $dbname!=""){
 					}
 				}else{
 					try {
-						$mongoCRUDClass->db_insert($tablename, $row);
+						$collection->insert($row);
 						$log->lwrite('Data inserted successfully at line '.__LINE__);	//log message
 						echo "inserted";
 					}catch(MongoCursorException $e) {
@@ -148,7 +147,7 @@ if($tablename!="" && $dbname!=""){
 				  $log->lwrite('IN product_images_uuids, at line '.__LINE__); //log message                                                               
 
 					$newProductImagesArr=$row->product_images_uuids;
-					if($productFound = $mongoCRUDClass->db_findone($tablename, array($updatecol => $row->$updatecol))){
+ 					if($productFound = $collection->findOne(array($updatecol => $row->$updatecol))){
  						if(isset($productFound['product_images']) && count($productFound['product_images'])>0){
  							$prodImagesArr=array();
  							$deleteImagesTxt="";
@@ -161,8 +160,7 @@ if($tablename!="" && $dbname!=""){
             				}
             				
             				$set_v= array('product_images' => $prodImagesArr);
-            				if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->$updatecol), $set_v, '$push')){
-                			//if($collection->update(array($updatecol => $row->$updatecol), array('$push' => $set_v))){
+                			if($collection->update(array($updatecol => $row->$updatecol), array('$push' => $set_v))){
                    				$log->lwrite('Success: product_images updated for product, at line '.__LINE__);	//log message
 								echo "product_images updated, deleted images are : ".$deleteImagesTxt." at line ".__LINE__;
 								$log->lwrite("product_images updated, deleted images are : ".$deleteImagesTxt." at line ".__LINE__);
@@ -179,7 +177,7 @@ if($tablename!="" && $dbname!=""){
 			}
 		}else{
 			$log->lwrite('Error: No data retrieved from server at line '.__LINE__);	//log message
-			echo "error : No data retrieved from server at line ".__LINE__;
+			echo "error";
 		}
 	}else{
 		$log->lwrite('Error: No data retrieved from server at line '.__LINE__);	//log message
