@@ -1,14 +1,12 @@
 <?php
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
-
 define("SAVEIMAGESONDISK", true);
-date_default_timezone_set("Europe/London");
 include_once("config.php");
 
 if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['token'])){
 
-$images_root_disk_path="/var/www/html/vhosts/dreamfurnishings.co.uk/public_ftp/";
+$images_root_disk_path="../../public_ftp/";
 
 $log->lfile('logs/log_'.date("j-n-Y").'.txt');
 
@@ -116,7 +114,8 @@ if($tablename!="" && $dbname!=""){
 
             				//check product exists or not
            					if($existBool) {
-           						$del_item= $collection->update(array($updatecol => $row->uuid_product), array('$pull'=> array( "product_images"=> $get_image_Details)));
+           						$del_item= $mongoCRUDClass->db_update($tablename, array($updatecol => $row->uuid_product), array( "product_images"=> $get_image_Details), '$pull');
+           						//$del_item= $collection->update(array($updatecol => $row->uuid_product), array('$pull'=> array( "product_images"=> $get_image_Details)));
 								if($del_item){
 									// insert d same row							
 									$set_v= array('product_images' => $prodImagesArr);
@@ -130,8 +129,8 @@ if($tablename!="" && $dbname!=""){
 								}
             				}else{
                 				$set_v= array('product_images' => $prodImagesArr);
-                				if($collection->update(array($updatecol => $row->uuid_product), array('$push' => $set_v))){
-                   					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
+                				if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->uuid_product), $set_v, '$push')){
+                					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
 									echo "updated at line ".__LINE__;
                 				}else{
                     				$log->lwrite('Error: No such product found in database, failed at line '.__LINE__);	//log message
@@ -140,8 +139,8 @@ if($tablename!="" && $dbname!=""){
            					}
         				}else{
             				$set_v= array('product_images' => $prodImagesArr);
-            				if($collection->update(array($updatecol => $row->uuid_product), array('$push' => $set_v))){
-               					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
+            				if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->uuid_product), $set_v, '$push')){
+            					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
 								echo "updated at line ".__LINE__;
             				}else{
                 				$log->lwrite('Error: No such product found in database, failed at line '.__LINE__);	//log message

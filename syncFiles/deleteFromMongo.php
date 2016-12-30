@@ -7,7 +7,7 @@ if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['t
 	// write message to the log file
 	$log->lwrite('------------------------------------------------------');		//log message
 	$tablename=isset($_GET['tablename']) ? $_GET['tablename'] : "";
-
+	
 	if($tablename!="" && $dbname!=""){
 		$file_path='php://input';
 		$collection = $mon_db->$tablename;	
@@ -29,7 +29,8 @@ if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['t
 						$exist = $collection->find(array($updatecol => $row->$updatecol));
 						$num_exist = $exist->count();
 						if($num_exist>0){
-							$collection->remove(array($updatecol => $row->$updatecol));
+							$mongoCRUDClass->db_delete($tablename, array($updatecol => $row->$updatecol));
+							//$collection->remove(array($updatecol => $row->$updatecol));
 							$log->lwrite('Deleted record successfully at line '.__LINE__); //log message
 							echo "deleted";
 						}else{

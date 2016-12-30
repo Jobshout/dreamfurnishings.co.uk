@@ -29,7 +29,7 @@ if($cookie!=''){
         if($existBool) {
         	$set_v= array($objectName => $existRecord);
         	
-        	if($mongoCRUDClass->db_update("session",array("_id" => $realmongoid), array('$pull' => $set_v))){
+        	if($mongoCRUDClass->db_update("session", array("_id" => $realmongoid), $set_v, '$pull')){
             	$result["success"]="Deleted this product successfully from your ".$action."!";
         	}else{
            		$result["error"]="Please try after sometime!";
