@@ -1,7 +1,6 @@
 <?php
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
-define("SAVE_IMAGES_IN_MONGO", true);
 define("SAVE_IMAGES_ON_DISK", true);
 include_once("config.php");
 
@@ -42,7 +41,7 @@ if($tablename!="" && $dbname!=""){
 					
 					if($productFound = $collection->findOne(array($updatecol => $row->uuid_product))){
 						$prodImagesArr=array();
-						if( SAVE_IMAGES_ON_DISK ){
+						if(SAVE_IMAGES_ON_DISK){
                         			$prod_images=$row;
                                     
                                     $realPathStr="";
@@ -101,46 +100,6 @@ if($tablename!="" && $dbname!=""){
                                     }
                            
                     	}
-                    	
-                    	                    if ( SAVE_IMAGES_IN_MONGO )
-{
-
-$prod_images=$row;
-                                    foreach($prod_images as $key=>$value){
-                                        if($key=="encoded_image"){
-
-                                            /*
-echo "image_data_as_txt: " . $prod_images->encoded_image . "<br>";
-echo "uuid: " . $prod_images->uuid . "<br>";
-*/
-$collectionNameStr="images_data";                                            
-$collectionObj = $mon_db->$collectionNameStr;
-
-					$exist = $collectionObj->find(array($updatecol => $prod_images->uuid));
-					$num_exist = $exist->count();
-					if($num_exist>0){
-					
-							if($mongoCRUDClass->db_update($collectionNameStr, array($updatecol => $prod_images->uuid), array("image_data" => $prod_images->encoded_image))){
-								$log->lwrite('Image data updated successfully at line '.__LINE__); //log message
-								echo "updated";
-							}else{
-								$log->lwrite('Error: Image data updation failed at line '.__LINE__); //log message
-								echo "updation failed";
-							}
-
-
-} else {
-
-$collectionObj->insert(array("image_data" => $prod_images->encoded_image, $updatecol => $prod_images->uuid));  
-
-}
-                                        }
-                                    }
-
-
-
-}
-
                     	
 						 if(isset($productFound['product_images']) && count($productFound['product_images'])>0){
             				$existBool=false;
