@@ -1,16 +1,7 @@
 <?php
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
-<<<<<<< HEAD
-<<<<<<< HEAD
-define("SAVE_IMAGES_ON_DISK", true);
-date_default_timezone_set("Europe/London");
-=======
 define("SAVEIMAGESONDISK", true);
->>>>>>> origin/master
-=======
-define("SAVEIMAGESONDISK", true);
->>>>>>> origin/master
 include_once("config.php");
 
 if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['token'])){
@@ -44,7 +35,7 @@ if($tablename!="" && $dbname!=""){
 				if(isset($_REQUEST['updatecol']) && $_REQUEST['updatecol']!=""){
 					$updatecol=$_REQUEST['updatecol'];
 					$log->lwrite("Record with [".$tablename."]".$updatecol." : ".$row->$updatecol);	//log message
-                    if ( SAVE_IMAGES_ON_DISK ) {
+                    if(SAVEIMAGESONDISK){
                         if(isset($row->product_images) && $row->product_images!=""){
 
                             if(count($row->product_images)>0){
