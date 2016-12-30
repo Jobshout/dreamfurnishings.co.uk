@@ -1,11 +1,15 @@
 <?php
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
+<<<<<<< HEAD
 
 define("SAVE_IMAGES_ON_DISK", true);
 define("SAVE_IMAGES_IN_MONGO", true);
 
 date_default_timezone_set("Europe/London");
+=======
+define("SAVEIMAGESONDISK", true);
+>>>>>>> origin/master
 include_once("config.php");
 
 if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['token'])){
@@ -45,7 +49,7 @@ if($tablename!="" && $dbname!=""){
 					
 					if($productFound = $collection->findOne(array($updatecol => $row->uuid_product))){
 						$prodImagesArr=array();
-						if(SAVE_IMAGES_ON_DISK){
+                    if ( SAVE_IMAGES_ON_DISK ) {
                         			$prod_images=$row;
                                     
                                     $realPathStr="";
@@ -113,6 +117,11 @@ if($tablename!="" && $dbname!=""){
                                     }
                            
                     	}
+
+
+
+
+
                     	
 						 if(isset($productFound['product_images']) && count($productFound['product_images'])>0){
             				$existBool=false;
@@ -127,7 +136,8 @@ if($tablename!="" && $dbname!=""){
 
             				//check product exists or not
            					if($existBool) {
-           						$del_item= $collection->update(array($updatecol => $row->uuid_product), array('$pull'=> array( "product_images"=> $get_image_Details)));
+           						$del_item= $mongoCRUDClass->db_update($tablename, array($updatecol => $row->uuid_product), array( "product_images"=> $get_image_Details), '$pull');
+           						//$del_item= $collection->update(array($updatecol => $row->uuid_product), array('$pull'=> array( "product_images"=> $get_image_Details)));
 								if($del_item){
 									// insert d same row							
 									$set_v= array('product_images' => $prodImagesArr);
@@ -141,8 +151,8 @@ if($tablename!="" && $dbname!=""){
 								}
             				}else{
                 				$set_v= array('product_images' => $prodImagesArr);
-                				if($collection->update(array($updatecol => $row->uuid_product), array('$push' => $set_v))){
-                   					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
+                				if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->uuid_product), $set_v, '$push')){
+                					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
 									echo "updated at line ".__LINE__;
                 				}else{
                     				$log->lwrite('Error: No such product found in database, failed at line '.__LINE__);	//log message
@@ -151,8 +161,8 @@ if($tablename!="" && $dbname!=""){
            					}
         				}else{
             				$set_v= array('product_images' => $prodImagesArr);
-            				if($collection->update(array($updatecol => $row->uuid_product), array('$push' => $set_v))){
-               					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
+            				if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->uuid_product), $set_v, '$push')){
+            					$log->lwrite('Success: Updated image for product, at line '.__LINE__);	//log message
 								echo "updated at line ".__LINE__;
             				}else{
                 				$log->lwrite('Error: No such product found in database, failed at line '.__LINE__);	//log message

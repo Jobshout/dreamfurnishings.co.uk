@@ -37,7 +37,7 @@ if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['t
 						if($num_exist>0){
 							//if($collection->update(array($updatecol => $row->$updatecol), array('$set' => $row))){
 							// the following will replace the existing json
-							if($collection->update(array($updatecol => $row->$updatecol), $row)){
+							if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->$updatecol), $row)){
 								$log->lwrite('Data updated successfully at line '.__LINE__); //log message
 								echo "updated";
 							}else{
@@ -45,7 +45,7 @@ if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['t
 								echo "updation failed";
 							}
 						}	else{
-							if($collection->insert($row)){
+							if($mongoCRUDClass->db_insert($tablename, $row)){
 								$log->lwrite('Data inserted successfully at line '.__LINE__); //log message
 								echo "inserted";
 							}else{
@@ -55,7 +55,7 @@ if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['t
 						}
 					}else{
 						try {
-							$collection->insert($row);
+							$mongoCRUDClass->db_insert($tablename, $row);
 							$log->lwrite('Data inserted successfully at line '.__LINE__); //log message	
 							echo "inserted";
 						}catch(MongoCursorException $e) {

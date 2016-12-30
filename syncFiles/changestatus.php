@@ -11,8 +11,8 @@ if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['t
 
 	$uuid = isset($_GET['uuid']) ? $_GET['uuid'] : '';
 	if($uuid!=''){
-		if($one_row= $mon_db->collectionToSync->findOne(array("uuid" => $uuid))){
-			$update_entry=$mon_db->collectionToSync->update(array("uuid" => $uuid), array('$set' => array("sync_state" => 1)));
+		if($one_row = $mongoCRUDClass->db_findone("collectionToSync", array("uuid" => $uuid))){
+			$update_entry=$mongoCRUDClass->db_update("collectionToSync", array("uuid" => $uuid), array("sync_state" => 1));
 			$msgStr='Updated [collectionToSync]uuid successfully at line '.__LINE__;
 			$log->lwrite($msgStr);	//log message
 			$result['Success']= $msgStr;

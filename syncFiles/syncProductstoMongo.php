@@ -1,12 +1,16 @@
 <?php
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
+<<<<<<< HEAD
 define("SAVE_IMAGES_ON_DISK", true);
 date_default_timezone_set("Europe/London");
+=======
+define("SAVEIMAGESONDISK", true);
+>>>>>>> origin/master
 include_once("config.php");
 
 if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['token'])){
-$images_root_disk_path="/var/www/html/vhosts/dreamfurnishings.co.uk/public_ftp/";
+$images_root_disk_path="../../public_ftp/";
 
 $log->lfile('logs/log_'.date("j-n-Y").'.txt');
 
@@ -36,7 +40,7 @@ if($tablename!="" && $dbname!=""){
 				if(isset($_REQUEST['updatecol']) && $_REQUEST['updatecol']!=""){
 					$updatecol=$_REQUEST['updatecol'];
 					$log->lwrite("Record with [".$tablename."]".$updatecol." : ".$row->$updatecol);	//log message
-                    if(SAVE_IMAGES_ON_DISK){
+                    if ( SAVE_IMAGES_ON_DISK ) {
                         if(isset($row->product_images) && $row->product_images!=""){
 
                             if(count($row->product_images)>0){
@@ -107,7 +111,7 @@ if($tablename!="" && $dbname!=""){
 					$num_exist = $exist->count();
 					if($num_exist>0){
 						try {
-							if($collection->update(array($updatecol => $row->$updatecol), $row)){
+							if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->$updatecol), $row)){
 								$log->lwrite('Data updated successfully at line '.__LINE__); //log message
 								echo "updated";
 							}else{
@@ -120,7 +124,7 @@ if($tablename!="" && $dbname!=""){
 						}
 					}	else{
 						try {
-							if($collection->insert($row)){
+							if($mongoCRUDClass->db_insert($tablename, $row)){
 								$log->lwrite('Data inserted successfully at line '.__LINE__); //log message
 								echo "inserted";
 							}else{
@@ -134,7 +138,7 @@ if($tablename!="" && $dbname!=""){
 					}
 				}else{
 					try {
-						$collection->insert($row);
+						$mongoCRUDClass->db_insert($tablename, $row);
 						$log->lwrite('Data inserted successfully at line '.__LINE__);	//log message
 						echo "inserted";
 					}catch(MongoCursorException $e) {
@@ -149,7 +153,7 @@ if($tablename!="" && $dbname!=""){
 				  $log->lwrite('IN product_images_uuids, at line '.__LINE__); //log message                                                               
 
 					$newProductImagesArr=$row->product_images_uuids;
- 					if($productFound = $collection->findOne(array($updatecol => $row->$updatecol))){
+					if($productFound = $mongoCRUDClass->db_findone($tablename, array($updatecol => $row->$updatecol))){
  						if(isset($productFound['product_images']) && count($productFound['product_images'])>0){
  							$prodImagesArr=array();
  							$deleteImagesTxt="";
@@ -162,7 +166,8 @@ if($tablename!="" && $dbname!=""){
             				}
             				
             				$set_v= array('product_images' => $prodImagesArr);
-                			if($collection->update(array($updatecol => $row->$updatecol), array('$push' => $set_v))){
+            				if($mongoCRUDClass->db_update($tablename, array($updatecol => $row->$updatecol), $set_v, '$push')){
+                			//if($collection->update(array($updatecol => $row->$updatecol), array('$push' => $set_v))){
                    				$log->lwrite('Success: product_images updated for product, at line '.__LINE__);	//log message
 								echo "product_images updated, deleted images are : ".$deleteImagesTxt." at line ".__LINE__;
 								$log->lwrite("product_images updated, deleted images are : ".$deleteImagesTxt." at line ".__LINE__);
