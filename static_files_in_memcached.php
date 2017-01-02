@@ -35,12 +35,12 @@ endforeach;
 return $data;
 }
 
-$mylist=rscandir("/Users/balinderwalia/Documents/WebApplications/dreamfurnishings.co.uk/images/");
+$mylist=rscandir("images/");
 //echo "mylist: ";
 //print_r($mylist);
 //echo "<br>";
 
-$srch = array('/Users/balinderwalia/Documents/WebApplications/dreamfurnishings.co.uk/images/');
+$srch = array('images/');
 $newval = array('images/');
 
 $memcache_obj = memcache_connect("localhost", 11211);
@@ -52,11 +52,12 @@ $url=str_replace($srch,$newval,$val);
   $value = file_get_contents($val);
 //	echo "base: " . $value . "<br>";
   $url = "/" . $url;
+echo $url . "<br>";
 memcache_add($memcache_obj, $url, $value, false, 0);
 }
 
-$mylist=rscandir("/Users/balinderwalia/Documents/WebApplications/dreamfurnishings.co.uk/css/");
-$srch = array('/Users/balinderwalia/Documents/WebApplications/dreamfurnishings.co.uk/css/');
+$mylist=rscandir("css/");
+$srch = array('css/');
 $newval = array('css/');
 
 while (list($key, $val) = each($mylist)) {
@@ -70,8 +71,8 @@ memcache_add($memcache_obj, $url, $value, false, 0);
 }
 
 
-$mylist=rscandir("/Users/balinderwalia/Documents/WebApplications/dreamfurnishings.co.uk/js/");
-$srch = array('/Users/balinderwalia/Documents/WebApplications/dreamfurnishings.co.uk/js/');
+$mylist=rscandir("js/");
+$srch = array('js/');
 $newval = array('js/');
 
 while (list($key, $val) = each($mylist)) {
@@ -83,6 +84,7 @@ while (list($key, $val) = each($mylist)) {
 //echo "url: " . $url . ", value: " . $value . "<br>";
 //echo "url: " . $url . "<br>";
   $url = "/" . $url;
+echo $url . "<br>";
 memcache_add($memcache_obj, $url, $value, false, 0);
 }
 
