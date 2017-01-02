@@ -35,42 +35,6 @@ $latestProducts = $db->Products->find(array('publish_on_web' => true, 'product_c
 						if($defaultImage==""){
 							$defaultImage="images/default-product-small.png";
 						}
-						
-						/**if(isset($latestProduct['product_images']) && count($latestProduct['product_images'])>0){ 
-       						foreach($latestProduct['product_images'] as $product_images){
-    							if($product_images["default"]=="yes"){
- 									//if(isset($product_images['path']) && $product_images['path']!="" && file_exists($product_images['path'])===true){ 
-    								//	$defaultImage=$product_images["path"];
-    								//	break;
-    								//}elseif(isset($product_images['encoded_image']) && $product_images['encoded_image']!=""){ 
-    								if(isset($product_images['encoded_image']) && $product_images['encoded_image']!=""){ 
- 										$defaultBase64=$product_images["encoded_image"];
- 										$imgdata = base64_decode($defaultBase64);
-										$mimetype = getImageMimeType($imgdata);
-										$defaultImage="data:image/".$mimetype.";base64,".$defaultBase64;
-										break;
-									}else{
-										$defaultImage=$product_images["path"];
-										break;
-									}
-								}else{
- 									//if(isset($product_images['path']) && $product_images['path']!="" && file_exists($product_images['path'])===true){ 
-    								//	$defaultImage=$product_images["path"];
-    								//	break;
-    								//}elseif(isset($product_images['encoded_image']) && $product_images['encoded_image']!=""){ 
-    								if(isset($product_images['encoded_image']) && $product_images['encoded_image']!=""){ 
- 										$defaultBase64=$product_images["encoded_image"];
- 										$imgdata = base64_decode($defaultBase64);
-										$mimetype = getImageMimeType($imgdata);
-										$defaultImage="data:image/".$mimetype.";base64,".$defaultBase64;
-										break;
-									}else{
-										$defaultImage=$product_images["path"];
-										break;
-									}
-								}
-							}
-						}**/
 				?>
         		<div class="col-sm-6">
             		<div class="row">

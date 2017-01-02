@@ -4,21 +4,22 @@ $guid = isset($_GET["guid"]) ? $_GET["guid"] : "";
 $windowTitle = isset($_GET["name"]) ? $_GET["name"] : "Dream Furnishings";
 $imageSrc="images/default-product-large.png";
 
-//$images_root_disk_path="/var/www/html/vhosts/dreamfurnishings.co.uk/public_ftp/";
 $images_root_disk_path="/";
 
 if($guid!=""){
-	$textFileNameStr=$images_root_disk_path."images/products/".$guid.".txt";
+	$textFileNameStr=$images_root_disk_path.PRODUCT_IMAGE_DIRECTORY.$guid.".txt";
 	if($dbProductData = $mongoCRUDClass->db_findone("Products", array("product_images.uuid" => $guid))){
 		$windowTitle=$dbProductData['ProductName'];
 		if(isset($dbProductData['product_images']) && count($dbProductData['product_images'])>0){ 
 			foreach($dbProductData['product_images'] as $product_images){
  				if($product_images["uuid"]==$guid){
- 					if(isset($product_images["encoded_image"]) && $product_images["encoded_image"]!=""){
- 						$imagebase64=$product_images["encoded_image"];
- 						$imgdata = base64_decode($imagebase64);
-						$mimetype = getImageMimeType($imgdata);
-						$imageSrc="data:image/".$mimetype.";base64,".$imagebase64;
+ 					$imageExtension="";
+                	$pos = strrpos($product_images['name'], ".");
+					if ($pos !== false) {
+    					$imageExtension=substr($product_images['name'],intval($pos)+1) ;
+    				}
+    				if($imageExtension!="" && $product_images["uuid"]!=""){ 
+ 						$imageSrc=PRODUCT_IMAGE_DIRECTORY.$product_images["uuid"].".".$imageExtension;		
 					}elseif(file_exists($textFileNameStr)){
 						$getFileContents=file_get_contents($findTxtFile);
            				$uncompressed = gzuncompress($getFileContents);
@@ -32,6 +33,9 @@ if($guid!=""){
  			}
 		}
 	}
+}
+if(!file_exists($imageSrc)){
+	$imageSrc="images/default-product-large.png";
 }
 	
 ?>

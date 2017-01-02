@@ -113,62 +113,7 @@ if($dbResultsData->count()>0){
 	foreach($dbResultsData as $product){
 		$row = array();
        	$row['name']=ucfirst($product["ProductName"]);
-		$defaultImage="";
-       	if(isset($product['product_images']) && count($product['product_images'])>0){ 
-       		$totalImages= count($product['product_images']);
-       		$hasDefaultBool=false;
-       		if($totalImages>1){
- 				foreach($product['product_images'] as $product_images){
- 					if($product_images["default"]=="yes"){
- 						$hasDefaultBool=true;
- 					}
- 				}
- 			}
-    		foreach($product['product_images'] as $product_images){
-    			if($totalImages==1){
-    				if(isset($product_images['path']) && $product_images['path']!="" && file_exists($product_images['path'])===true){ 
-    					$defaultImage=$product_images["path"];
-    				}elseif(isset($product_images['encoded_image']) && $product_images['encoded_image']!=""){ 
- 						$defaultBase64=$product_images["encoded_image"];
- 						$imgdata = base64_decode($defaultBase64);
-						$mimetype = getImageMimeType($imgdata);
-						$defaultImage="data:image/".$mimetype.";base64,".$defaultBase64;
-					}else{
-						$defaultImage=$product_images["path"];
-					}
-    			}else{
-    				if($hasDefaultBool){
-    					if($product_images["default"]=="yes"){
- 							if(isset($product_images['path']) && $product_images['path']!="" && file_exists($product_images['path'])===true){ 
-    							$defaultImage=$product_images["path"];
-    						}elseif(isset($product_images['encoded_image']) && $product_images['encoded_image']!=""){ 
- 								$defaultBase64=$product_images["encoded_image"];
- 								$imgdata = base64_decode($defaultBase64);
-								$mimetype = getImageMimeType($imgdata);
-								$defaultImage="data:image/".$mimetype.";base64,".$defaultBase64;
-								break;
-							}else{
-								$defaultImage=$product_images["path"];
-								break;
-							}
-						}
-					}else{
-						if(isset($product_images['path']) && $product_images['path']!="" && file_exists($product_images['path'])===true){ 
-    						$defaultImage=$product_images["path"];
-    					}elseif(isset($product_images['encoded_image']) && $product_images['encoded_image']!=""){ 
- 							$defaultBase64=$product_images["encoded_image"];
- 							$imgdata = base64_decode($defaultBase64);
-							$mimetype = getImageMimeType($imgdata);
-							$defaultImage="data:image/".$mimetype.";base64,".$defaultBase64;
-							break;
-						}else{
-							$defaultImage=$product_images["path"];
-							break;
-						}
-					}
-				}
- 			}
- 		}
+		$defaultImage=findDefaultImage($product);
  		if($defaultImage!=""){
  			$row['image']=$defaultImage;
  		}else{

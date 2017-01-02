@@ -20,6 +20,7 @@ define("SITE_ID",1);
 define("USER_IP_ADDRESS",$HTTPIPAddrStr);
 define("SITE_NAME","Dream Furnishing");
 define("CURRENCY","&pound;");
+define("PRODUCT_IMAGE_DIRECTORY","images/products/");
 
 require_once('include/functions.php');
 

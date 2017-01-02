@@ -227,46 +227,36 @@ function findDefaultImage($product){
                     }
                 }
                 foreach($product['product_images'] as $product_images){
+                	$imageExtension="";
+                	$pos = strrpos($product_images['name'], ".");
+					if ($pos !== false) {
+    					$imageExtension=substr($product_images['name'],intval($pos)+1) ;
+    				}
                     if($totalImages==1){
-                        if(isset($product_images['path']) && $product_images['path']!="" && file_exists($product_images['path'])===true){ 
-                            $defaultImage=$product_images["path"];
-                        }elseif(isset($product_images['encoded_image']) && $product_images['encoded_image']!=""){ 
-                            $defaultBase64=$product_images["encoded_image"];
-                            $imgdata = base64_decode($defaultBase64);
-                            $mimetype = getImageMimeType($imgdata);
-                            $defaultImage="data:image/".$mimetype.";base64,".$defaultBase64;
-                        }else{
+                    	if($imageExtension!="" && $product_images["uuid"]!=""){
+                    		$defaultImage=PRODUCT_IMAGE_DIRECTORY.$product_images["uuid"].".".$imageExtension;
+                    	}else{
                             $defaultImage=$product_images["path"];
                         }
                     }else{
                         if($hasDefaultBool){
                             if($product_images["default"]=="yes"){
-                                if(isset($product_images['path']) && $product_images['path']!="" && file_exists($product_images['path'])===true){ 
-                                    $defaultImage=$product_images["path"];
-                                }elseif(isset($product_images['encoded_image']) && $product_images['encoded_image']!=""){ 
-                                    $defaultBase64=$product_images["encoded_image"];
-                                    $imgdata = base64_decode($defaultBase64);
-                                    $mimetype = getImageMimeType($imgdata);
-                                    $defaultImage="data:image/".$mimetype.";base64,".$defaultBase64;
-                                    break;
-                                }else{
-                                    $defaultImage=$product_images["path"];
-                                    break;
-                                }
+                            	if($imageExtension!="" && $product_images["uuid"]!=""){
+                    				$defaultImage=PRODUCT_IMAGE_DIRECTORY.$product_images["uuid"].".".$imageExtension;
+                    				break;
+                    			}else{
+                            		$defaultImage=$product_images["path"];
+                            		break;
+                       			}
                             }
                         }else{
-                            if(isset($product_images['path']) && $product_images['path']!="" && file_exists($product_images['path'])===true){ 
-                                $defaultImage=$product_images["path"];
-                            }elseif(isset($product_images['encoded_image']) && $product_images['encoded_image']!=""){ 
-                                $defaultBase64=$product_images["encoded_image"];
-                                $imgdata = base64_decode($defaultBase64);
-                                $mimetype = getImageMimeType($imgdata);
-                                $defaultImage="data:image/".$mimetype.";base64,".$defaultBase64;
-                                break;
-                            }else{
-                                $defaultImage=$product_images["path"];
-                                break;
-                            }
+                        	if($imageExtension!="" && $product_images["uuid"]!=""){
+                    			$defaultImage=PRODUCT_IMAGE_DIRECTORY.$product_images["uuid"].".".$imageExtension;
+                    			break;
+                    		}else{
+                            	$defaultImage=$product_images["path"];
+                            	break;
+                       		}
                         }
                     }
                 }

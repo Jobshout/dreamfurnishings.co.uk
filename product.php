@@ -132,46 +132,28 @@ require_once("include/main_header.php"); ?>
  						}
  						foreach($dbProductData['product_images'] as $product_images){
  							$countNum++;
- 							if(isset($product_images["path"]) && $product_images["path"]!="" && file_exists($_SERVER['DOCUMENT_ROOT'].'/'.$product_images['path'])===true){
- 								
+ 							$imageExtension="";
+                			$pos = strrpos($product_images['name'], ".");
+							if ($pos !== false) {
+    							$imageExtension=substr($product_images['name'],intval($pos)+1) ;
+    						}
+    						if($imageExtension!="" && $product_images["uuid"]!=""){ 	
+    							$pathStr=PRODUCT_IMAGE_DIRECTORY.$product_images["uuid"].".".$imageExtension;							
  								if($hasDefaultBool){
 									if($product_images["default"]=="yes"){
-										$defaultImage=$product_images["path"];
+										$defaultImage=$pathStr;
 										$defaultImageUUIDStr=$product_images["uuid"];
-										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
+										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$pathStr.'" data-largeimg="'.$pathStr.'"/></a></li>';
 									}else{
- 										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
+ 										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$pathStr.'" data-largeimg="'.$pathStr.'"/></a></li>';
 									}
 								}else{
 									if($countNum==1){
- 										$defaultImage=$product_images["path"];
+ 										$defaultImage=$pathStr;
  										$defaultImageUUIDStr=$product_images["uuid"];
-										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
+										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$pathStr.'" data-largeimg="'.$pathStr.'"/></a></li>';
 									}else{
- 										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$product_images["path"].'" data-largeimg="'.$product_images["path"].'"/></a></li>';
-									}
-								}
-							}elseif(isset($product_images["encoded_image"]) && $product_images["encoded_image"]!=""){
- 								
- 								$imagebase64=$product_images["encoded_image"];
- 								$imgdata = base64_decode($imagebase64);
-								$mimetype = getImageMimeType($imgdata);
-								$imageSrc="data:image/".$mimetype.";base64,".$imagebase64;
-								if($hasDefaultBool){
- 									if($product_images["default"]=="yes"){
- 										$defaultImage=$imageSrc;
- 										$defaultImageUUIDStr=$product_images["uuid"];
-										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
-									}else{
-										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
-									}
-								}else{
-									if($countNum==1){
-										$defaultImage=$imageSrc;
-										$defaultImageUUIDStr=$product_images["uuid"];
-										$firstCarouselImagesStr='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
-									}else{
- 										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$imageSrc.'" data-largeimg="'.$imageSrc.'"/></a></li>';
+ 										$carouselImagesStr.='<li><a href="#"><img id="'.$product_images["uuid"].'" onerror="this.src=\'images/default-product-large.png\'" src="'.$pathStr.'" data-largeimg="'.$pathStr.'"/></a></li>';
 									}
 								}
 							}else{
