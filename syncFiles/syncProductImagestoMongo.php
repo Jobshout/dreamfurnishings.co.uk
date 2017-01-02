@@ -42,7 +42,7 @@ if($tablename!="" && $dbname!=""){
 					
 					if($productFound = $collection->findOne(array($updatecol => $row->uuid_product))){
 						$prodImagesArr=array();
-						if( SAVE_IMAGES_ON_DISK ){
+						
                         			$prod_images=$row;
                                     
                                     $realPathStr="";
@@ -54,49 +54,51 @@ if($tablename!="" && $dbname!=""){
                                                 $imageExtension=substr($prod_images->name,intval($pos)+1) ;
                                             }
 
-if ( SAVE_IMAGES_IN_MONGO )
-{
-	$tablename="fs.files";
-	$collectionNameStr = $mon_db->$tablename;
-   // now remove the document if there is already one with this uuid
-   $collectionNameStr->remove(array("uuid"=>$prod_images->uuid));
+											if ( SAVE_IMAGES_IN_MONGO )
+											{
+												$tablename="fs.files";
+												$collectionNameStr = $mon_db->$tablename;
+   												// now remove the document if there is already one with this uuid
+   												$collectionNameStr->remove(array("uuid"=>$prod_images->uuid));
 
-			$fileContentArr = array( "uuid"=>$prod_images->uuid, "file_name"=>$prod_images->name, "ext"=>$imageExtension, "modified" => time() );
-			$grid = $db->getGridFS();
-			$saveFile=$grid->storeBytes($imageBlob, $fileContentArr);
-}
+												$fileContentArr = array( "uuid"=>$prod_images->uuid, "file_name"=>$prod_images->name, "ext"=>$imageExtension, "modified" => time() );
+												$grid = $db->getGridFS();
+												$saveFile=$grid->storeBytes($imageBlob, $fileContentArr);
+											}
 
+											if( SAVE_IMAGES_ON_DISK ){
+                                            	$directory=$images_root_disk_path.'images/products/';
+                                            	$txtImageDirectory= $images_root_disk_path.'images/products/';
+                                           		if (is_dir($directory)) {
+                                                	if($imageExtension!=""){
+                                                   		//save image as txt with gz compression
+                                                    	if (is_dir($txtImageDirectory)) {
+                                                        	//$txtfilenameStr=$txtImageDirectory.$prod_images->uuid.".".$imageExtension.".txt";
+                                                        	$txtfilenameStr=$txtImageDirectory.$prod_images->uuid.".txt";
+                                                        	$compressImage = gzcompress($prod_images->encoded_image, 9); 
+                                                        	$generateImageTxtBool=file_put_contents($txtfilenameStr, $compressImage);
+                                                    	}
 
-                                            $directory=$images_root_disk_path.'images/products/';
-                                            $txtImageDirectory= $images_root_disk_path.'images/products/';
-                                            if (is_dir($directory)) {
-                                                if($imageExtension!=""){
-                                                    //save image as txt with gz compression
-                                                    if (is_dir($txtImageDirectory)) {
-                                                        //$txtfilenameStr=$txtImageDirectory.$prod_images->uuid.".".$imageExtension.".txt";
-                                                        $txtfilenameStr=$txtImageDirectory.$prod_images->uuid.".txt";
-                                                        $compressImage = gzcompress($prod_images->encoded_image, 9); 
-                                                        $generateImageTxtBool=file_put_contents($txtfilenameStr, $compressImage);
-                                                    }
-
-                                                    //generate image 
-                                                    $filenameStr=$directory.$prod_images->uuid.".".$imageExtension;
-                                                    $generateImageBool=file_put_contents($filenameStr, $imageBlob);
-                                                    if ( $generateImageBool === false ){
-                                                        $prodImagesArr[$key]=$value;
-                                                    }else{
-                                                        $prodImagesArr["encoded_image"]="";
-                                                        $realPathStr='/images/products/'.$prod_images->uuid.".".$imageExtension;
-                                                        $prodImagesArr["path"]=$realPathStr;
-                                                      /*  chmod($realPathStr, 0777);  // octal; correct value of mode                                                                                                      \
-                                                        chown($realPathStr, "nginx");                                                                                                                                                                                     
-                                                        chgrp($realPathStr, "nginx");    */                                                                                                                                                                                      
-                                                        $log->lwrite("Generated product image from blob at disk path: ".$realPathStr."at line ".__LINE__); //log message
-                                                    }	
-                                                }else{
-                                                    $prodImagesArr[$key]=$value;
-                                                }
+                                                    	//generate image 
+                                                    	$filenameStr=$directory.$prod_images->uuid.".".$imageExtension;
+                                                    	$generateImageBool=file_put_contents($filenameStr, $imageBlob);
+                                                    	if ( $generateImageBool === false ){
+                                                       		$prodImagesArr[$key]=$value;
+                                                    	}else{
+                                                        	$realPathStr='/images/products/'.$prod_images->uuid.".".$imageExtension;
+                                                        	$prodImagesArr["path"]=$realPathStr;
+                                                      		/*  chmod($realPathStr, 0777);  // octal; correct value of mode                                                                                                      \
+                                                        	chown($realPathStr, "nginx");                                                                                                                                                                                     
+                                                        	chgrp($realPathStr, "nginx");    */                                                                                                                                                                                      
+                                                        	$log->lwrite("Generated product image from blob at disk path: ".$realPathStr."at line ".__LINE__); //log message
+                                                    	}	
+                                                	}else{
+                                                   	 $prodImagesArr[$key]=$value;
+                                                	}
+                                            	}
                                             }
+                                            
+                                            $prodImagesArr["encoded_image"]="";
                                         }elseif($key=="path"){
                                             if($realPathStr!=""){
                                                 $prodImagesArr["path"]=$realPathStr;
@@ -107,9 +109,7 @@ if ( SAVE_IMAGES_IN_MONGO )
                                             $prodImagesArr[$key]=$value;
                                         }
                                     }
-                           
-                    	}
- 
+                          
 
                     	
 						 if(isset($productFound['product_images']) && count($productFound['product_images'])>0){

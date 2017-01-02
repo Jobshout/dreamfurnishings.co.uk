@@ -1,6 +1,7 @@
 <?php
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
+define("PROCESS_IMAGES_CODE", false);
 define("SAVE_IMAGES_ON_DISK", false);
 include_once("config.php");
 
@@ -35,7 +36,7 @@ if($tablename!="" && $dbname!=""){
 				if(isset($_REQUEST['updatecol']) && $_REQUEST['updatecol']!=""){
 					$updatecol=$_REQUEST['updatecol'];
 					$log->lwrite("Record with [".$tablename."]".$updatecol." : ".$row->$updatecol);	//log message
-                    if( SAVE_IMAGES_ON_DISK ){
+                    if( PROCESS_IMAGES_CODE ){
                         if(isset($row->product_images) && $row->product_images!=""){
 
                             if(count($row->product_images)>0){
@@ -55,7 +56,7 @@ if($tablename!="" && $dbname!=""){
                                             if ($pos !== false) {
                                                 $imageExtension=substr($prod_images->name,intval($pos)+1) ;
                                             }
-
+											if( SAVE_IMAGES_ON_DISK ){
                                             $directory=$images_root_disk_path.'images/products/';
                                             $txtImageDirectory= $images_root_disk_path.'images/products/';
                                             if (is_dir($directory)) {
@@ -82,6 +83,7 @@ if($tablename!="" && $dbname!=""){
                                                 }else{
                                                     $prodImagesArr[$key]=$value;
                                                 }
+                                            }
                                             }
                                         }elseif($key=="path"){
                                             if($realPathStr!=""){
