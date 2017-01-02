@@ -6,44 +6,34 @@ require_once("include/functions.php");
 require_once("include/mongo_connection.php");
 
 $imgSrc= isset($_GET['src']) ? $_GET['src'] : '';
-/*
-echo $imgSrc;
-exit;
+if($imgSrc!=""){
 
-$imgSrc="/images/products/E21CD835753B1A49B951920814D985B3.jpg";
-*/
 $extStr = substr($imgSrc, strripos($imgSrc,".") + 1);
 
-//echo $extStr . "<br>";
-
 $fileNoExtension = basename($imgSrc, "." . $extStr);
-
-//echo $fileNoExtension;
 
 $collectionNameStr="fs.files";                                            
 $collectionObj = $db->$collectionNameStr;
 
-//$dbProductData = $db->$collectionNameStr->findOne(array("uuid" => $fileNoExtension));
-//echo $dbProductData['_id'];
-
 $gridFS = $db->getGridFS();
 
 //header('Content-type: image/jpg');
-$fileMimeType=image_get_mime_type($extStr);
-header('Content-type: ' . $fileMimeType);
-header('image-src: database');
 
-$image = $gridFS->findOne(array("uuid" => $fileNoExtension));
+if($image = $gridFS->findOne(array("uuid" => $fileNoExtension))){
+	$fileMimeType=image_get_mime_type($extStr);
+	header('Content-type: ' . $fileMimeType);
+	header('image-src: database');
+	//print_r($image);
+	@$memcache_obj = memcache_connect("localhost", 11211);
 
-@$memcache_obj = memcache_connect("localhost", 11211);
+	$image_data_blob = $image->getBytes();
 
-$image_data_blob = $image->getBytes();
+	if($memcache_obj)
+	{
+	@memcache_add($memcache_obj, $imgSrc, $image_data_blob, false, 0);
+	}
 
-if($memcache_obj)
-{
-@memcache_add($memcache_obj, $imgSrc, $image_data_blob, false, 0);
+	echo $image_data_blob;
 }
-
-echo $image_data_blob;
-
+}
 ?>

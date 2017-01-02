@@ -85,9 +85,9 @@ if (foundActive === false) {
 }
 
 defaultWidth = lineWidth = activeElement.width();
-
+if(activeElement.position()){
 defaultPosition = linePosition = activeElement.position().left;
-
+}
 menuLine.css("width", lineWidth);
 menuLine.css("left", linePosition);
 
