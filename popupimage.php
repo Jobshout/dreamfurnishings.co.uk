@@ -34,9 +34,10 @@ if($guid!=""){
 		}
 	}
 }
-if(!file_exists($imageSrc)){
+
+/*if(!file_exists($imageSrc)){
 	$imageSrc="images/default-product-large.png";
-}
+}*/
 	
 ?>
 <!DOCTYPE html>

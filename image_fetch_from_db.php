@@ -23,18 +23,23 @@ $fileNoExtension = basename($imgSrc, "." . $extStr);
 $collectionNameStr="fs.files";                                            
 $collectionObj = $db->$collectionNameStr;
 
-$dbProductData = $db->$collectionNameStr->findOne(array("uuid" => $fileNoExtension));
-//print_r($dbProductData);
+//$dbProductData = $db->$collectionNameStr->findOne(array("uuid" => $fileNoExtension));
 //echo $dbProductData['_id'];
 
 $gridFS = $db->getGridFS();
 
 header('Content-type: image/jpg');
-$image = $gridFS->findOne(array("_id"=>new MongoId($dbProductData['_id'])));
+$image = $gridFS->findOne(array("uuid" => $fileNoExtension));
+//print_r($image);
+@$memcache_obj = memcache_connect("localhost", 11211);
 
-$memcache_obj = memcache_connect("localhost", 11211);
-memcache_add($memcache_obj, $imgSrc, $image->getBytes(), false, 0);
+$image_data_blob = $image->getBytes();
 
-echo $image->getBytes();
+if($memcache_obj)
+{
+@memcache_add($memcache_obj, $imgSrc, $image_data_blob, false, 0);
+}
+
+echo $image_data_blob;
 
 ?>
