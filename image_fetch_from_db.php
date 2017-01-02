@@ -28,9 +28,13 @@ $collectionObj = $db->$collectionNameStr;
 
 $gridFS = $db->getGridFS();
 
-header('Content-type: image/jpg');
+//header('Content-type: image/jpg');
+$fileMimeType=image_get_mime_type($extStr);
+header('Content-type: ' . $fileMimeType);
+header('image-src: database');
+
 $image = $gridFS->findOne(array("uuid" => $fileNoExtension));
-//print_r($image);
+
 @$memcache_obj = memcache_connect("localhost", 11211);
 
 $image_data_blob = $image->getBytes();
