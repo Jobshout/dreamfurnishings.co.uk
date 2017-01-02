@@ -443,8 +443,8 @@ require_once("include/footer.php");
 function pop_up(){
     var imgsrc=$('#main_image').attr('class'); 
     if(imgsrc!=''){
-        imgsrc='popupimage.htm?guid='+imgsrc;
-        window.open(imgsrc,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=1076,height=668,directories=no,location=no');
+        var srclink='image-preview-'+imgsrc+'.html';
+        window.open(srclink,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=1076,height=668,directories=no,location=no');
     }
 }
 function remove_user_preferences(id, actionStr){
