@@ -1,8 +1,7 @@
 <?php
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
-define("SAVE_IMAGES_ON_DISK", true);
-define("SAVE_IMAGES_IN_MONGO", true);
+define("SAVE_IMAGES_ON_DISK", false);
 include_once("config.php");
 
 if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['token'])){

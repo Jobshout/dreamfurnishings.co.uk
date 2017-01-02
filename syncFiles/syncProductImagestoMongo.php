@@ -1,7 +1,7 @@
 <?php
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
-define("SAVE_IMAGES_ON_DISK", true);
+define("SAVE_IMAGES_ON_DISK", false);
 define("SAVE_IMAGES_IN_MONGO", true);
 include_once("config.php");
 
@@ -57,9 +57,9 @@ if($tablename!="" && $dbname!=""){
 if ( SAVE_IMAGES_IN_MONGO )
 {
 	$tablename="fs.files";
-	$collection = $mon_db->$tablename;
+	$collectionNameStr = $mon_db->$tablename;
    // now remove the document if there is already one with this uuid
-   $collection->remove(array("uuid"=>$prod_images->uuid));
+   $collectionNameStr->remove(array("uuid"=>$prod_images->uuid));
 
 			$fileContentArr = array( "uuid"=>$prod_images->uuid, "file_name"=>$prod_images->name, "ext"=>$imageExtension, "modified" => time() );
 			$grid = $db->getGridFS();
