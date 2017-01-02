@@ -2,6 +2,7 @@
 ini_set('max_execution_time', 900);
 ini_set('memory_limit', '1024M');
 define("SAVE_IMAGES_ON_DISK", true);
+define("SAVE_IMAGES_IN_MONGO", true);
 include_once("config.php");
 
 if(isset($_GET['token']) && $_GET['token']!="" && secure_authentication($_GET['token'])){
@@ -41,18 +42,30 @@ if($tablename!="" && $dbname!=""){
 					
 					if($productFound = $collection->findOne(array($updatecol => $row->uuid_product))){
 						$prodImagesArr=array();
-						if(SAVE_IMAGES_ON_DISK){
+						if( SAVE_IMAGES_ON_DISK ){
                         			$prod_images=$row;
                                     
                                     $realPathStr="";
                                     foreach($prod_images as $key=>$value){
                                         if($key=="encoded_image"){
                                             $imageBlob = base64_decode($prod_images->encoded_image);
-
                                             $pos = strpos($prod_images->name, ".");
                                             if ($pos !== false) {
                                                 $imageExtension=substr($prod_images->name,intval($pos)+1) ;
                                             }
+
+if ( SAVE_IMAGES_IN_MONGO )
+{
+	$tablename="fs.files";
+	$collection = $mon_db->$tablename;
+   // now remove the document if there is already one with this uuid
+   $collection->remove(array("uuid"=>$prod_images->uuid));
+
+			$fileContentArr = array( "uuid"=>$prod_images->uuid, "file_name"=>$prod_images->name, "ext"=>$imageExtension, "modified" => time() );
+			$grid = $db->getGridFS();
+			$saveFile=$grid->storeBytes($imageBlob, $fileContentArr);
+}
+
 
                                             $directory=$images_root_disk_path.'images/products/';
                                             $txtImageDirectory= $images_root_disk_path.'images/products/';
@@ -96,6 +109,8 @@ if($tablename!="" && $dbname!=""){
                                     }
                            
                     	}
+ 
+
                     	
 						 if(isset($productFound['product_images']) && count($productFound['product_images'])>0){
             				$existBool=false;
