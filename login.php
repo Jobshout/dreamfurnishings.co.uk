@@ -78,13 +78,10 @@ require_once("include/main_header.php");
                 		</div>
 						
 						
-						<label class="checkbox" STYLE="padding-left:25px;">
-                    		<!--<input value="remember-me" type="checkbox"> Remember me-->
-                    		<span class="pull-right">
-                        		<a href="javascript:void(0)" onClick="swtichForms('fpwd'); return false;" id="fPwdBtn"> Forgot Password?</a>
+						<div class="pull-right" style="position: relative;bottom: 22px;">
+                        		<a href="javascript:void(0)" onClick="swtichForms('fpwd'); return false;" id="fPwdBtn" class="btn btn-primary btn-xs"  > Forgot Password?</a>
                         		<a href="javascript:void(0)" onClick="swtichForms('login'); return false;" style="display:none; margin-bottom:5px;" id="loginBtn" class="btn btn-primary btn-xs"  > Sign In?</a>
-							</span>
-                		</label>
+							</div>
                 	</div>
             	</form>
 			</div>

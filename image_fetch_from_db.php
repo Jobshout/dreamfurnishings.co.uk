@@ -32,7 +32,8 @@ if($image = $gridFS->findOne(array("uuid" => $fileNoExtension))){
 	{
 	@memcache_add($memcache_obj, $imgSrc, $image_data_blob, false, 0);
 	}
-
+	@$memcache_obj->close();
+	
 	echo $image_data_blob;
 }
 }
