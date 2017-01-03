@@ -319,8 +319,8 @@ function image_get_mime_type($extension)
                 ,"htm"=>"text/html"
                 ,"html"=>"text/html"
         );
-
-       return $mime_types[$extension];
+	$extension=strtolower($extension);
+	return $mime_types[$extension];
 }
 
 
