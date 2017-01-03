@@ -320,7 +320,7 @@ function image_get_mime_type($extension)
                 ,"html"=>"text/html"
         );
 	$extension=strtolower($extension);
-	return $mime_types[$extension];
+	return @$mime_types[$extension];
 }
 
 
