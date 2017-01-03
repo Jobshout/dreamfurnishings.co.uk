@@ -353,11 +353,7 @@ h5.feture-hding{
 	 margin-bottom:35px;
 	 
  }
- .service-blk img{
-	max-width: 100%;
-	 color:#333;
-	 margin-bottom:15px;
- }
+ 
  
 
   .service-blk h4{
@@ -379,9 +375,7 @@ h5.feture-hding{
 	  line-height:24px;
 	  margin-bottom:15px;
   }
-   
-   
-   .view-product a{
+ .view-product a{
 		background:#e68e03;
 		color:#fff;
 		font-size:13px;
@@ -397,7 +391,6 @@ h5.feture-hding{
 		padding:5px 15px;
 		
 	}
-   
 	.service-blk-bg{
 		background:url(../images/service-blk-bg.jpg) no-repeat left top #eaeaea;
 		margin-bottom:5px;			
@@ -1801,7 +1794,7 @@ min-height: 64px;
 	/*navigation toogle button styling */
 	.navbar {
 		border:none;
-		z-index:100;
+		z-index:9999;
 	}
 	.navbar-nav {
 		margin-top:0px;
@@ -2152,6 +2145,7 @@ a:focus {
 /*****/
 
 
+
 .login-body { background-color: #f1f2f7 }
 .form-signin {
    max-width: 570px;
@@ -2183,7 +2177,7 @@ border: 1px solid #ddd;
 }
 .form-signin .form-control {
     position: relative;
-    font-size: 12px;
+    font-size: 16px;
     height: 38px;
     padding: 10px;
     -webkit-box-sizing: border-box;
@@ -2288,11 +2282,10 @@ border: 1px solid #ddd;
     background-color: #f1f2f7;
 }
 
-.alert-dismissable .close, .alert-dismissible .close {
-    position: relative;
-    top: -2px;
-    right: -10px;
-    color: inherit;
+.service-blk img {
+	color: #333;
+    margin-bottom: 15px;
+    max-width: 100%;
 }
 
 
@@ -2316,3 +2309,4 @@ border-radius:4px;
     color: #d9534f;
     colro: #fc9504;
 }
+
