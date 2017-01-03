@@ -56,6 +56,7 @@ echo $url . "<br>";
 memcache_add($memcache_obj, $url, $value, false, 0);
 }
 
+/*
 $mylist=rscandir("css/");
 $srch = array('css/');
 $newval = array('css/');
@@ -69,8 +70,9 @@ while (list($key, $val) = each($mylist)) {
 echo $url . "<br>";
 memcache_add($memcache_obj, $url, $value, false, 0);
 }
+*/
 
-
+/*
 $mylist=rscandir("js/");
 $srch = array('js/');
 $newval = array('js/');
@@ -84,8 +86,11 @@ while (list($key, $val) = each($mylist)) {
 //echo "url: " . $url . ", value: " . $value . "<br>";
 //echo "url: " . $url . "<br>";
   $url = "/" . $url;
-echo $url . "<br>";
+echo "<h2>" . $url . "</h2> : ";
+//echo $value . "<br>";
 memcache_add($memcache_obj, $url, $value, false, 0);
 }
+
+*/
 
 ?>

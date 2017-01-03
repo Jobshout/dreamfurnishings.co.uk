@@ -18,7 +18,7 @@
                  	<?php foreach($latestProductsList as $prod){
                  		$link=$prod["uuid"];
                  		if(isset($prod['product_code']) && $prod['product_code']){
-                 			$link=$prod["product_code"];
+                 			$link="product-" . $prod["product_code"];
                  		}	?>
                      <li><a href="<?php echo gb_fn_linkCacheHandler($link.'.html','product.htm?code='.$link);?>" title="<?php echo $prod['ProductName']; ?>"><?php echo ucfirst($prod['ProductName']); ?></a></li>
                 	<?php	}	?>
