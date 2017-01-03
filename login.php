@@ -72,12 +72,12 @@ require_once("include/main_header.php");
                     		<!--<input value="remember-me" type="checkbox"> Remember me-->
                     		<span class="pull-right">
                         		<a href="javascript:void(0)" onClick="swtichForms('fpwd'); return false;" id="fPwdBtn"> Forgot Password?</a>
-                        		<a href="javascript:void(0)" onClick="swtichForms('login'); return false;" style="display:none;" id="loginBtn"> Sign In?</a>
+                        		<a href="javascript:void(0)" onClick="swtichForms('login'); return false;" style="display:none; margin-bottom:5px;" id="loginBtn" class="btn btn-primary btn-xs"  > Sign In?</a>
 							</span>
                 		</label>
 						<input class="btn btn-lg btn-danger btn-block" type="submit" name="sign_in" id="sign_in" value="Sign In">
 						<div STYLE="padding-top:10px;"> Don't have an account yet?
-                    		<a title="Register" href="register.htm">
+                    		<a title="Register" href="register.htm"   class="btn btn-primary btn-xs">
                         		Create an account
                     		</a>
                 		</div>
