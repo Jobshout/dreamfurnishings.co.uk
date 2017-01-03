@@ -69,40 +69,20 @@ if($latestCategories->count()>0){ ?>
      <div class="row">
      	<?php $i=0;
      	foreach($latestCategories as $fetchCat){
-     		$i++;
-     		//$imgSrc="images/bedroom.jpg";
      		$defaultImgSrc="images/".$fetchCat["code"].".jpg";
-     		/**if($i==1){
-     			$imgSrc="images/bedroom.jpg";
-     		}elseif($i==2){
-     			$imgSrc="images/living-room.jpg";
-     		}elseif($i==3){
-     			$imgSrc="images/dining-room.jpg";
-     		}elseif($i==4){
-     			$imgSrc="images/living-room.svg";
-     		}	**/
+     		$fetchCatLinkStr=gb_fn_linkCacheHandler('products-by-category-'.$fetchCat['code'].'.html','products.htm?category='.$fetchCat['code']);
      		?>
      	<div class="col-sm-4 ">
         	<div class="service-blk">
-        		<a HREF="products.htm?category=<?php echo $fetchCat["uuid"];?>"><img src="<?php echo $defaultImgSrc;?>"></a>
+        		<a HREF="<?php echo $fetchCatLinkStr;?>"><img src="<?php echo $defaultImgSrc;?>"></a>
                 <h4><?php echo $fetchCat["name"];?></h4>
                 <?php if(isset($fetchCat["description"]) && $fetchCat["description"]!=""){ ?>
                 <p><?php 
-                	/**$bodyStr= $fetchCat["description"];
-                	$firstSPosNum=stripos($bodyStr,"<p>");
-					$firstEPosNum=stripos($bodyStr,"</p>");
-					if($firstSPosNum>0 && $firstEPosNum>0){
-					$bodyStr=substr($bodyStr,$firstSPosNum,$firstEPosNum);
-					}
-					$bodyStr=strip_tags($bodyStr);
-					if(strlen($bodyStr)>125){
-						$bodyStr=substr($bodyStr,0,125)."...";
-					}**/
 					$bodyStr= getBriefText($fetchCat["description"]);
                 	echo $bodyStr;
                 ?></p>
                 <?php }	?>
-                <div CLASS="view-product"><a HREF="products.htm?category=<?php echo $fetchCat["uuid"];?>">View Products</a></div>
+                <div CLASS="view-product"><a HREF="<?php echo $fetchCatLinkStr;?>">View Products</a></div>
                 
              </div>   
             
