@@ -302,7 +302,7 @@ if(!empty($_POST['submit'])){
                     	</label>-->
                     	<input class="btn btn-lg btn-danger btn-block" type="submit" name="submit" value="Submit">
 						<div STYLE="padding-top:10px;">Already Registered ?
-                        	<a title="Login" href="login.htm">Login</a>
+                        <a title="Login" href="login.htm" class="btn btn-default btn-sm">Login</a>
                     	</div>
                 	</div>
            		</form>
