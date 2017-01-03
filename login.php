@@ -68,6 +68,16 @@ require_once("include/main_header.php");
                 		<input type="hidden" id="action" name="action" value="login">
                    		<input class="form-control" placeholder="Email" autofocus="" type="text" id="email_address" name="email_address">
 						<input class="form-control" placeholder="Password" type="password" id="password" name="password">
+						
+						<input class="btn btn-lg btn-danger btn-block" type="submit" name="sign_in" id="sign_in" value="Sign In">
+						<div STYLE="padding-top:10px;"> Don't have an account yet?
+                    		<a title="Register" href="register.htm"   class="btn btn-primary btn-xs">
+                        		Create an account
+                    		</a>
+							
+                		</div>
+						
+						
 						<label class="checkbox" STYLE="padding-left:25px;">
                     		<!--<input value="remember-me" type="checkbox"> Remember me-->
                     		<span class="pull-right">
@@ -75,12 +85,6 @@ require_once("include/main_header.php");
                         		<a href="javascript:void(0)" onClick="swtichForms('login'); return false;" style="display:none; margin-bottom:5px;" id="loginBtn" class="btn btn-primary btn-xs"  > Sign In?</a>
 							</span>
                 		</label>
-						<input class="btn btn-lg btn-danger btn-block" type="submit" name="sign_in" id="sign_in" value="Sign In">
-						<div STYLE="padding-top:10px;"> Don't have an account yet?
-                    		<a title="Register" href="register.htm"   class="btn btn-primary btn-xs">
-                        		Create an account
-                    		</a>
-                		</div>
                 	</div>
             	</form>
 			</div>

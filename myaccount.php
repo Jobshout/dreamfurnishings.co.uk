@@ -66,7 +66,7 @@ if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
                 				</div>
 			    				<div class="row">
                     				<div class="col-xs-3 col-sm-2"></div>
-                    					<div class="col-xs-9 col-sm-10"><p>[ <a href="account.htm">Edit</a> ]</p>
+                    					<div class="col-xs-9 col-sm-10"><p CLASS="btn btn-danger">[ <i CLASS="fa fa-edit"></i> <a href="account.htm">Edit</a> ]</p>
                     			</div>
                 			</div>
 						</div>
