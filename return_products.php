@@ -11,6 +11,7 @@ function find_top_categories($e){
 	$categoryStr="";
 	//$breadCrumbmenuStr="";
 	$dbCategoryData = $db->categories->find(array("uuid_top_level_category" => $e), array("uuid" => 1, "name" =>1));
+	
 	foreach($dbCategoryData as $catData){
 		$categoryFound= find_top_categories($catData["uuid"]);
 		//$categoryFound=$categoryFoundStr["menu_categories"];
@@ -36,31 +37,31 @@ function find_top_categories($e){
 }
 
 if($category!=""){
-	//echo json_encode(array("category.uuid" => $category));
-	if($dbfetchCatName = $db->categories->findOne(array("uuid" => $category), array("name" =>1))){
+	$categoryStr="";
+	if($dbfetchCatName = $db->categories->findOne(array("code" => $category), array("name" =>1, "uuid" =>1))){
 		$breadCrumbStr.='<li class="active">'.$dbfetchCatName["name"].'</li>';
-	}
 	
-	$categoryStr=$category;
-	$dbCategoryData = $db->categories->find(array("uuid_top_level_category" => $category), array("uuid" => 1, "name" =>1));
-	foreach($dbCategoryData as $catData){
-		$categoryFound= find_top_categories($catData["uuid"]);
-		//$categoryFound=$categoryFoundStr["menu_categories"];
-		//$breadCrumbStr.=$categoryFoundStr["breadcrumb"];
+	
+		$categoryStr=$dbfetchCatName["uuid"];
+		$dbCategoryData = $db->categories->find(array("uuid_top_level_category" => $dbfetchCatName["uuid"]), array("uuid" => 1, "name" =>1));
+		foreach($dbCategoryData as $catData){
+			$categoryFound= find_top_categories($catData["uuid"]);
+			//$categoryFound=$categoryFoundStr["menu_categories"];
+			//$breadCrumbStr.=$categoryFoundStr["breadcrumb"];
 		
-		if($categoryFound!=""){
-			if($categoryStr!=""){
-				$categoryStr .= ",".$categoryFound;
-			}else{
-				$categoryStr .= $categoryFound;
+			if($categoryFound!=""){
+				if($categoryStr!=""){
+					$categoryStr .= ",".$categoryFound;
+				}else{
+					$categoryStr .= $categoryFound;
+				}
 			}
-		}
 		
-		if($categoryStr!=""){
-			$categoryStr .= ",".$catData["uuid"];
-			
-		}else{
-			$categoryStr .= $catData["uuid"];
+			if($categoryStr!=""){
+				$categoryStr .= ",".$catData["uuid"];
+			}else{
+				$categoryStr .= $catData["uuid"];
+			}
 		}
 	}
 	$categoryArr= explode(",",$categoryStr);

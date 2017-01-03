@@ -4,6 +4,7 @@ $productCatHtmlStr="";
 if($dbCategories = $db->categories->find(array("is_active" => true, "uuid_top_level_category" => ""))->sort(array("name" => 1))){
 	foreach($dbCategories as $dbCategory){
 		$catUUIDStr=$dbCategory['uuid'];
+		$catCodeStr=$dbCategory['code'];
 		$displayCategoryBool=false;
 		$dbProductsForCat = $db->Products->find(array( 'publish_on_web' => true, "product_category.uuid" => $catUUIDStr));
 		if($dbProductsForCat->count()>0){
@@ -17,15 +18,16 @@ if($dbCategories = $db->categories->find(array("is_active" => true, "uuid_top_le
 		
 		if($displayCategoryBool){
 			$menuHTMLStr .= '<li>';
+			$categoryLinkStr=gb_fn_linkCacheHandler('products-by-category-'.$dbCategory['code'].'.html','products.htm?category='.$dbCategory['code']);
 			if($subMenuStr!="" && $subMenuStr!='<ul class="dropdown-menu"></ul>'){
-				$menuHTMLStr .=  '<a href="products.htm?category='.$dbCategory['uuid'].'">'.ucfirst($dbCategory['name']).'<span class="caret"></span></a>';
+				$menuHTMLStr .=  '<a href="'.$categoryLinkStr.'">'.ucfirst($dbCategory['name']).'<span class="caret"></span></a>';
 				$menuHTMLStr .=  $subMenuStr;
 			}else{
-				$menuHTMLStr .=  '<a href="products.htm?category='.$dbCategory['uuid'].'">'.ucfirst($dbCategory['name']).'</a>';
+				$menuHTMLStr .=  '<a href="'.$categoryLinkStr.'">'.ucfirst($dbCategory['name']).'</a>';
 			}
 			$menuHTMLStr .=  '</li>';
 		
-			$productCatHtmlStr .= '<li> <a href="javascript:void(0)" onClick="fetch_cat_products(\''.$catUUIDStr.'\')" aria-expanded="false">'.ucfirst($dbCategory['name']);
+			$productCatHtmlStr .= '<li> <a href="javascript:void(0)" onClick="fetch_cat_products(\''.$catCodeStr.'\')" aria-expanded="false">'.ucfirst($dbCategory['name']);
 			if($p_subMenuStr!="" && $p_subMenuStr!='<ul aria-expanded="false" class="collapse"></ul>'){
 				$productCatHtmlStr .=  '<span class="glyphicon arrow"></span></a>';
 				$productCatHtmlStr .=  $p_subMenuStr;

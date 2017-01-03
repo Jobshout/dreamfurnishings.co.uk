@@ -32,6 +32,7 @@ function find_sub_categories($e,$displayBool=false,$level=1){
 		
 		foreach($dbSubCategories as $dbSubCategory){
 			$catUUIDStr=$dbSubCategory['uuid'];
+			$catCodeStr=$dbSubCategory['code'];
 			$displayCategoryBool=false;
 			$dbProductsForCat = $db->Products->find(array('publish_on_web' => true, "product_category.uuid" => $catUUIDStr));
 			if($dbProductsForCat->count()>0){
@@ -45,8 +46,9 @@ function find_sub_categories($e,$displayBool=false,$level=1){
 			
 			if($displayCategoryBool){
 				$displayCategorywithProductsBool=$displayCategoryBool;
-				$returnMenuStr.= '<li><a href="products.htm?category='.$dbSubCategory['uuid'].'">'.ucfirst($dbSubCategory['name']);
-				$returnProductsStr.= '<li><a href="javascript:void(0)" onClick="fetch_cat_products(\''.$catUUIDStr.'\')">'.ucfirst($dbSubCategory['name']);
+				$categoryLinkStr=gb_fn_linkCacheHandler('products-by-category-'.$dbSubCategory['code'].'.html','products.htm?category='.$dbSubCategory['code']);
+				$returnMenuStr.= '<li><a href="'.$categoryLinkStr.'">'.ucfirst($dbSubCategory['name']);
+				$returnProductsStr.= '<li><a href="javascript:void(0)" onClick="fetch_cat_products(\''.$catCodeStr.'\')">'.ucfirst($dbSubCategory['name']);
 				
 				if($subMenuStr!="" && $subMenuStr!='<ul class="dropdown-menu"></ul>'){
 					$returnMenuStr .=  '<span class="caret"></span></a>';
