@@ -70,7 +70,8 @@ function load_data(){
             	htmlStr+='<div class="col-sm-3 text-center"><a href="'+linkStr+'"><img src="'+item.image+'" class="img-responsive" alt="'+item.name+'" STYLE="height:170px;" onerror="this.src=\'images/default-product-small.png\'"></a></div>';
               	htmlStr+='<div class="col-sm-6"><a href="'+linkStr+'" class="prdt-name">'+item.name+'</a><br><strong>Product SKU</strong>: '+item.sku+'<br>';
               	htmlStr+='<span class="price">'+item.currency+item.price+'</span></div>';
-              	htmlStr+='<div class="col-sm-3 text-center"><a onclick="enquire_about(\''+buyStr+'\', \''+buyCodeStr+'\')" href="javascript:void(0)" class="buy-now-btn" title="Enquire Now"> Enquire Now</a><br/><a HREF="javascript:void(0)" onClick="remove_wishlist(\''+item.id+'\')" title="Remove from wishlist" class="rem-frm-list">Remove from wishlist</a></div>';
+              	htmlStr+='<div class="col-sm-3 text-right"><a onclick="enquire_about(\''+buyStr+'\', \''+buyCodeStr+'\')" href="javascript:void(0)" class="btn btn-danger" title="Enquire Now" style="margin-bottom:8px;"> <i CLASS="fa fa-envelope"></i> Enquire Now</a><br/>
+				<a HREF="javascript:void(0)" onClick="remove_wishlist(\''+item.id+'\')" title="Remove from wishlist" class="btn btn-primary"><i CLASS="fa fa-remove"></i> Remove from wishlist</a></div>';
             	htmlStr+='</div>';
             }); 
 			

@@ -89,7 +89,7 @@ color: #000;
         	<div STYLE="float:right;" CLASS="hidden-sm hidden-xs">
 		  		<form id="mainSearch" class="searchnew" action="products.htm" method="post">
               		<div id="label"><label for="search-terms" id="search-label">search</label></div>
-               	 	<div id="input"><input type="text" name="keyword" id="search-terms" placeholder="Enter search terms..."></div>
+               	 	<div id="input"><input type="text" name="keyword" id="search-terms" placeholder="Enter search Products..."></div>
            		</form>
 			</div>
 			<div class="visible-sm visible-xs" style="margin-top:20px;">

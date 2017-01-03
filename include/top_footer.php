@@ -44,7 +44,7 @@
 				if($copyrightStr!=""){	
                     echo $copyrightStr;
                 }else{    ?>
-            	© 2016 Dream Furnishings. All Rights Reserved.
+            	© 2017 Dream Furnishings. All Rights Reserved.
                 <?php } ?>
                 
         		 <?php if($termsPage= $mongoCRUDClass->db_findone("web_content", array("code" => "terms-and-conditions", "status" => "true"))){	?>
@@ -84,7 +84,7 @@
                 <?php if($copyrightStr!=""){	
                     echo $copyrightStr;
                 }else{    ?>
-                © 2016 Dream Furnishings. All Rights Reserved.
+                © 2017 Dream Furnishings. All Rights Reserved.
                 <?php } ?>&nbsp;Site Managed by <a target="_blank" href="http://www.tenthmatrix.co.uk/" title="Tenthmatrix" class="powered-by-link"><img src="images/Powered-by-tenthmatrix.png" style="vertical-align:text-bottom;" alt="Tenthmatrix"></a> </div>
 		</div>
 	</div>
