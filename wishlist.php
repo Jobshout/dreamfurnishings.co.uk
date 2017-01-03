@@ -67,8 +67,8 @@ function load_data(){
           			buyCodeStr=item.code;
           			buyStr="code";
           		}
-            	htmlStr+='<div class="col-sm-3 text-center"><a onClick="'+linkStr+'" href="javascript:void(0)"><img src="'+item.image+'" class="img-responsive" alt="'+item.name+'" STYLE="height:170px;" onerror="this.src=\'images/default-product-small.png\'"></a></div>';
-              	htmlStr+='<div class="col-sm-6"><a onClick="'+linkStr+'" href="javascript:void(0)" class="prdt-name">'+item.name+'</a><br><strong>Product SKU</strong>: '+item.sku+'<br>';
+            	htmlStr+='<div class="col-sm-3 text-center"><a href="'+linkStr+'"><img src="'+item.image+'" class="img-responsive" alt="'+item.name+'" STYLE="height:170px;" onerror="this.src=\'images/default-product-small.png\'"></a></div>';
+              	htmlStr+='<div class="col-sm-6"><a href="'+linkStr+'" class="prdt-name">'+item.name+'</a><br><strong>Product SKU</strong>: '+item.sku+'<br>';
               	htmlStr+='<span class="price">'+item.currency+item.price+'</span></div>';
               	htmlStr+='<div class="col-sm-3 text-center"><a onclick="enquire_about(\''+buyStr+'\', \''+buyCodeStr+'\')" href="javascript:void(0)" class="buy-now-btn" title="Enquire Now"> Enquire Now</a><br/><a HREF="javascript:void(0)" onClick="remove_wishlist(\''+item.id+'\')" title="Remove from wishlist" class="rem-frm-list">Remove from wishlist</a></div>';
             	htmlStr+='</div>';

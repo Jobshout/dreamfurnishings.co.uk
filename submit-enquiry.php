@@ -37,7 +37,12 @@ if ($c_name!="" && $c_email!="" && $comment!=""){
 				$mail->AddAddress(ADMIN_EMAIL,SITE_NAME);
 				$mail->SetFrom($c_email,$c_name);			
 				$mail->Subject = $subjectStr;
-			
+				if(ADMIN_CC_EMAIL!=''){
+					$mail->AddCC(ADMIN_CC_EMAIL);
+				}
+				if(ADMIN_BB_EMAIL!=''){
+					$mail->AddBCC(ADMIN_BB_EMAIL);
+				}
 				$mail->MsgHTML($message);
 				$mail->Send();
 					

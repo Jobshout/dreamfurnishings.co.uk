@@ -291,7 +291,7 @@
 					$szPortString = ':'.$_SERVER['SERVER_PORT'];
 				}
 			}
-
+			$szProtocolString = 'https://';
 			$szReturnString = $szProtocolString.$_SERVER['SERVER_NAME'].$szPortString.$_SERVER['SCRIPT_NAME'];
 			
 			$boFinished = false;

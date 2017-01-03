@@ -35,9 +35,7 @@ if (file_exists($defaultSettingsFile)) {
 		$mail->SMTPAuth = true;             // Enable SMTP authentication
 		$mail->Username = $mailerUsernameStr;    // SMTP username
 		$mail->Password = $mailerPasswordStr;     // SMTP password
-
 	}
-
 }
 
 if(isset($smtpservice) && $smtpservice=="gmail"){
@@ -45,4 +43,27 @@ if(isset($smtpservice) && $smtpservice=="gmail"){
 	$mail->Port = 587;
 }
 
+//mailer emails
+$adminEmailAddr="jobshout421@gmail.com";
+$bbEmailAddr=$adminEmailAddr;
+$ccEmailAddr="";
+
+$fetchAdminEmails= $db->Tokens->find(array("code" => array('$in' => array('dreamfurnishing-admin-email','dreamfurnishing-cc-email','dreamfurnishing-bb-email'))));
+	if($fetchAdminEmails->count()>0){
+		foreach($fetchAdminEmails as $fetchEmails){	
+			if(isset($token["contentTxt"]) && $token["contentTxt"]!=""){
+			
+				if(isset($token["code"]) && $token["code"]=="dreamfurnishing-admin-email"){
+					$adminEmailAddr=$token["contentTxt"];
+				}elseif(isset($token["code"]) && $token["code"]=="dreamfurnishing-bb-email"){
+					$bbEmailAddr=$token["contentTxt"];
+				}elseif(isset($token["code"]) && $token["code"]=="dreamfurnishing-cc-email"){
+					$ccEmailAddr=$token["contentTxt"];
+				}
+			}
+		}
+	}
+define("ADMIN_EMAIL", $adminEmailAddr);
+define("ADMIN_CC_EMAIL", $ccEmailAddr);
+define("ADMIN_BB_EMAIL", $bbEmailAddr);
 ?>

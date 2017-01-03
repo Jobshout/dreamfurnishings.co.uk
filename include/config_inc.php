@@ -27,30 +27,6 @@ require_once('include/functions.php');
 //mongo connection file
 require_once('include/mongo_connection.php');
 
-switch ($_SERVER['SERVER_NAME']) {
-    case "dev.dreamfurnishings.co.uk":
-	define("PRODUCT_DIR","https://dev-billing.tenthmatrix.co.uk");
-	define("ADMIN_EMAIL","balinder.walia@gmail.com");
-	define("ADMIN_CC_EMAIL","");
-	define("ADMIN_BB_EMAIL","nehak189@gmail.com");
-    break;
-        
-    case "staging.dreamfurnishings.com":
-	define("PRODUCT_DIR","https://dev-billing.tenthmatrix.co.uk");
-	define("ADMIN_EMAIL","balinder.walia@gmail.com");
-	define("ADMIN_CC_EMAIL","");
-	define("ADMIN_BB_EMAIL","nehak189@gmail.com");
-    break;
-        
-    default:
-	case "dev.dreamfurnishings.com":
-	define("PRODUCT_DIR","https://crm.tenthmatrix.co.uk");
-	define("ADMIN_EMAIL","balinder.walia@gmail.com");
-	define("ADMIN_CC_EMAIL","");
-	define("ADMIN_BB_EMAIL","nehak189@gmail.com");
-    break;
-}
-
 //mongoCRUD FILE
 require_once('include/MongoCRUD.php');
 

@@ -179,7 +179,7 @@ require_once("include/main_header.php"); ?>
  						$carouselStr=$firstCarouselImagesStr.$carouselImagesStr;
  					?>
 					<span class="demowrap"><img id="main_image" src="<?php echo $defaultImage; ?>" class="<?php echo $defaultImageUUIDStr; ?>" onerror="this.src='images/default-product-large.png'"/></span>
-                    <a href='javascript:void(0)' onClick='pop_up()' title='View Full Image' style="padding: 8px 8px;" class='btn btn-danger'>View Full Image</a> 
+                    <a href='javascript:void(0)' onClick='pop_up()' title='View Full Image' style="padding: 8px 8px; margin-top:5px;" class='btn btn-danger'>View Full Image</a> 
 						<?php if($carouselStr!=""){ ?>
 						<ul id="imagesCarousel" class="elastislide-list">
 							<?php echo $carouselStr; ?>			
@@ -220,7 +220,7 @@ require_once("include/main_header.php"); ?>
              		<?php	} ?>
 					<div CLASS="row">
 		   				<div CLASS="col-md-6">
-		   					<a href="mailto:?subject=Product from the <?php echo SITE_NAME; ?>&body=<?php echo SITE_WS_PATH.$dbProductData['product_code'].'.html'; ?>" title="Email this page" STYLE="width:100%; margin-bottom:10px;"  class="btn btn-default btn-xs"><i CLASS="fa fa-envelope"></i> Email this page</a>
+		   					<a href="mailto:?subject=Product from the <?php echo SITE_NAME; ?>&body=<?php echo SITE_WS_PATH.'product-'.$dbProductData['product_code'].'.html'; ?>" title="Email this page" STYLE="width:100%; margin-bottom:10px;"  class="btn btn-default btn-xs"><i CLASS="fa fa-envelope"></i> Email this page</a>
 		   				</div>
 						<div CLASS="col-md-6" style="padding-left: 0px;">
 							<a data-toggle="modal" data-backdrop="static" href="#modal_form" class="btn btn-default btn-xs" STYLE="width:100%; margin-bottom:10px;"><i CLASS="fa fa-link"></i> Link this page</a>
@@ -247,7 +247,7 @@ require_once("include/main_header.php"); ?>
             		<div CLASS="row">
             			<?php if(isset($dbProductData['Unit_Price']) && $dbProductData['Unit_Price']>0){ ?>
             				<div CLASS="col-sm-3"><input class="form-control text-center" value="1"  min="1" type="number" id="qunatityID" style="height: 43px;margin-bottom: 13px;border-radius: 0px;"></div>
-           					<div CLASS="col-sm-5 pading-lft" ><a href="javascript:void(0)" onClick="add_user_preferences('<?php echo $dbProductData['uuid']; ?>', 'cart'); return false;" class="add-to-cart-btn"><i class="fa fa-cart-plus"></i> Add to cart</a></div>
+           					<div CLASS="col-sm-9 pading-lft" id="productPageCartID" ><a href="javascript:void(0)" onClick="add_user_preferences('<?php echo $dbProductData['uuid']; ?>', 'cart'); return false;" class="add-to-cart-btn"><i class="fa fa-cart-plus"></i> Add to cart</a></div>
             			<div class="col-sm-4 pading-lft displayCartsClass" style="display:none;">
             			<?php }else{ ?>
             			
@@ -412,7 +412,7 @@ require_once("include/main_header.php"); ?>
 					<span style="float:right;">
     					<a href="javascript:void(0)" onclick="$('#textLink').select()">select all</a>
 					</span>
-					<textarea class="form-control" style="margin-bottom:5px;" name="textLink" id="textLink" onClick="$('#textLink').select()" rows="2" ><a href="<?php echo SITE_WS_PATH; if(isset($dbProductData['product_code'])){ echo $dbProductData['product_code'].'.html'; } ?>">Product <?php if(isset($dbProductData['ProductName']) && $dbProductData['ProductName']!="") { echo $dbProductData['ProductName']; }?> from the <?php echo SITE_NAME;	?></a></textarea>
+					<textarea class="form-control" style="margin-bottom:5px;" name="textLink" id="textLink" onClick="$('#textLink').select()" rows="2" ><a href="<?php echo SITE_WS_PATH; if(isset($dbProductData['product_code'])){ echo 'product-'.$dbProductData['product_code'].'.html'; } ?>">Product <?php if(isset($dbProductData['ProductName']) && $dbProductData['ProductName']!="") { echo $dbProductData['ProductName']; }?> from the <?php echo SITE_NAME;	?></a></textarea>
 				</div>
 				<?php if(isset($defaultImage) && $defaultImage!=""){ ?>
 					<div class="formSep" >
@@ -422,7 +422,7 @@ require_once("include/main_header.php"); ?>
 					<span style="float:right;">
    						<a  href="javascript:void(0)" onClick="$('#thumbLink').select()">select all</a>
 					</span>
-						<textarea class="form-control" style="margin-bottom:5px;" name="thumbLink" id="thumbLink" onClick="$('#thumbLink').select()" rows="2" ><a href="<?php echo SITE_WS_PATH; if(isset($dbProductData['product_code'])){ echo $dbProductData['product_code'].'.html'; } ?>" ><img src="<?php echo SITE_PATH.$defaultImage; ?>" alt="Product <?php if(isset($dbProductData['ProductName']) && $dbProductData['ProductName']!="") { echo $dbProductData['ProductName']; }?> from the <?php echo SITE_NAME;	?>" height="150" width="150" /></a></textarea>
+						<textarea class="form-control" style="margin-bottom:5px;" name="thumbLink" id="thumbLink" onClick="$('#thumbLink').select()" rows="2" ><a href="<?php echo SITE_WS_PATH; if(isset($dbProductData['product_code'])){ echo 'product-'.$dbProductData['product_code'].'.html'; } ?>" ><img src="<?php echo SITE_PATH.'/'.$defaultImage; ?>" alt="Product <?php if(isset($dbProductData['ProductName']) && $dbProductData['ProductName']!="") { echo $dbProductData['ProductName']; }?> from the <?php echo SITE_NAME;	?>" height="150" width="150" /></a></textarea>
 					</div>
 				<?php } ?>
         	</div>

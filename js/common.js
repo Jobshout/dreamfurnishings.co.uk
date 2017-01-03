@@ -57,6 +57,7 @@ function fetchUserPreferences(actionStr){
 				if(actionStr=="wishlist"){
 					$("#wishlistMenu").show();
 				}else if(actionStr=="cart"){
+					$("#productPageCartID").attr("class", "col-sm-5 pading-lft");
 					$(".displayCartsClass").show();
 					$(".cartItemsClass").html(response.success);
 				}
@@ -65,6 +66,7 @@ function fetchUserPreferences(actionStr){
 					$("#wishlistMenu").hide();
 				}
 				else if(actionStr=="cart"){
+					$("#productPageCartID").attr("class", "col-sm-9 pading-lft");
 					$(".displayCartsClass").hide();
 					$(".cartItemsClass").html(0);
 				}

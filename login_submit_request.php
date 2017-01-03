@@ -33,7 +33,12 @@ if($email!="" && validChr($email)){
 						$mail->AddReplyTo(ADMIN_EMAIL,SITE_NAME);
 						$mail->AddAddress($user["Email"],$user["First name"]);
 						$mail->SetFrom(ADMIN_EMAIL,SITE_NAME);	
-						
+						if(ADMIN_CC_EMAIL!=''){
+							$mail->AddCC(ADMIN_CC_EMAIL);
+						}
+						if(ADMIN_BB_EMAIL!=''){
+							$mail->AddBCC(ADMIN_BB_EMAIL);
+						}
 						$mail->Subject = $subjectStr;
 			
 						$mail->MsgHTML($user_html);

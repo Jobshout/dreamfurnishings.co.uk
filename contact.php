@@ -61,7 +61,7 @@ if($getGMapStr!=""){	?>
  <label for="c_message">Message:</label> <span STYLE="color:red; font-size:17px;">*</span>
  <TEXTAREA  class="form-control" STYLE="height:120px;" id="c_message" name="c_message">
  <?php if(isset($productSKUStr) && $productSKUStr!=""){	
- 	echo "I would like to buy Product: ".$productSKUStr." (SKU)";
+ 	echo "I would like to enquire about Product: ".$productSKUStr." (SKU)";
  }	?>
  </TEXTAREA>
 </div>

@@ -53,7 +53,12 @@ if(!empty($_POST['StatusCode'])){
 							$mail->AddReplyTo(ADMIN_EMAIL,SITE_NAME);
 							$mail->AddAddress($userLoggedIn["Email"]);
 							$mail->SetFrom(ADMIN_EMAIL,SITE_NAME);		
-			
+							if(ADMIN_CC_EMAIL!=''){
+								$mail->AddCC(ADMIN_CC_EMAIL);
+							}
+							if(ADMIN_BB_EMAIL!=''){
+								$mail->AddBCC(ADMIN_BB_EMAIL);
+							}
 							$mail->Subject = $subject;
 			
 							$mail->MsgHTML($userEmailHtml);
@@ -75,7 +80,12 @@ if(!empty($_POST['StatusCode'])){
 							$mail->AddReplyTo($userLoggedIn["Email"]);
 							$mail->AddAddress(ADMIN_EMAIL,SITE_NAME);
 							$mail->SetFrom($userLoggedIn["Email"]);		
-			
+							if(ADMIN_CC_EMAIL!=''){
+								$mail->AddCC(ADMIN_CC_EMAIL);
+							}
+							if(ADMIN_BB_EMAIL!=''){
+								$mail->AddBCC(ADMIN_BB_EMAIL);
+							}
 							$mail->Subject = $subject;
 			
 							$mail->MsgHTML($adminEmailHtml);
@@ -219,11 +229,11 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 	// (always required unless ResultDeliveryMethod = "SERVER" and PaymentFormDisplaysResult = "true")
 	if ($ResultDeliveryMethod == 'SERVER' && PaymentFormHelper::stringToBool($szPaymentFormDisplaysResult) == false)
 	{
-		$szCallbackURL = PaymentFormHelper::getSiteSecureBaseURL().'order-confirmation.php';
+		$szCallbackURL = PaymentFormHelper::getSiteSecureBaseURL().'order-confirmation.htm';
 	}
 	else
 	{
-		$szCallbackURL = PaymentFormHelper::getSiteSecureBaseURL().'order-confirmation.php'; 
+		$szCallbackURL = PaymentFormHelper::getSiteSecureBaseURL().'order-confirmation.htm'; 
 	}
 
 	// get the string to be hashed

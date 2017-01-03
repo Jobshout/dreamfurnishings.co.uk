@@ -140,7 +140,13 @@ if(!empty($_POST['submit'])){
 							$mail->AddReplyTo(ADMIN_EMAIL,SITE_NAME);
 							$mail->AddAddress($email_address,$first_name);
 							$mail->SetFrom(ADMIN_EMAIL,SITE_NAME);		
-			
+							if(ADMIN_CC_EMAIL!=''){
+								$mail->AddCC(ADMIN_CC_EMAIL);
+							}
+							if(ADMIN_BB_EMAIL!=''){
+								$mail->AddBCC(ADMIN_BB_EMAIL);
+							}
+							
 							$mail->Subject = $subject;
 			
 							$mail->MsgHTML($user_html);
