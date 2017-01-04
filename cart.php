@@ -82,7 +82,7 @@ if(!empty($_POST['submit'])){
 				</div>
 				<div CLASS="row mainContentClass">
 					<div CLASS="col-md-6">
-						<p id="vatAppliedMsg"></p>
+						<p id="vatAppliedMsg" <?php if(HIDETAX){ ?>style="display:none;"<?php } ?> ></p>
 					</div>
 					<div CLASS="col-md-6">
 						<div CLASS="table-responsive">
@@ -93,8 +93,8 @@ if(!empty($_POST['submit'])){
 										<th ALIGN="RIGHT" CLASS="text-right"><strong>Subtotal <?php echo  CURRENCY;?><span id="subTotalHere">0</span></strong></th>
 									</TR>
 									<?php 
-										$taxRate=20; $taxCode="";
-										if(isset($userLoggedIn['country']) && $userLoggedIn['country']!=""){
+										$taxRate=0; $taxCode="";
+										if(HIDETAX==false && isset($userLoggedIn['country']) && $userLoggedIn['country']!=""){
 											if($countryAb = $mongoCRUDClass->db_findone("countries", array("name" => $userLoggedIn['country']))){
 												$taxCode=$countryAb['WMO'];
 												switch ($countryAb['WMO']) {
@@ -105,11 +105,11 @@ if(!empty($_POST['submit'])){
        													$taxRate=0;
         												break;
     												default:
-        												$taxRate=10;
+        												$taxRate=0;
         												break;
 												}
 									?>
-									<TR>
+									<TR <?php if(HIDETAX){ ?>class="display:none;"<?php } ?> >
 										<th ALIGN="RIGHT" CLASS="text-right"><strong>Total Tax <?php echo  CURRENCY;?><span id="totalTaxHere">0</span></strong></th>
 									</TR>
 									<?php	}
@@ -151,7 +151,7 @@ require_once("include/footer.php");
 $(function () {
 	load_data();
 	var taxRateNum=$("#tax_rate").val();
-	if(taxRateNum!=""){
+	if(taxRateNum>=1){
 		$("#vatAppliedMsg").html(taxRateNum+"% VAT applied");
 	}else{
 		$("#vatAppliedMsg").hide();

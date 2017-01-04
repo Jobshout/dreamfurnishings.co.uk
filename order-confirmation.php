@@ -392,7 +392,7 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 									<td class=" col-sm-7 text-left" style="border-top:none;"><strong>Subtotal</strong></td>
 									<td class=" col-sm-2 text-left" style="border-top:none;"><?php if(isset($orderDetails["total_due_without_tax"])){ echo CURRENCY.$orderDetails["total_due_without_tax"];	} ?></td>
 								</tr>
-								<tr id="row_subtotal">
+								<tr id="row_subtotal" <?php if(HIDETAX){ ?>style="display:none;"<?php } ?>>
 									<td class=" col-sm-7 text-left"><strong>Tax</strong></td>
 									<td class=" col-sm-2 text-left"><?php if(isset($orderDetails["total_tax"])){ echo CURRENCY.$orderDetails["total_tax"];	} ?></td>
 								</tr>

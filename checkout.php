@@ -171,7 +171,7 @@ require_once("save_contact.php");
                           <th>Subtotal</th>
                           <td><?php echo CURRENCY;?><span id="subTotalHere">0</span></td>
                         </tr>
-                         <tr>
+                         <tr <?php if(HIDETAX){ ?>style="display:none;"<?php } ?> >
                           <th>Tax</th>
                           <td><?php echo CURRENCY;?><span id="totalTaxHere">0</span></td>
                         </tr>

@@ -40,5 +40,5 @@ if($getAddrStr==""){
 define("ADDRESS",$getAddrStr);
 
 define("SEOFRIENDLYFLAG",true);
-
+define("HIDETAX", true);
 ?>
