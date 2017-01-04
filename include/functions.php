@@ -25,7 +25,7 @@ function find_sub_categories($e,$displayBool=false,$level=1){
 	$displayCategorywithProductsBool=$displayBool;
 	
 	$level=$level+1;
-	$dbSubCategories = $db->categories->find(array("is_active" => true, "uuid_top_level_category" => $e))->sort(array("name" => 1));
+	$dbSubCategories = $db->categories->find(array("is_active" => true, "uuid_top_level_category" => $e))->sort(array("sort_order" => -1, "name" => 1));
 	if($dbSubCategories->count()>0){
 		$returnMenuStr.= '<ul class="dropdown-menu">';
 		$returnProductsStr.= '<ul aria-expanded="false" class="collapse">';

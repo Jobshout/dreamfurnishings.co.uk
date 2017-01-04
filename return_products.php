@@ -71,7 +71,7 @@ if($category!=""){
 	if($keyword!=""){
 		$dbResultsData = $db->Products->find(array('$text' => array( '$search' => $keyword ), 'product_category.uuid' => array('$in' => $categoryArr), 'publish_on_web' => true ), array('score' => array( '$meta' => "textScore"  )) )->sort( array( 'score' => array( '$meta' => "textScore" ) ) )->limit($limit)->skip($startLim);
 	}else{
-		$dbResultsData = $db->Products->find(array("product_category.uuid" => array('$in' => $categoryArr), 'publish_on_web' => true))->sort(array("modified_timestamp" => -1))->limit($limit)->skip($startLim);
+		$dbResultsData = $db->Products->find(array("product_category.uuid" => array('$in' => $categoryArr), 'publish_on_web' => true))->sort(array("sort_order" => -1, "modified_timestamp" => -1))->limit($limit)->skip($startLim);
 	}
 }else{
 
@@ -84,7 +84,7 @@ if($category!=""){
 	if($keyword!=""){
 		$dbResultsData = $db->Products->find(array('$text' => array( '$search' => $keyword ),'publish_on_web' => true, 'product_category.uuid' => array('$in' => $categoryArr) ), array('score' => array( '$meta' => "textScore"  )) )->sort( array( 'score' => array( '$meta' => "textScore" ) ) )->limit($limit)->skip($startLim);
 	}else{
-		$dbResultsData = $db->Products->find(array('publish_on_web' => true, "product_category.uuid" => array('$in' => $categoryArr)))->sort(array("modified_timestamp" => -1))->limit($limit)->skip($startLim);
+		$dbResultsData = $db->Products->find(array('publish_on_web' => true, "product_category.uuid" => array('$in' => $categoryArr)))->sort(array("sort_order" => -1, "modified_timestamp" => -1))->limit($limit)->skip($startLim);
 	}
 }
 

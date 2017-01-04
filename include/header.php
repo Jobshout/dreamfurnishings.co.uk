@@ -1,7 +1,7 @@
 <?php
 $menuHTMLStr="";
 $productCatHtmlStr="";
-if($dbCategories = $db->categories->find(array("is_active" => true, "uuid_top_level_category" => ""))->sort(array("name" => 1))){
+if($dbCategories = $db->categories->find(array("is_active" => true, "uuid_top_level_category" => ""))->sort(array("sort_order" => -1, "name" => 1))){
 	foreach($dbCategories as $dbCategory){
 		$catUUIDStr=$dbCategory['uuid'];
 		$catCodeStr=$dbCategory['code'];
