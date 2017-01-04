@@ -2,7 +2,7 @@
 require_once("include/config_inc.php");
 require_once("include/main_header.php");
 
-$latestProducts = $db->Products->find(array('publish_on_web' => true, 'product_category' => array('$ne' => "")))->sort(array("sort_order" => -1,"created_timestamp" => -1))->limit(2);
+$latestProducts = $db->Products->find(array('publish_on_web' => true, 'product_category' => array('$ne' => "")))->sort(array("sort_order" => -1,"modified_timestamp" => -1))->limit(2);
 
 ?>
 
