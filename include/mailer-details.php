@@ -50,7 +50,7 @@ $ccEmailAddr="";
 
 $fetchAdminEmails= $db->Tokens->find(array("code" => array('$in' => array('dreamfurnishing-admin-email','dreamfurnishing-cc-email','dreamfurnishing-bb-email'))));
 	if($fetchAdminEmails->count()>0){
-		foreach($fetchAdminEmails as $fetchEmails){	
+		foreach($fetchAdminEmails as $token){	
 			if(isset($token["contentTxt"]) && $token["contentTxt"]!=""){
 			
 				if(isset($token["code"]) && $token["code"]=="dreamfurnishing-admin-email"){
