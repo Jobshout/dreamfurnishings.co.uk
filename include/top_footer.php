@@ -8,6 +8,9 @@
                  <li><a href="<?php echo gb_fn_linkCacheHandler('sitemap.htm','sitemap.htm');?>" title="Sitemap">Sitemap</a></li>
                  <li><a href="<?php echo gb_fn_linkCacheHandler('news.htm','news.htm');?>" title="News">News</a></li>
                  <li><a href="<?php echo gb_fn_linkCacheHandler('contact.htm','contact.htm');?>" title="Contact">Contact</a></li>
+                 <?php if($termsPage= $mongoCRUDClass->db_findone("web_content", array("code" => "privacy-policy", "status" => "true"))){	?>
+        			<li><a href="<?php echo gb_fn_linkCacheHandler('privacy-policy.html','content.htm?code=privacy-policy'); ?>" title="Privacy Policy">Privacy Policy</a><li>
+        		<?php } ?>
                  </ul>
             </div>
             <?php $latestProductsList = $db->Products->find(array('publish_on_web' => true))->sort(array("created_timestamp" => 1))->limit(5);

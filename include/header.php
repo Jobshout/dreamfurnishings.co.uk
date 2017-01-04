@@ -111,7 +111,7 @@ color: #000;
             			<?php if(isset($menuHTMLStr) && $menuHTMLStr!=""){  ?>
          				<?php echo $menuHTMLStr; ?>
          				<?php } ?>
-         				<li><a href="products.htm" title="View all products">View all products</a></li>
+         				<li><a href="products.htm" title="View all products">View All Products</a></li>
       				</ul>
             	</li>
             	<li><a href="<?php echo gb_fn_linkCacheHandler('about-us.html','content.htm?code=about-us');?>" title="Company Profile">Company Profile</a></li>
