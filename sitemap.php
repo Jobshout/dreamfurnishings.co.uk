@@ -8,7 +8,7 @@ function fetch_sub_categories($e,$displayBool=false,$level=1){
 	$displayCategorywithProductsBool=$displayBool;
 	
 	$level=$level+1;
-	$dbSubCategories = $db->categories->find(array("is_active" => true, "uuid_top_level_category" => $e))->sort(array("name" => 1));
+	$dbSubCategories = $db->categories->find(array("is_active" => true, "uuid_top_level_category" => $e))->sort(array("sort_order" => -1, "name" => 1));
 	if($dbSubCategories->count()>0){
 		foreach($dbSubCategories as $dbSubCategory){
 			$catUUIDStr=$dbSubCategory['uuid'];
@@ -50,7 +50,7 @@ function fetch_sub_categories($e,$displayBool=false,$level=1){
 	return array('sub_categories' => $returnMenuStr, 'displayBool' => $displayCategorywithProductsBool);     
 }
 
-$latestProducts = $db->Products->find(array('publish_on_web' => true, 'product_category' => array('$ne' => "")))->sort(array("created_timestamp" => -1));
+$latestProducts = $db->Products->find(array('publish_on_web' => true, 'product_category' => array('$ne' => "")))->sort(array("sort_order" => -1,"modified_timestamp" => -1));
 $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"), array("status" => true)), 'code' => array('$ne' => "")))->sort(array("posted_timestamp" => -1));
 
 ?>
@@ -91,7 +91,7 @@ $webPages = $db->web_content->find(array('$or' => array(array("status" => "true"
 							<li><a href="<?php echo gb_fn_linkCacheHandler('contact.htm','contact.htm');?>"  title="Contact">Contact</a></li>
    					   </ul>
    					 </div>
-   					<?php if($fetchCategories = $db->categories->find(array("is_active" => true, "uuid_top_level_category" => ""))->sort(array("name" => 1))){ 
+   					<?php if($fetchCategories = $db->categories->find(array("is_active" => true, "uuid_top_level_category" => ""))->sort(array("sort_order" => -1, "name" => 1))){ 
    						if($fetchCategories->count()>0){
    						?>
    						<h2 class="site-map-cat-hding">Products</h2>
