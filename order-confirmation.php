@@ -9,16 +9,16 @@ if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
 			if($orderDetails = $db->orders->findOne(array("uuid" =>  $session_values['transaction_uuid'],  "order_items" => array('$exists' => true)))){
 			
 			}else{
-				header("Location: cart.htm?error=Add some items in your cart!"); exit;
+				header("Location: cart.htm?" . NewGuid() . " &error=Add some items in your cart!"); exit;
 			}
 		}else{
-			header("Location: cart.htm?error=Add some items in your cart!"); exit;
+			header("Location: cart.htm?" . NewGuid() . " &error=Add some items in your cart!"); exit;
 		}
 	}else{
-		header("Location: checkout.htm?error=Confirm billing address before payment!"); exit;
+		header("Location: checkout.htm?" . NewGuid() . " &error=Confirm billing address before payment!"); exit;
 	}
 }else{
-	header("Location: login.htm?redirect=confirm_billing"); exit;
+	header("Location: login.htm?" . NewGuid() . " &redirect=confirm_billing"); exit;
 }
 
 if(!empty($_POST['StatusCode'])){
@@ -103,7 +103,7 @@ if(!empty($_POST['StatusCode'])){
 				
 			$succ_msg="Thank you, your order has been placed successfully.";
 		}else{
-			header("Location: cart.htm?error=Add some items in your cart!"); exit;
+			header("Location: cart.htm?" . NewGuid() . " &error=Add some items in your cart!"); exit;
 		}
 	}else{
 		//create history
