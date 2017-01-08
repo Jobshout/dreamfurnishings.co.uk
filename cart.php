@@ -15,11 +15,11 @@ if(!empty($_POST['submit'])){
 				$err_msg="Add some products in your cart!";
 			}
 		}else{
-			header("Location: checkout.htm?redirect=cart");
+			header("Location: checkout.htm?".rand()."&redirect=cart");
 			exit;
 		}
 	}else{
-		header("Location: checkout.htm?redirect=cart");
+		header("Location: checkout.htm?".rand()."redirect=cart");
 		exit;
 	}
 }
@@ -212,7 +212,7 @@ function changeQuantity(id, val){
 	$.ajax({
 		url: 'updateUserPreferences.htm',
 		type: 'POST',
-		data: {"uuid" : id, "quantity" : val, "unitPrice" : unit_price },
+		data: {"uuid" : id, "quantity" : val, "unitPrice" : unit_price , "random" : Math.random() },
 		dataType: 'json',
 		cache: false,
 		success: function(response){
@@ -232,7 +232,7 @@ function remove_user_preferences(id, actionStr='cart'){
 	$.ajax({
 		url: 'removeUserPreferences.htm',
 		type: 'POST',
-		data: {"uuid" : id,  "action" : actionStr },
+		data: {"uuid" : id,  "action" : actionStr , "random" : Math.random() },
 		dataType: 'json',
 		cache: false,
 		success: function(response){

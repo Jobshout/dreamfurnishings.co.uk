@@ -70,7 +70,7 @@ color: #000;
 			<?php } ?>
 			<!-- |
 			<a HREF="#" STYLE="color:#000; font-size: 13px;" > <i CLASS="fa fa-sign-out"></i> Sign Out</a>-->
-			<a HREF="cart.htm?<?php echo NewGuid();?>" CLASS="btn btn-danger btn-sm displayCartsClass" STYLE="margin-left:7px; display:none;"> <i CLASS="fa fa-cart-plus"></i> &nbsp; Cart <span class="cart_items cartItemsClass">0</span></a>
+			<a HREF="cart.htm?<?php echo rand();?>" CLASS="btn btn-danger btn-sm displayCartsClass" STYLE="margin-left:7px; display:none;"> <i CLASS="fa fa-cart-plus"></i> &nbsp; Cart <span class="cart_items cartItemsClass">0</span></a>
 		</div>
 	</div>
 </div>
@@ -105,7 +105,6 @@ color: #000;
   			
 			<!-- Right nav -->
          	<ul class="nav navbar-nav navbar-right ">
-            	<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" href="javascript:void(0)" title="Home">Home</a></li>
             	<li><a id="ProductMainMenu" href="javascript:void(0)" title="Products">Products<span class="caret"></span></a>
             		<ul class="dropdown-menu">
             			<?php if(isset($menuHTMLStr) && $menuHTMLStr!=""){  ?>
@@ -116,6 +115,7 @@ color: #000;
             	</li>
             	<li><a href="<?php echo gb_fn_linkCacheHandler('about-us.html','content.htm?code=about-us');?>" title="Company Profile">Company Profile</a></li>
             	<li><a href="<?php echo gb_fn_linkCacheHandler('blogs.htm','blogs.htm'); ?>" title="Blog">Blog </a></li>
+            	<li><a href="<?php echo gb_fn_linkCacheHandler('index.htm','index.htm');?>" href="javascript:void(0)" title="Home">Home</a></li>
 				<li><a href="<?php echo gb_fn_linkCacheHandler('contact.htm','contact.htm'); ?>" title="Contact">Contact</a></li>
 				<li id="wishlistMenu" style="display:none;"><a href="<?php echo gb_fn_linkCacheHandler('wishlist.htm','wishlist.htm');?>" title="Wishlist"><i class="glyphicon glyphicon-heart"></i></a></li>
 			</ul>
