@@ -70,7 +70,7 @@ color: #000;
 			<?php } ?>
 			<!-- |
 			<a HREF="#" STYLE="color:#000; font-size: 13px;" > <i CLASS="fa fa-sign-out"></i> Sign Out</a>-->
-			<a HREF="cart.htm?<?php NewGuid();?>" CLASS="btn btn-danger btn-sm displayCartsClass" STYLE="margin-left:7px; display:none;"> <i CLASS="fa fa-cart-plus"></i> &nbsp; Cart <span class="cart_items cartItemsClass">0</span></a>
+			<a HREF="cart.htm?<?php echo NewGuid();?>" CLASS="btn btn-danger btn-sm displayCartsClass" STYLE="margin-left:7px; display:none;"> <i CLASS="fa fa-cart-plus"></i> &nbsp; Cart <span class="cart_items cartItemsClass">0</span></a>
 		</div>
 	</div>
 </div>

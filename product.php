@@ -253,7 +253,7 @@ require_once("include/main_header.php"); ?>
             			
             			<div class="col-sm-12 displayCartsClass" style="display:none;">
             			<?php } ?>
-            				<a href="cart.htm" class="btn btn-danger btn-sm " style=" border-radius:1px; line-height:30px; margin-bottom:10px; position: relative; width:100%;">
+            				<a href="cart.htm?<?php echo NewGuid();?>" class="btn btn-danger btn-sm " style=" border-radius:1px; line-height:30px; margin-bottom:10px; position: relative; width:100%;">
             					View cart<span class="cart_items cartItemsClass">0</span>
             				</a>
             			</div>
@@ -491,7 +491,7 @@ function add_user_preferences(id, actionStr){
 	$.ajax({
 		url: 'addUserPreferences.htm',
 		type: 'POST',
-		data: {"uuid" : id, "action" : actionStr, "availableOptions" : availableOptions, "unit_price" : unitPriceOfProduct, "quantity" :quantityNum },
+		data: {"uuid" : id, "action" : actionStr, "availableOptions" : availableOptions, "unit_price" : unitPriceOfProduct, "quantity" :quantityNum, "random" : Math.random() },
 		dataType: 'json',
 		cache: false,
 		success: function(response){
