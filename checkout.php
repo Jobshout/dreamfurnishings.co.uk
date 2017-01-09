@@ -61,8 +61,8 @@ require_once("save_contact.php");
                         			<div CLASS="form-group"><input placeholder="Email" id="email_address" name="email_address" type="text" CLASS="form-control"></div>
                           			<div CLASS="form-group"><input placeholder="Password" type="password" id="password" name="password" CLASS="form-control"></div>
                           			<input type="submit" name="sign_in" class="btn btn-danger" value="Sign In">
-                       				<span class="aa-lost-password"><a href="login.htm?action=requestnewpassword" class="btn btn-default">Lost your password?</a></span>
-                       				<span class="aa-lost-password" STYLE="float:right;">Don't have an account yet? <a href="register.htm" CLASS="btn btn-default">Create an account</a></span>
+                       				<span class="aa-lost-password"><a href="login.htm?action=requestnewpassword" class="btn btn-primary">Lost your password?</a></span>
+                       				<span class="aa-lost-password" STYLE="float:right;">Don't have an account yet? <a href="register.htm" CLASS="btn btn-primary">Create an account</a></span>
                         		</div>
                         	</form>
 						</dd>
