@@ -220,6 +220,7 @@ function changeQuantity(id, val){
 				$("#inputSB_"+id).val(subtotalFloat);
 				$("#spanSB_"+id).html(subtotalFloat);
 				evaluateGrandTotal();
+				fetchUserPreferences("cart");
 			}else if(response.error){
 				$(".cartTable").before('<div class="alert alert-danger" role="alert">'+response.error+'</div>');
 			}				
