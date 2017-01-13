@@ -66,7 +66,7 @@ if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
                 				</div>
 			    				<div class="row">
                     				<div class="col-xs-3 col-sm-2"></div>
-                    					<div class="col-xs-9 col-sm-10"><p CLASS="btn btn-danger">[ <i CLASS="fa fa-edit"></i> <a href="account.htm">Edit</a> ]</p>
+                    				<div class="col-xs-9 col-sm-10"><p CLASS="btn btn-danger"><a href="account.htm"><i CLASS="fa fa-edit"></i> Edit</a></p>
                     			</div>
                 			</div>
 						</div>
@@ -77,7 +77,7 @@ if(isset($isUserSignedInBool) && $isUserSignedInBool==true){
 						$total_trans=$transactions->count();
 						if($total_trans>0) {
 				?>
-				<div class="row" id="transaction_activity">
+				<div class="row" id="transaction_activity" style="margin-top:20px;">
 					<div class="col-sm-12 ">
                   		<div class="my-account-pg-hding"><span class="glyphicon glyphicon-list-alt"></span> My Activity</div>   
                  		<div style="padding:0 15px;">

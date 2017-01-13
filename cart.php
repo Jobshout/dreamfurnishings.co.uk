@@ -209,6 +209,7 @@ function load_data(){
 function changeQuantity(id, val){
 	var unit_price=parseFloat($("#unit_"+id).val());
 	var subtotalFloat=parseFloat(unit_price)*val;
+	subtotalFloat=subtotalFloat.toFixed(2);
 	$.ajax({
 		url: 'updateUserPreferences.htm',
 		type: 'POST',

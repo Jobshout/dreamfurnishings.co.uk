@@ -147,6 +147,88 @@ require_once("save_contact.php");
                                 </div>
                             </div>
                           </div>
+                          
+                          	<h2>Delivery Address</h2>
+                          		<label class="checkbox" style="margin-left: 23px;color:#999;">
+									<input name="same_delivery_address" value="true" id="same_delivery_address" type="checkbox" <?php if(isset($userLoggedIn) && isset($userLoggedIn['same_delivery_address']) && $userLoggedIn['same_delivery_address']==true){ echo 'checked'; } ?> >Same as billing address
+								</label>
+								<?php $deliveryAddressStr= isset($userLoggedIn['delivery_address']) ? $userLoggedIn['delivery_address'] : '';	?>
+                          		<div class="row">
+                            		<div class="col-md-6">
+                              			<div class="form-group">
+                              				<input name="d_first_name" value="<?php if(isset($deliveryAddressStr['first_name'])){ echo $deliveryAddressStr['first_name']; } ?>" placeholder="First Name*" id="d_first_name" class="form-control inputControl" type="text">
+        								</div>                             
+                            		</div>
+                            		<div class="col-md-6">
+                              			<div class="form-group">
+                              				<input name="d_last_name" value="<?php if(isset($deliveryAddressStr['last_name'])){ echo $deliveryAddressStr['last_name']; } ?>" placeholder="Last Name*" id="d_last_name" class="form-control inputControl" type="text">
+                                		</div>
+                            		</div>
+                          		</div> 
+                          		  
+                          		<div class="row">
+                            		<div class="col-md-6">
+                              			<div class="form-group">
+                              				<input name="d_email_address" value="<?php if(isset($deliveryAddressStr['Email'])){ echo $deliveryAddressStr['Email']; } ?>" placeholder="Email Address*" id="d_email_address" class="form-control inputControl"  type="text">
+                                		</div>                             
+                            		</div>
+                            		<div class="col-md-6">
+                              			<div class="form-group">
+                                			<input name="d_telephone" value="<?php if(isset($deliveryAddressStr['Mobile'])){ echo $deliveryAddressStr['Mobile']; } ?>" placeholder="Mobile*" id="d_telephone" class="form-control inputControl" type="text">
+                              			</div>
+                            		</div>
+                          		</div> 
+                          		<div class="row">
+                            		<div class="col-md-12">
+                              			<div class="form-group">
+                                			<textarea cols="8" rows="3" CLASS="form-control" placeholder="Address 1" id="d_address_line_1" name="d_address_line_1"><?php if(isset($deliveryAddressStr['address_line_1'])){ echo $deliveryAddressStr['address_line_1']; } ?></textarea>
+                              			</div>                             
+                            		</div>                            
+                          		</div>   
+                          		<div class="row">
+                            		<div class="col-md-12">
+                              			<div class="form-group">
+                              				<select class="form-control" id="d_country" name="d_country">
+                    							<option value="">--Select Country--</option>
+												<?php $country_table = $db->countries->find();
+													if($country_table->count()>0){
+														foreach($country_table as $country){
+															$selectedStr="";
+															if(isset($deliveryAddressStr['country']) && $deliveryAddressStr['country']==$country['name']){ 
+																$selectedStr="selected";
+															}
+															echo '<option value="'.$country['name'].'" '.$selectedStr.'>'.$country['name'].'</option>';
+														}
+													}
+												?>
+										</select>
+                               		</div>                             
+                            	</div>                            
+                          	</div>
+                          	<div class="row">
+                            	<div class="col-md-6">
+                              		<div class="form-group">
+                                		<input name="d_address_line_2" value="<?php if(isset($deliveryAddressStr['address_line_2'])){ echo $deliveryAddressStr['address_line_2']; } ?>" placeholder="Address 2" id="d_address_line_2" class="form-control inputControl" type="text">
+                              		</div>                             
+                            	</div>
+                            	<div class="col-md-6">
+                              		<div class="form-group">
+                              			<input name="d_city" value="<?php if(isset($deliveryAddressStr['address_line_3'])){ echo $deliveryAddressStr['address_line_3']; } ?>" placeholder="City*" id="d_city" class="form-control inputControl" type="text">
+                               		</div>
+                            	</div>
+                          	</div>   
+                          	<div class="row">
+                            	<div class="col-md-6">
+                              		<div class="form-group">
+                                		<input name="d_state" value="<?php if(isset($deliveryAddressStr['county_or_state'])){ echo $deliveryAddressStr['county_or_state']; } ?>" placeholder="State/County*" id="d_state" class="form-control inputControl" type="text">
+                              		</div>                             
+                            	</div>
+                            	<div class="col-md-6">
+                              		<div class="form-group">
+                              			<input name="d_postcode" value="<?php if(isset($deliveryAddressStr['post_zip_code'])){ echo $deliveryAddressStr['post_zip_code']; } ?>" placeholder="Postcode / Zip*" id="d_postcode" class="form-control inputControl" type="text">
+                                	</div>
+                           		</div>
+                          	</div>
                           	<div class="row"><div class="col-md-12"><input type="submit" value="Continue >" CLASS="btn btn-danger" name="submit" style="float:right"></div></div>                                    
                         </div></form>
 						</dd>
@@ -194,6 +276,31 @@ require_once("include/footer.php");
 <script>
 $(function () {
 	load_data();	
+	$("#same_delivery_address").click(function() {
+    	if ($(this).is(':checked')) {
+      		$("#d_first_name").val($("#first_name").val());
+      		$("#d_last_name").val($("#last_name").val());
+      		$("#d_email_address").val($("#email_address").val());
+      		$("#d_telephone").val($("#telephone").val());
+      		$("#d_address_line_1").val($("#address_line_1").val());
+      		$("#d_country").val($("#country").val());
+      		$("#d_address_line_2").val($("#address_line_2").val());
+      		$("#d_city").val($("#city").val());
+      		$("#d_state").val($("#state").val());
+      		$("#d_postcode").val($("#postcode").val());
+    	} else{
+    		$("#d_first_name").val('');
+    		$("#d_last_name").val('');
+    		$("#d_email_address").val('');
+    		$("#d_telephone").val('');
+    		$("#d_address_line_1").val('');
+    		$("#d_country").val('');
+    		$("#d_address_line_2").val('');
+    		$("#d_city").val('');
+    		$("#d_state").val('');
+    		$("#d_postcode").val('');
+    	}
+    });
 });
 
 var xhr;
@@ -262,6 +369,29 @@ $(function () {
       				required: "Please enter password"
     			}
   			}
+		});
+		$( "#myaccount" ).validate( {
+        	errorElement: "em",
+			rules: {
+				first_name : { required: true },
+				last_name : { required: true },
+				telephone : { required: true },
+				address_line_1 : { required: true },
+				country : { required: true },
+				city : { required: true },
+				state : { required: true },
+				postcode : { required: true },
+				email_address : { required :true, email: true},
+				d_first_name : { required: true },
+				d_last_name : { required: true },
+				d_telephone : { required: true },
+				d_address_line_1 : { required: true },
+				d_country : { required: true },
+				d_city : { required: true },
+				d_state : { required: true },
+				d_postcode : { required: true },
+				d_email_address : { required :true, email: true}
+			}
 		});
     });
 </script>

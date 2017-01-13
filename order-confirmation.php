@@ -331,8 +331,24 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 							</div>
 						</div>
 						<div class="col-sm-6">
-							<h4 CLASS="heding"><span>Billing Information</span></h4>
+							<h4 CLASS="heding"><span>Delivery Information</span></h4>
 							<div style="padding:0 5px;">
+								<?php $deliveryAddressStr= isset($userLoggedIn['delivery_address']) ? $userLoggedIn['delivery_address'] : '';
+								if($deliveryAddressStr!=""){	?>
+									
+									<p class="big-hding" style="padding:0px;"><STRONG>Name:</STRONG> <?php if(isset($deliveryAddressStr["first_name"]) && $deliveryAddressStr["first_name"]!=""){ echo $deliveryAddressStr["first_name"];	} ?>&nbsp;<?php if(isset($deliveryAddressStr["last_name"]) && $deliveryAddressStr["last_name"]!=""){ echo $deliveryAddressStr["last_name"];	} ?></p>
+									<P>
+										<SPAN CLASS="big-hding" STYLE="padding:0px;"><STRONG>Address:</STRONG> <?php if(isset($deliveryAddressStr["address_line_1"]) && $deliveryAddressStr["address_line_1"]!=""){ echo $deliveryAddressStr["address_line_1"];	} ?></SPAN>
+										<?php if(isset($deliveryAddressStr["address_line_2"]) && $deliveryAddressStr["address_line_2"]!=""){ echo ", ".$deliveryAddressStr["address_line_2"];	} ?>
+										<?php if(isset($deliveryAddressStr["address_line_3"]) && $deliveryAddressStr["address_line_3"]!=""){ echo ", ".$deliveryAddressStr["address_line_3"];	} ?>
+										<?php if(isset($deliveryAddressStr["county_or_state"]) && $deliveryAddressStr["county_or_state"]!=""){ echo ", ".$deliveryAddressStr["county_or_state"];	} ?>
+										<?php if(isset($deliveryAddressStr["country"]) && $deliveryAddressStr["country"]!=""){ echo ", ".$deliveryAddressStr["country"];	} ?>
+										<?php if(isset($deliveryAddressStr["post_zip_code"]) && $deliveryAddressStr["post_zip_code"]!=""){ echo ", ".$deliveryAddressStr["post_zip_code"];	} ?>
+									</P>
+									<P><STRONG>Mobile:</STRONG> <?php if(isset($deliveryAddressStr["Mobile"]) && $deliveryAddressStr["Mobile"]!=""){ echo $deliveryAddressStr["Mobile"];	} ?></P>
+									<P><STRONG>Email:</STRONG> <a href="mailto:<?php if(isset($deliveryAddressStr["Email"]) && $deliveryAddressStr["Email"]!=""){ echo $deliveryAddressStr["Email"];	} ?>"><?php if(isset($deliveryAddressStr["Email"]) && $deliveryAddressStr["Email"]!=""){ echo $deliveryAddressStr["Email"];	} ?></a></P>
+								
+								<?php }else{	?>
 								<p class="big-hding" style="padding:0px;"><STRONG>Name:</STRONG> <?php if(isset($userLoggedIn["First name"]) && $userLoggedIn["First name"]!=""){ echo $userLoggedIn["First name"];	} ?>&nbsp;<?php if(isset($userLoggedIn["Surname"]) && $userLoggedIn["Surname"]!=""){ echo $userLoggedIn["Surname"];	} ?></p>
 								<P><SPAN CLASS="big-hding" STYLE="padding:0px;"><STRONG>Address:</STRONG> <?php if(isset($userLoggedIn["address_line_1"]) && $userLoggedIn["address_line_1"]!=""){ echo $userLoggedIn["address_line_1"];	} ?></SPAN>
 								<?php if(isset($userLoggedIn["address_line_2"]) && $userLoggedIn["address_line_2"]!=""){ echo ", ".$userLoggedIn["address_line_2"];	} ?>
@@ -344,6 +360,7 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 								</P>
 								<P><STRONG>Mobile:</STRONG> <?php if(isset($userLoggedIn["Mobile"]) && $userLoggedIn["Mobile"]!=""){ echo $userLoggedIn["Mobile"];	} ?></P>
 								<P><STRONG>Email:</STRONG> <a href="mailto:<?php if(isset($userLoggedIn["Email"]) && $userLoggedIn["Email"]!=""){ echo $userLoggedIn["Email"];	} ?>"><?php if(isset($userLoggedIn["Email"]) && $userLoggedIn["Email"]!=""){ echo $userLoggedIn["Email"];	} ?></a></P>
+								<?php } ?>
 							</div>  
 						</div>
         			</div>

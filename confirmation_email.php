@@ -193,7 +193,20 @@ h3{
 			Order Date: <?php if(isset($orderDetails["order_date"]) && $orderDetails["order_date"]!=""){ echo date("d M Y", strtotime($orderDetails["order_date"]));;	} ?><br>
 			Total Amount: <?php if(isset($orderDetails["total_due_with_tax"]) && $orderDetails["total_due_with_tax"]!=""){ echo CURRENCY.$orderDetails["total_due_with_tax"];	} ?></p>
 		</div>
-		<div class="col1 width385"><h2>BILLING INFORMATION</h2>
+		<div class="col1 width385"><h2>DELIVERY INFORMATION</h2>
+			<?php $deliveryAddressStr= isset($userLoggedIn['delivery_address']) ? $userLoggedIn['delivery_address'] : '';
+				if($deliveryAddressStr!=""){	?>
+				<p><?php if(isset($deliveryAddressStr["first_name"]) && $deliveryAddressStr["first_name"]!=""){ echo $deliveryAddressStr["first_name"];	} ?>&nbsp;<?php if(isset($deliveryAddressStr["last_name"]) && $deliveryAddressStr["last_name"]!=""){ echo $deliveryAddressStr["last_name"];	} ?><br>
+					<?php if(isset($deliveryAddressStr["address_line_1"]) && $deliveryAddressStr["address_line_1"]!=""){ echo $deliveryAddressStr["address_line_1"];	} ?>
+					<?php if(isset($deliveryAddressStr["address_line_2"]) && $deliveryAddressStr["address_line_2"]!=""){ echo ", ".$deliveryAddressStr["address_line_2"];	} ?>
+					<?php if(isset($deliveryAddressStr["address_line_3"]) && $deliveryAddressStr["address_line_3"]!=""){ echo ", ".$deliveryAddressStr["address_line_3"];	} ?>
+					<?php if(isset($deliveryAddressStr["county_or_state"]) && $deliveryAddressStr["county_or_state"]!=""){ echo ", ".$deliveryAddressStr["county_or_state"];	} ?>
+					<?php if(isset($deliveryAddressStr["country"]) && $deliveryAddressStr["country"]!=""){ echo ", ".$deliveryAddressStr["country"];	} ?>
+					<?php if(isset($deliveryAddressStr["post_zip_code"]) && $deliveryAddressStr["post_zip_code"]!=""){ echo ", ".$deliveryAddressStr["post_zip_code"];	} ?><br>
+				Telephone: <?php if(isset($deliveryAddressStr["Mobile"]) && $deliveryAddressStr["Mobile"]!=""){ echo $deliveryAddressStr["Mobile"];	} ?><br>
+				E-mail: <a href="mailto:<?php if(isset($deliveryAddressStr["Email"]) && $deliveryAddressStr["Email"]!=""){ echo $deliveryAddressStr["Email"];	} ?>"><?php if(isset($deliveryAddressStr["Email"]) && $deliveryAddressStr["Email"]!=""){ echo $deliveryAddressStr["Email"];	} ?></p>				
+			<?php }else{	?>
+			
 			<p><?php if(isset($userLoggedIn["First name"]) && $userLoggedIn["First name"]!=""){ echo $userLoggedIn["First name"];	} ?>&nbsp;<?php if(isset($userLoggedIn["Surname"]) && $userLoggedIn["Surname"]!=""){ echo $userLoggedIn["Surname"];	} ?><br>
 			<?php if(isset($userLoggedIn["address_line_1"]) && $userLoggedIn["address_line_1"]!=""){ echo $userLoggedIn["address_line_1"];	} ?>
 								<?php if(isset($userLoggedIn["address_line_2"]) && $userLoggedIn["address_line_2"]!=""){ echo ", ".$userLoggedIn["address_line_2"];	} ?>
@@ -203,6 +216,8 @@ h3{
 								<?php if(isset($userLoggedIn["post_zip_code"]) && $userLoggedIn["post_zip_code"]!=""){ echo ", ".$userLoggedIn["post_zip_code"];	} ?><br>
 			Telephone: <?php if(isset($userLoggedIn["Mobile"]) && $userLoggedIn["Mobile"]!=""){ echo $userLoggedIn["Mobile"];	} ?><br>
 			E-mail: <a href="mailto:<?php if(isset($userLoggedIn["Email"]) && $userLoggedIn["Email"]!=""){ echo $userLoggedIn["Email"];	} ?>"><?php if(isset($userLoggedIn["Email"]) && $userLoggedIn["Email"]!=""){ echo $userLoggedIn["Email"];	} ?></p>
+			
+			<?php } ?>
 		</div>
 	</div>
 	

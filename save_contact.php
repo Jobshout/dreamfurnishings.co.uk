@@ -34,8 +34,22 @@ if(!empty($_POST['submit'])){
 				$time = time();
 				
 				if($contactsRecord=$mongoCRUDClass->db_findone("Contacts", array("uuid" => $uuid ))){
-				//if($contactsRecord= $db->Contacts->findOne(array("uuid" => $uuid ))){
-					$updateArr= array("First name" => $first_name, "Surname" => $last_name, "Email" => $email_address, "address_line_1" => $addr1, "address_line_2" => $addr2, "address_line_3" => $city, "county_or_state" => $state, "post_zip_code" => $postcode, "country" => $country, "Mobile" => $telephone);
+					
+					$d_first_name= isset($_POST['d_first_name']) ? $_POST['d_first_name'] : '';
+					$d_last_name= isset($_POST['d_last_name']) ? $_POST['d_last_name'] : '';
+					$d_email_address= isset($_POST['d_email_address']) ? $_POST['d_email_address'] : '';
+					$d_telephone= isset($_POST['d_telephone']) ? $_POST['d_telephone'] : '';
+					$d_address_line_1= isset($_POST['d_address_line_1']) ? $_POST['d_address_line_1'] : '';
+					$d_address_line_2= isset($_POST['d_address_line_2']) ? $_POST['d_address_line_2'] : '';
+					$d_country= isset($_POST['d_country']) ? $_POST['d_country'] : '';
+					$d_city= isset($_POST['d_city']) ? $_POST['d_city'] : '';
+					$d_state= isset($_POST['d_state']) ? $_POST['d_state'] : '';
+					$d_postcode= isset($_POST['d_postcode']) ? $_POST['d_postcode'] : '';
+					$same_delivery_address= isset($_POST['same_delivery_address']) ? $_POST['same_delivery_address'] : false;
+					
+					$deliveryAddr=array("first_name" => $d_first_name, "last_name" => $d_last_name, "Email" => $d_email_address, "address_line_1" => $d_address_line_1, "address_line_2" => $d_address_line_2, "address_line_3" => $d_city, "county_or_state" => $d_state, "post_zip_code" => $d_postcode, "country" => $d_country, "Mobile" => $d_telephone);
+					
+					$updateArr= array("First name" => $first_name, "Surname" => $last_name, "Email" => $email_address, "address_line_1" => $addr1, "address_line_2" => $addr2, "address_line_3" => $city, "county_or_state" => $state, "post_zip_code" => $postcode, "country" => $country, "Mobile" => $telephone, "same_delivery_address" => $same_delivery_address, "delivery_address" => $deliveryAddr);
 					if(isset($_POST['password']) && $_POST['password']!=""){
 						$password=addslashes($_POST["password"]);
 						$md5_password=md5($password);
