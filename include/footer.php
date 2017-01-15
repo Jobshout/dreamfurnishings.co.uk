@@ -13,3 +13,5 @@
 <script type="text/javascript">
 var linkHandlerBool='<?php if(defined("SEOFRIENDLYFLAG")){	echo SEOFRIENDLYFLAG;	}	?>';
 </script>
+
+<?php include_once("include/google-analytics-tracking.php") ?>	
