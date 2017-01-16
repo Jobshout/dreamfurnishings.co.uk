@@ -268,7 +268,11 @@ if(!empty($_POST['submit'])){
 							<?php $country_table = $db->countries->find(array("status"=>1));
 								if(count($country_table)>0){
 									foreach($country_table as $country){
-										echo '<option value="'.$country['name'].'">'.$country['name'].'</option>';
+										$defaultselectedOptionStr="";
+										if($country['WMO']=="UK"){
+											$defaultselectedOptionStr="selected";
+										}
+										echo '<option value="'.$country['name'].'" '.$defaultselectedOptionStr.'>'.$country['name'].'</option>';
 									}
 								}
 							?>

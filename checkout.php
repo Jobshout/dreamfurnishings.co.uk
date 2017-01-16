@@ -87,7 +87,7 @@ require_once("save_contact.php");
                           		<div class="row">
                             		<div class="col-md-6">
                               			<div class="form-group">
-                              				<input name="email_address" value="<?php if(isset($userLoggedIn) && isset($userLoggedIn['Email'])){ echo $userLoggedIn['Email']; } ?>" placeholder="Email Address*" id="email_address" class="form-control inputControl"  type="text">
+                              				<input name="email_address" readonly value="<?php if(isset($userLoggedIn) && isset($userLoggedIn['Email'])){ echo $userLoggedIn['Email']; } ?>" placeholder="Email Address*" id="email_address" class="form-control inputControl"  type="text">
                                 		</div>                             
                             		</div>
                             		<div class="col-md-6">
