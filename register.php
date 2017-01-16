@@ -265,7 +265,7 @@ if(!empty($_POST['submit'])){
 							<div CLASS="col-md-12"><div class="form-group">
                     	<select class="form-control" id="country" name="country">
                     		<option value="">--Select Country--</option>
-							<?php $country_table = $db->countries->find();
+							<?php $country_table = $db->countries->find(array("status"=>1));
 								if(count($country_table)>0){
 									foreach($country_table as $country){
 										echo '<option value="'.$country['name'].'">'.$country['name'].'</option>';

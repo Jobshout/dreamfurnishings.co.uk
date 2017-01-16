@@ -1,6 +1,24 @@
 <?php
 ini_set('display_errors',1);
 require_once("include/config_inc.php");
+$countUpdated=0;
+echo "<h3>Update 'status' field for all countries</h3><br>";
+$country_table = $db->countries->find();
+if($country_table->count()>0){
+	echo "Count: ".$country_table->count()."<br>";
+	foreach($country_table as $country){
+		echo $country['_id']."<br>";
+			
+		if($country["WMO"]=="UK"){
+			$db->countries->update(array("_id" => $country['_id']), array('$set' => array('status' => 1)));
+		}else{
+			$db->countries->update(array("_id" => $country['_id']), array('$set' => array('status' => 0)));
+		}
+		$countUpdated++;
+	}
+}
+echo "<br>Rows Updated: ".$countUpdated;
+exit;
 $file_contentJson= file_get_contents("country-codes.json");
 $file_contentJson = (array) json_decode($file_contentJson);
 $countInserted=0;$countUpdated=0;

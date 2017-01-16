@@ -108,7 +108,7 @@ require_once("save_contact.php");
                               			<div class="form-group">
                               				<select class="form-control" id="country" name="country">
                     							<option value="">--Select Country--</option>
-												<?php $country_table = $db->countries->find();
+												<?php $country_table = $db->countries->find(array("status"=>1));
 													if($country_table->count()>0){
 														foreach($country_table as $country){
 															$selectedStr="";
@@ -190,7 +190,7 @@ require_once("save_contact.php");
                               			<div class="form-group">
                               				<select class="form-control" id="d_country" name="d_country">
                     							<option value="">--Select Country--</option>
-												<?php $country_table = $db->countries->find();
+												<?php $country_table = $db->countries->find(array("status"=>1));
 													if($country_table->count()>0){
 														foreach($country_table as $country){
 															$selectedStr="";

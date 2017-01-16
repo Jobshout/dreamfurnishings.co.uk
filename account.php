@@ -106,7 +106,7 @@ require_once("save_contact.php");
         <label class="control-label" for="country">Country<sup CLASS="required">*</sup> </label>
         <select class="form-control" id="country" name="country">
                     							<option value="">--Select Country--</option>
-												<?php $country_table = $db->countries->find();
+												<?php $country_table = $db->countries->find(array("status"=>1));
 													if($country_table->count()>0){
 														foreach($country_table as $country){
 															$selectedStr="";
