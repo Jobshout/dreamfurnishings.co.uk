@@ -47,8 +47,9 @@ if(isset($smtpservice) && $smtpservice=="gmail"){
 $adminEmailAddr="jobshout421@gmail.com";
 $bbEmailAddr=$adminEmailAddr;
 $ccEmailAddr="";
+$ccWebmasterEmailAddr="jobshout421@gmail.com";
 
-$fetchAdminEmails= $db->Tokens->find(array("code" => array('$in' => array('dreamfurnishing-admin-email','dreamfurnishing-cc-email','dreamfurnishing-bb-email'))));
+$fetchAdminEmails= $db->Tokens->find(array("code" => array('$in' => array('dreamfurnishing-admin-email','dreamfurnishing-cc-email','dreamfurnishing-bb-email','dreamfurnishing-cc-webmaster'))));
 	if($fetchAdminEmails->count()>0){
 		foreach($fetchAdminEmails as $token){	
 			if(isset($token["contentTxt"]) && $token["contentTxt"]!=""){
@@ -59,11 +60,14 @@ $fetchAdminEmails= $db->Tokens->find(array("code" => array('$in' => array('dream
 					$bbEmailAddr=$token["contentTxt"];
 				}elseif(isset($token["code"]) && $token["code"]=="dreamfurnishing-cc-email"){
 					$ccEmailAddr=$token["contentTxt"];
+				}elseif(isset($token["code"]) && $token["code"]=="dreamfurnishing-cc-webmaster"){
+					$ccWebmasterEmailAddr=$token["contentTxt"];
 				}
 			}
 		}
 	}
 define("ADMIN_EMAIL", $adminEmailAddr);
 define("ADMIN_CC_EMAIL", $ccEmailAddr);
+define("ADMIN_CC_WEBMASTER", $ccWebmasterEmailAddr);
 define("ADMIN_BB_EMAIL", $bbEmailAddr);
 ?>

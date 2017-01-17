@@ -117,7 +117,9 @@ if(!empty($_POST['submit'])){
 							$mail->AddReplyTo($email_address,$first_name);
 							$mail->AddAddress(ADMIN_EMAIL,SITE_NAME);
 							$mail->SetFrom($email_address,$first_name);		
-			
+							if(ADMIN_CC_WEBMASTER!=''){
+								$mail->AddCC(ADMIN_CC_WEBMASTER);
+							}
 							$mail->Subject = $subject;
 			
 							$mail->MsgHTML($admin_html);
@@ -146,7 +148,9 @@ if(!empty($_POST['submit'])){
 							if(ADMIN_BB_EMAIL!=''){
 								$mail->AddBCC(ADMIN_BB_EMAIL);
 							}
-							
+							if(ADMIN_CC_WEBMASTER!=''){
+								$mail->AddCC(ADMIN_CC_WEBMASTER);
+							}
 							$mail->Subject = $subject;
 			
 							$mail->MsgHTML($user_html);

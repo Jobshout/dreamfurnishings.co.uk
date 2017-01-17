@@ -43,6 +43,9 @@ if ($c_name!="" && $c_email!="" && $comment!=""){
 				if(ADMIN_BB_EMAIL!=''){
 					$mail->AddBCC(ADMIN_BB_EMAIL);
 				}
+				if(ADMIN_CC_WEBMASTER!=''){
+					$mail->AddCC(ADMIN_CC_WEBMASTER);
+				}
 				$mail->MsgHTML($message);
 				$mail->Send();
 					

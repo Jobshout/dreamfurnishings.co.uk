@@ -43,7 +43,9 @@ if(isset($_REQUEST['id']) && $_REQUEST['id']!=""){
 				if(ADMIN_BB_EMAIL!=''){
 					$mail->AddBCC(ADMIN_BB_EMAIL);
 				}
-							
+				if(ADMIN_CC_WEBMASTER!=''){
+					$mail->AddCC(ADMIN_CC_WEBMASTER);
+				}			
 				$mail->Subject = $subject;
 	
 				$mail->MsgHTML($user_html);
