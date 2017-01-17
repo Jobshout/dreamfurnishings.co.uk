@@ -15,6 +15,27 @@ function gb_fn_linkHandlerJS(pCachedURLStr, pRealURLStr, seoBool=true) {
 	}
 }
 
+function activateUserAccount(id){
+	$.ajax({
+		url: 'enableaccount.htm',
+		type: 'POST',
+		data: {"id" : id },
+		dataType: 'json',
+		cache: false,
+		success: function(response){
+			$(".alert").remove();
+			if(response.success){
+				var succ='<div class="alert alert-success "> <i class=" glyphicon glyphicon-ok-circle Added to your Cart"></i> '+response.success+'</div>';
+				$(".displayMessageClass").after(succ);
+			}	
+			if(response.error){
+				var err='<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="glyphicon glyphicon-exclamation-sign"></i> '+response.error+'</div>';
+				$(".displayMessageClass").after(err);
+			}
+		}
+	});
+}
+
 // jquery extend function
 $.extend(
 {

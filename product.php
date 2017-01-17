@@ -204,8 +204,14 @@ require_once("include/main_header.php"); ?>
         			<?php if(isset($dbProductData['stock_available']) && $dbProductData['stock_available']>0){ ?>
         				Availability:<strong> In stock</strong></p>
         			<?php }else{ ?>
-        				Availability:<strong> Out of stock</strong> (Call Us)</p>
-        			<?php } ?>
+        				Availability:
+        				<?php $outOfStockStr=get_token_value('out-of-stock-message');
+							if($outOfStockStr!=""){
+								echo $outOfStockStr;
+							}else{ ?>
+        					<strong> Out of stock</strong> (Call Us)</p>
+        				<?php }
+        				} ?>
             		<div class="price-block">
             			<?php if(isset($dbProductData['Unit_Price']) && $dbProductData['Unit_Price']>0){ ?>
             			<span class="price"><?php echo CURRENCY." ".$dbProductData['Unit_Price']; ?></span>

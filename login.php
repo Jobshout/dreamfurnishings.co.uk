@@ -53,7 +53,7 @@ require_once("include/main_header.php");
 		<div class="row content">
 			<div class="col-md-12">
 				<form class="form-signin wow fadeInUp animated" name="login" id="login" method="post" style="visibility: visible; animation-name: fadeInUp;" data-wow-animation-name="fadeInUp">
-                	<h2 class="form-signin-heading topHeadingsClass">Sign in now</h2>
+                	<h2 class="form-signin-heading topHeadingsClass displayMessageClass">Sign in now</h2>
                 	<?php if(isset($err_msg)){ ?>
 			 			<div class="alert alert-danger alert-dismissable">
   							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -79,9 +79,9 @@ require_once("include/main_header.php");
 						
 						
 						<div class="pull-right" style="position: relative;bottom: 22px;">
-                        		<a href="javascript:void(0)" onClick="swtichForms('fpwd'); return false;" id="fPwdBtn" class="btn btn-primary btn-xs"  > Forgot Password?</a>
-                        		<a href="javascript:void(0)" onClick="swtichForms('login'); return false;" style="display:none; margin-bottom:5px;" id="loginBtn" class="btn btn-primary btn-xs"  > Sign In?</a>
-							</div>
+                        	<a href="javascript:void(0)" onClick="swtichForms('fpwd'); return false;" id="fPwdBtn" class="btn btn-primary btn-xs"  > Forgot Password?</a>
+                        	<a href="javascript:void(0)" onClick="swtichForms('login'); return false;" style="display:none; margin-bottom:5px;" id="loginBtn" class="btn btn-primary btn-xs"  > Sign In?</a>
+						</div>
                 	</div>
             	</form>
 			</div>

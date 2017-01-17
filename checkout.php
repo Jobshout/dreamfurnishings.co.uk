@@ -33,6 +33,7 @@ require_once("save_contact.php");
 	<div class="container">
 		<div class="row content">
 			<div CLASS="col-md-8">
+				<span class="displayMessageClass"></span>
 				<?php if(isset($_GET['error'])){ ?>
 						<div class="alert alert-danger alert-dismissable">
   							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

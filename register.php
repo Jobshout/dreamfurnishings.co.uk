@@ -167,6 +167,14 @@ if(!empty($_POST['submit'])){
 					
 						if($returnSuccMsgFlag){
 							$succ_msg = 'Thank you for registration with '.SITE_NAME.'. Please check your email.';
+							unset($_POST['first_name']);
+							unset($_POST['last_name']);
+							unset($_POST['email_address']);
+							unset($_POST['address_line_1']);
+							unset($_POST['city']);
+							unset($_POST['postcode']);
+							unset($_POST['country']);
+							unset($_POST['telephone']);
 						}else{
 							$err_msg = "Sorry, your request can't be processed now, please try later!";
 						}
@@ -174,19 +182,10 @@ if(!empty($_POST['submit'])){
 					}
 				}else{
 					$err_msg = "User with this email already exists, please confirm your registration from email sent to you or contact us!";
+					unset($_POST['email_address']);
 				}
-				
-				unset($_POST['first_name']);
-				unset($_POST['last_name']);
-				unset($_POST['email_address']);
-				unset($_POST['address_line_1']);
-				unset($_POST['city']);
-				unset($_POST['postcode']);
-				unset($_POST['country']);
-				unset($_POST['telephone']);
-				unset($_POST['password']);
-				unset($_POST['confirm_password']);
-			
+			unset($_POST['password']);
+			unset($_POST['confirm_password']);
 		}
 	}
 }
@@ -230,34 +229,34 @@ if(!empty($_POST['submit'])){
                 		<div class="row">
                             <div class="col-md-6">
                               	<div class="form-group">
-                                	<input class="form-control" placeholder="First Name*" autofocus="" type="text" id="first_name" name="first_name">
+                                	<input class="form-control" placeholder="First Name*" autofocus="" type="text" id="first_name" name="first_name" value="<?php if(isset($_POST['first_name']) && $_POST['first_name']){	echo $_POST['first_name'];	} ?>">
                               	</div>                             
                             </div>
                             <div class="col-md-6">
                               	<div class="form-group">
-                                	<input class="form-control" placeholder="Last Name*" type="text" id="last_name" name="last_name">
+                                	<input class="form-control" placeholder="Last Name*" type="text" id="last_name" name="last_name" value="<?php if(isset($_POST['last_name']) && $_POST['last_name']){	echo $_POST['last_name'];	} ?>">
                               	</div>
                             </div>
 						</div>
                    		<div class="row">
 							<div CLASS="col-md-12"><div class="form-group">
-                    			<input class="form-control" placeholder="Address 1*" type="text" id="address_line_1" name="address_line_1">
+                    			<input class="form-control" placeholder="Address 1*" type="text" id="address_line_1" name="address_line_1" value="<?php if(isset($_POST['address_line_1']) && $_POST['address_line_1']){	echo $_POST['address_line_1'];	} ?>">
                     		</div></div>
                     	</div>
                     	<div class="row">
 							<div CLASS="col-md-12"><div class="form-group">
-                    			<input class="form-control" placeholder="Address 2" type="text" id="address_line_2" name="address_line_2">
+                    			<input class="form-control" placeholder="Address 2" type="text" id="address_line_2" name="address_line_2" value="<?php if(isset($_POST['address_line_2']) && $_POST['address_line_2']){	echo $_POST['address_line_2'];	} ?>">
                     		</div></div>
                     	</div>
                     	<div class="row">
                             <div class="col-md-6">
                               	<div class="form-group">
-                              		<input class="form-control" placeholder="City*" type="text" id="city" name="city">
+                              		<input class="form-control" placeholder="City*" type="text" id="city" name="city" value="<?php if(isset($_POST['city']) && $_POST['city']){	echo $_POST['city'];	} ?>">
                               	</div>                             
                             </div>
                             <div class="col-md-6">
                               	<div class="form-group">
-                    				<input class="form-control" placeholder="State/County*" type="text" id="state" name="state">
+                    				<input class="form-control" placeholder="State/County*" type="text" id="state" name="state" value="<?php if(isset($_POST['state']) && $_POST['state']){	echo $_POST['state'];	} ?>">
                     			</div>
                     		</div>
                     	</div>
@@ -269,7 +268,9 @@ if(!empty($_POST['submit'])){
 								if(count($country_table)>0){
 									foreach($country_table as $country){
 										$defaultselectedOptionStr="";
-										if($country['WMO']=="UK"){
+										if(isset($_POST['country']) && $_POST['country']==$country['WMO']){	
+											$defaultselectedOptionStr="selected";
+										}	elseif($country['WMO']=="UK"){
 											$defaultselectedOptionStr="selected";
 										}
 										echo '<option value="'.$country['name'].'" '.$defaultselectedOptionStr.'>'.$country['name'].'</option>';
@@ -281,18 +282,18 @@ if(!empty($_POST['submit'])){
 						<div class="row">
                             <div class="col-md-6">
                               	<div class="form-group">
-                              		<input class="form-control" placeholder="Post Code*" type="text" id="postcode" name="postcode">
+                              		<input class="form-control" placeholder="Post Code*" type="text" id="postcode" name="postcode" value="<?php if(isset($_POST['postcode']) && $_POST['postcode']){	echo $_POST['postcode'];	} ?>">
                               	</div>
                             </div>
                             <div class="col-md-6">
                               	<div class="form-group">
-                    				<input class="form-control" placeholder="Telephone*" type="text" id="telephone" name="telephone">
+                    				<input class="form-control" placeholder="Telephone*" type="text" id="telephone" name="telephone" value="<?php if(isset($_POST['telephone']) && $_POST['telephone']){	echo $_POST['telephone'];	} ?>">
                     			</div>
                     		</div>
                     	</div>
                     	<div class="row">
 							<div CLASS="col-md-12">
-                    			<input class="form-control" placeholder="Email*" type="text" id="email_address" name="email_address">
+                    			<input class="form-control" placeholder="Email*" type="text" id="email_address" name="email_address" value="<?php if(isset($_POST['email_address']) && $_POST['email_address']){	echo $_POST['email_address'];	} ?>">
                     		</div>
                     	</div>
                     	<div class="row">
