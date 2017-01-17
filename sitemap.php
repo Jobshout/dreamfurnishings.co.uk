@@ -33,7 +33,8 @@ function fetch_sub_categories($e,$displayBool=false,$level=1){
                     //}
                     $returnMenuStr.= ' ">';
                     foreach($dbProductsForCat as $productDetails){
-                        $returnMenuStr.= '<li>'.$productDetails["ProductName"].'</li>';
+                    	$productLinkStr= gb_fn_linkCacheHandler('product-'.$productDetails["product_code"].'.html','product.htm?code='.$productDetails["product_code"]);
+                        $returnMenuStr.= '<li><a href="'.$productLinkStr.'">'.$productDetails["ProductName"].'</a></li>';
                    	}
 					$returnMenuStr.= '</ul>';
 				}

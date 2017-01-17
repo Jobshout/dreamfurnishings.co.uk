@@ -13,7 +13,7 @@
         		<?php } ?>
                  </ul>
             </div>
-            <?php $latestProductsList = $db->Products->find(array('publish_on_web' => true))->sort(array("created_timestamp" => 1))->limit(5);
+            <?php $latestProductsList = $db->Products->find(array('publish_on_web' => true))->sort(array("sort_order" => -1,"modified_timestamp" => -1))->limit(5);
             if($latestProductsList->count()>0){	?>
             <div class="col-sm-3">
 				<h2>Products</h2>
