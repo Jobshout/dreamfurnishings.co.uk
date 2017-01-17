@@ -1,6 +1,7 @@
 <?php 
 require_once("include/config_inc.php");
 require_once('include/class.phpmailer.php');
+
 $result=array();
 
 if(isset($_REQUEST['id']) && $_REQUEST['id']!=""){ 
@@ -13,7 +14,8 @@ if(isset($_REQUEST['id']) && $_REQUEST['id']!=""){
 		$returnSuccMsgFlag=true;
 						
 		$subject=SITE_NAME." account activation mail";
-		
+		$activationLinkStr=SITE_WS_PATH."login.htm?cc=".$create_token_entry['_id']."&".rand();
+				
 		$user_footer='</table>';
 		$user_header  = "<table border='0' style='text-align:left; width:95%; padding:5px;'>";
 		$user_header .= "<tr><td colspan='4' style='text-align:left;'>Hi ".$userRecords['First name']." ".$userRecords['Surname'].",\n\n</td></tr>";
@@ -21,7 +23,7 @@ if(isset($_REQUEST['id']) && $_REQUEST['id']!=""){
 		$user_header .= "<tr><td colspan='4'>This e-mail is to confirm your request to activate your account with <a href='".SITE_WS_PATH."' target='_blank'>".SITE_WS_PATH."</a> Dream Furnishings.</td></tr>";
 		$user_header .= "<tr><td colspan='4'>&nbsp;</td></tr>";
 		$user_header .= "<tr><td colspan='4'>To validate the e-mail address you entered on <a href='".SITE_WS_PATH."' target='_blank'>".SITE_WS_PATH."</a>, click on the link below or copy the line and paste it into a web browser (if the ENTIRE line does not look like a link you must copy and paste or you will get an error):</td></tr>";
-		$user_header .= "<tr><td colspan='4'><a href='".SITE_WS_PATH."login.htm?cc=".$create_token_entry['_id']."&".rand()."'>".SITE_WS_PATH."login.htm?cc=".$create_token_entry['_id']."&".rand()."</a></td></tr>";					  
+		$user_header .= "<tr><td colspan='4'><a href='".$activationLinkStr."'>".$activationLinkStr."</a></td></tr>";					  
 		$user_header .= "<tr><td colspan='4'>&nbsp;</td></tr>";
 						
 		$user_html = $user_header.$user_footer;

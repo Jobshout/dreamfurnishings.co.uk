@@ -5,10 +5,11 @@ $userUUIDStr="";
 if(isset($_GET['token'])){
 	if($chkToken = $mongoCRUDClass->db_findone("authentication_token", array("_id" => new MongoId($_GET['token']), "active" => true))){
 		if($findUser = $mongoCRUDClass->db_findone("Contacts", array("uuid" => $chkToken['user_uuid']))){
+			$userUUIDStr=$chkToken['user_uuid'];
 			if($findUser["AllowWebAccess"]==true){
-				$userUUIDStr=$chkToken['user_uuid'];
+				//
 			}else{
-				$err_msg = 'Your link has been expired!';
+				$mongoCRUDClass->db_update("Contacts", array("uuid" => $userUUIDStr), array("AllowWebAccess" => true));
 			}
 		}else{
 			$err_msg = 'You are not a registered user.';

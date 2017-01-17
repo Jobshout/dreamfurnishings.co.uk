@@ -6,9 +6,8 @@ if(!empty($_POST['sign_in'])){
 	$md5_password=md5($password);
 	
 if($email!="" && validChr($email)){
-	//if($user = $mongoCRUDClass->db_findone("Contacts", array("Email" => $email, "AllowWebAccess" => true))){
 	if($user = $mongoCRUDClass->db_findone("Contacts", array("Email" => $email))){
-		if($user['AllowWebAccess']==true || $user['AllowWebAccess']=="true"){
+		//if($user['AllowWebAccess']==true || $user['AllowWebAccess']=="true"){
 			if($action=="requestnewpassword"){
 				//to add authentication_token
 				$create_token_entry= array("user_uuid" => $user["uuid"], "created" => time(), "active" => true );
@@ -63,32 +62,36 @@ if($email!="" && validChr($email)){
 				}
 			}
 			else{
-				if($md5_password==$user['zWebPassword']){
-					$userCurrentIP= __ipAddress();
+				if($user['AllowWebAccess']==true || $user['AllowWebAccess']=="true"){
+					if($md5_password==$user['zWebPassword']){
+						$userCurrentIP= __ipAddress();
 				
-					$session_exits = $mongoCRUDClass->db_findone("session", array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])));
-					if($session_exits){
-						$session_update= array("last_loggedIn"=>time(), "user_uuid" => $user['uuid'], "login_status" => true, "ip_address" => $userCurrentIP);
-						$session_details= $mongoCRUDClass->db_update("session", array("_id" => $session_exits['_id']), $session_update);
+						$session_exits = $mongoCRUDClass->db_findone("session", array("_id" => new MongoId($_COOKIE["DreamFurnishingVisitor"])));
+						if($session_exits){
+							$session_update= array("last_loggedIn"=>time(), "user_uuid" => $user['uuid'], "login_status" => true, "ip_address" => $userCurrentIP);
+							$session_details= $mongoCRUDClass->db_update("session", array("_id" => $session_exits['_id']), $session_update);
 					
-						if(isset($_POST['referer']) && $_POST['referer']!=''){
-							header("location:".$_POST['referer']."&".rand());
-							exit;
-						}elseif(isset($_REQUEST['redirect']) && $_REQUEST['redirect']!=''){
-							header("location:".$_REQUEST['redirect'].".htm?".rand());
-							exit;
-						}else{
-							header("location:index.htm?".rand());
-							exit;
+							if(isset($_POST['referer']) && $_POST['referer']!=''){
+								header("location:".$_POST['referer']."&".rand());
+								exit;
+							}elseif(isset($_REQUEST['redirect']) && $_REQUEST['redirect']!=''){
+								header("location:".$_REQUEST['redirect'].".htm?".rand());
+								exit;
+							}else{
+								header("location:index.htm?".rand());
+								exit;
+							}
 						}
+					}else{
+						$err_msg="Invalid password!";
 					}
 				}else{
-					$err_msg="Invalid password!";
+					$err_msg= $email.' your account is inactive. If you want to activate your account, please click this button : <a title="Activate my account" href="javascript:void(0)" onClick="activateUserAccount(\''.$user['uuid'].'\')" class="btn btn-primary btn-xs">Activate my account</a> and this will send you a confirmation email.';
 				}
 			}
-		}else{
-			$err_msg= $email.' your account is inactive. If you want to activate your account, please click this button : <a title="Activate my account" href="javascript:void(0)" onClick="activateUserAccount(\''.$user['uuid'].'\')" class="btn btn-primary btn-xs">Activate my account</a> and this will send you a confirmation email.';
-		}
+		//}else{
+		//	$err_msg= $email.' your account is inactive. If you want to activate your account, please click this button : <a title="Activate my account" href="javascript:void(0)" onClick="activateUserAccount(\''.$user['uuid'].'\')" class="btn btn-primary btn-xs">Activate my account</a> and this will send you a confirmation email.';
+		//}
 	}else{
 		$err_msg= $email."  not a registered user!";	
 	}
