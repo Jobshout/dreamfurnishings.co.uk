@@ -214,7 +214,7 @@ require_once("include/main_header.php"); ?>
         				} ?>
             		<div class="price-block">
             			<?php if(isset($dbProductData['Unit_Price']) && $dbProductData['Unit_Price']>0){ ?>
-            			<span class="price"><?php echo CURRENCY." ".$dbProductData['Unit_Price']; ?></span>
+            			Price: <strong><?php echo CURRENCY." ".$dbProductData['Unit_Price']; ?></strong>
             			<?php } ?>
             			<!-- <br/><span>Tax: £100.00</span> -->
             		</div>
