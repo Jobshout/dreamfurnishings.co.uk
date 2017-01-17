@@ -99,9 +99,11 @@ function fetch_cat_products(e){
 }
 
 function load_data(){
+alert("Load data function called");
 var jsonRow="return_products.htm?start="+start+"&limit="+nPageSize+"&category="+category+"&keyword="+keyword;
 if(xhr) xhr.abort();
 xhr=$.getJSON(jsonRow,function(result){
+	alert("Got response by ajax request");
 	totalNum=result.iTotalRecords;
 	if(totalNum==0){
 		$('#products_section').html('<div class="alert alert-danger" role="alert">Sorry, no products found!</div>');
