@@ -31,8 +31,19 @@
             <div class="col-sm-3">
             	<h2>Get in Touch</h2>
                	<ul>
-               		<?php if(defined("ADDRESS") && ADDRESS!=""){	?>
-                    <li><?php echo ADDRESS;?></li>
+               		<?php if(defined("ADDRESS") && ADDRESS!=""){
+               			$addressStr=ADDRESS;
+               			$getLandlineStr=get_token_value('dreamfurnishing-landline');
+						if($getLandlineStr!=""){
+							$addressStr.=". Tel: ".$getLandlineStr;
+                   		}else{
+                   			$getMbStr=get_token_value('dreamfurnishing-mobile');
+                   			if($getMbStr!=""){
+								$addressStr.=". Tel: ".$getMbStr;
+							}
+                   		}
+                   	?>
+                    <li><?php echo $addressStr;?></li>
                     <?php } ?>
                     <?php $getMapStr=get_token_value('dreamfurnishing-footer-map');
 						if($getMapStr!=""){	?>

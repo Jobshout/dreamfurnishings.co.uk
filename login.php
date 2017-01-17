@@ -21,7 +21,7 @@ if(isset($_GET['cc'])){
 			$err_msg = 'You are not a registered user.';
 		}
 	}else{
-		$err_msg = 'Your link has been expired!';
+		//$err_msg = 'Your link has been expired!';
 	}
 }
 

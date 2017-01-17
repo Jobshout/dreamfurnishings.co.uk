@@ -12,7 +12,7 @@ if(isset($_REQUEST['id']) && $_REQUEST['id']!=""){
 		//Create HTML For Email 
 		$returnSuccMsgFlag=true;
 						
-		$subject="Account activation mail";
+		$subject=SITE_NAME." account activation mail";
 		
 		$user_footer='</table>';
 		$user_header  = "<table border='0' style='text-align:left; width:95%; padding:5px;'>";
