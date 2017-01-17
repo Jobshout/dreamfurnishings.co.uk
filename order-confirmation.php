@@ -124,6 +124,53 @@ if(!empty($_POST['StatusCode'])){
 $showPurchaseBtnBool=false;
 if(isset($orderDetails["status"]) && $orderDetails["status"]<=1){
 
+//delivery address
+$deliveryFirstname=$userLoggedIn["First name"];
+$deliverySecondname=$userLoggedIn["Surname"];
+$delivery_address_line_1= $userLoggedIn["address_line_1"];
+$delivery_address_line_2= $userLoggedIn["address_line_2"];
+$delivery_address_line_3 = $userLoggedIn["address_line_3"];
+$delivery_county_or_state = $userLoggedIn["county_or_state"];
+$delivery_post_zip_code = $userLoggedIn["post_zip_code"];
+$delivery_country = $userLoggedIn["country"];
+$delivery_Email = $userLoggedIn["Email"];
+$delivery_Mobile = $userLoggedIn["Mobile"];
+
+
+$deliveryAddressStr= isset($userLoggedIn['delivery_address']) ? $userLoggedIn['delivery_address'] : '';
+if($deliveryAddressStr!=""){
+	if(isset($deliveryAddressStr["first_name"]) && $deliveryAddressStr["first_name"]!=""){
+		$deliveryFirstname= $deliveryAddressStr["first_name"];
+	}
+	if(isset($deliveryAddressStr["last_name"]) && $deliveryAddressStr["last_name"]!=""){
+		$deliverySecondname= $deliveryAddressStr["last_name"];
+	}
+	if(isset($deliveryAddressStr["address_line_1"]) && $deliveryAddressStr["address_line_1"]!=""){
+		$delivery_address_line_1= $deliveryAddressStr["address_line_1"];
+	}
+	if(isset($deliveryAddressStr["address_line_2"]) && $deliveryAddressStr["address_line_2"]!=""){
+		$delivery_address_line_2= $deliveryAddressStr["address_line_2"];
+	}
+	if(isset($deliveryAddressStr["address_line_3"]) && $deliveryAddressStr["address_line_3"]!=""){
+		$delivery_address_line_3= $deliveryAddressStr["address_line_3"];
+	}
+	if(isset($deliveryAddressStr["county_or_state"]) && $deliveryAddressStr["county_or_state"]!=""){
+		$delivery_county_or_state= $deliveryAddressStr["county_or_state"];
+	}
+	if(isset($deliveryAddressStr["post_zip_code"]) && $deliveryAddressStr["post_zip_code"]!=""){
+		$delivery_post_zip_code= $deliveryAddressStr["post_zip_code"];
+	}
+	if(isset($deliveryAddressStr["country"]) && $deliveryAddressStr["country"]!=""){
+		$delivery_country= $deliveryAddressStr["country"];
+	}
+	if(isset($deliveryAddressStr["Email"]) && $deliveryAddressStr["Email"]!=""){
+		$delivery_Email= $deliveryAddressStr["Email"];
+	}
+	if(isset($deliveryAddressStr["Mobile"]) && $deliveryAddressStr["Mobile"]!=""){
+		$delivery_Mobile= $deliveryAddressStr["Mobile"];
+	}
+}
+
 /*merchants details*/
 $tokensQry= $db->Tokens->find(array("code" => array('$in' => array('payment-sense-merchantid','payment-sense-password','payment-sense-securekey'))));
 if($tokensQry->count()>0){
@@ -194,23 +241,23 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 	// order description
 	$szOrderDescription = 'Invoice no :'.$orderDetails['full_order_number'];
 	// these variables allow the payment form to be "seeded" with initial values
-	$szCustomerName = $userLoggedIn["First name"]." ".$userLoggedIn["Surname"];
-	$szAddress1 = $userLoggedIn["address_line_1"];	// Important for AVS Check 
-	$szAddress2 = $userLoggedIn['address_line_2'];
+	$szCustomerName = $deliveryFirstname." ".$deliverySecondname;
+	$szAddress1 = $delivery_address_line_1;	// Important for AVS Check 
+	$szAddress2 = $delivery_address_line_2;
 	$szAddress3 = '';
 	$szAddress4 = '';
-	$szCity = $userLoggedIn['address_line_3'];
-	$szState = $userLoggedIn['county_or_state'];
-	$szPostCode = $userLoggedIn['post_zip_code']; // Important for AVS Check
+	$szCity = $delivery_address_line_3;
+	$szState = $delivery_county_or_state;
+	$szPostCode = $delivery_post_zip_code; // Important for AVS Check
 	// the country code - ISO 3166-1  3-digit numeric (e.g. UK = 826)
-	$szCountryCode = fetchCountryCode($userLoggedIn['country']);
+	$szCountryCode = fetchCountryCode($delivery_country);
 		
 	//Email Address
-    $_SESSION['email'] = $userLoggedIn['Email'];//Paymentsense Amendment
-	$szEmailAddress = $userLoggedIn['Email'];
+    $_SESSION['email'] = $delivery_Email;//Paymentsense Amendment
+	$szEmailAddress = $delivery_Email;
 	//Phone Number
-	$_SESSION['phone_number'] = $userLoggedIn['Mobile'];//Paymentsense Amendment
-	$szPhoneNumber = $userLoggedIn['Mobile'];
+	$_SESSION['phone_number'] = $delivery_Mobile;//Paymentsense Amendment
+	$szPhoneNumber = $delivery_Mobile;
 	
 	// the URL on this system that the payment form will push the results to (only applicable for 
 	// ResultDeliveryMethod = "SERVER")
@@ -242,7 +289,7 @@ $PaymentProcessorDomain = 'paymentsensegateway.com';
 	{
 		$szCallbackURL = PaymentFormHelper::getSiteSecureBaseURL().'order-confirmation.htm'; 
 	}
-
+	
 	// get the string to be hashed
 	$szStringToHash = PaymentFormHelper::generateStringToHash($MerchantID,
 			        										  $PaymentSensePwd,
