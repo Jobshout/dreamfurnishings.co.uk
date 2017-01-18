@@ -90,7 +90,7 @@ How much is <span class="rand1"></span>+<span class="rand2"></span>?</label> <sp
 
  </div>
  </div>
- <div CLASS="row pull-right">
+ <div CLASS="row pull-right" STYLE="margin-bottom:15px;">
  
  <div CLASS="col-md-2 text-right">
 <button type="submit" class="btn submitbtn" id="submitBtn">Submit</button>
@@ -102,7 +102,7 @@ How much is <span class="rand1"></span>+<span class="rand2"></span>?</label> <sp
 
 </div>
 <div CLASS="col-md-4" >
-<div STYLE="background:#f5f5f5; border:1px solid #ddd; margin-top:25px; padding:10px; border-radius:5px;">
+<div STYLE="background:#f5f5f5; border:1px solid #ddd; margin-top:25px; padding:10px; border-radius:5px; clear:both;">
 <h2 STYLE="margin-top:5px;">Address</h2>
 	<?php $getMbStr=get_token_value('dreamfurnishing-mobile');
 	if($getMbStr!=""){	?>
