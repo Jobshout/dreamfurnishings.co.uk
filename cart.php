@@ -149,14 +149,90 @@ require_once("include/footer.php");
 ?>
 <script>
 $(function () {
-	load_data();
 	var taxRateNum=$("#tax_rate").val();
 	if(taxRateNum>=1){
 		$("#vatAppliedMsg").html(taxRateNum+"% VAT applied");
 	}else{
 		$("#vatAppliedMsg").hide();
 	}	
+	load_data();
 });
+
+function evaluateGrandTotal(){
+	var subtotal=0, total_tax=0, grandTotal=0;
+	var taxRateNum=parseFloat($("#tax_rate").val());
+	
+	$('.subtotalClass').each(function(){
+		var itemUnitPrice= parseFloat($(this).val());
+		subtotal=subtotal+itemUnitPrice;
+	});
+	subtotal=subtotal.toFixed(2);
+	$("#subTotalHere").html(subtotal);
+	$("#items_subtotal").val(subtotal);
+	
+	if(taxRateNum!=0){
+		total_tax =subtotal*taxRateNum/100;
+		total_tax=total_tax.toFixed(2);
+	}
+	
+	grandTotal = parseFloat(subtotal)+parseFloat(total_tax);
+	grandTotal=grandTotal.toFixed(2);  
+	$("#grandTotalHere").html(grandTotal);
+	$("#totalTaxHere").html(total_tax);
+	
+	$("#grand_total").val(grandTotal);
+	$("#total_tax").val(total_tax);
+	
+	fetchUserPreferences("cart");
+}
+function changeQuantity(id, val){
+	var unit_price=parseFloat($("#unit_"+id).val());
+	var subtotalFloat=parseFloat(unit_price)*val;
+	subtotalFloat=subtotalFloat.toFixed(2);
+	$.ajax({
+		url: 'updateUserPreferences.htm',
+		type: 'POST',
+		data: {"uuid" : id, "quantity" : val, "unitPrice" : unit_price , "random" : Math.random() },
+		dataType: 'json',
+		cache: false,
+		success: function(response){
+			if(response.success){
+				$("#inputSB_"+id).val(subtotalFloat);
+				$("#spanSB_"+id).html(subtotalFloat);
+				
+				evaluateGrandTotal();
+			}else if(response.error){
+				$(".cartTable").before('<div class="alert alert-danger" role="alert">'+response.error+'</div>');
+			}				
+		}
+	});
+}
+
+function remove_user_preferences(id, action){
+	var actionStr='cart';
+	if (typeof action !== "undefined") {
+   		actionStr=action;
+	}
+
+	$(".alert").remove();
+	$.ajax({
+		url: 'removeUserPreferences.htm',
+		type: 'POST',
+		data: {"uuid" : id,  "action" : actionStr , "random" : Math.random() },
+		dataType: 'json',
+		cache: false,
+		success: function(response){
+			if(response.success){
+				$("#"+id).remove();
+				
+				evaluateGrandTotal();
+			}else if(response.error){
+				$(".cartTable").before('<div class="alert alert-danger" role="alert">'+response.error+'</div>');
+			}				
+		}
+	});
+}
+
 var xhr;
 function load_data(){
 	var jsonRow="return_preferences_json.htm?action=cart";
@@ -199,79 +275,10 @@ function load_data(){
             }); 
 			
 			$('.cartTable').append(htmlStr);
-			evaluateGrandTotal();
 			$('#img_loading_div').hide();
+			evaluateGrandTotal();
 		}
 	});
-}
-
-function changeQuantity(id, val){
-	var unit_price=parseFloat($("#unit_"+id).val());
-	var subtotalFloat=parseFloat(unit_price)*val;
-	subtotalFloat=subtotalFloat.toFixed(2);
-	$.ajax({
-		url: 'updateUserPreferences.htm',
-		type: 'POST',
-		data: {"uuid" : id, "quantity" : val, "unitPrice" : unit_price , "random" : Math.random() },
-		dataType: 'json',
-		cache: false,
-		success: function(response){
-			if(response.success){
-				$("#inputSB_"+id).val(subtotalFloat);
-				$("#spanSB_"+id).html(subtotalFloat);
-				evaluateGrandTotal();
-				fetchUserPreferences("cart");
-			}else if(response.error){
-				$(".cartTable").before('<div class="alert alert-danger" role="alert">'+response.error+'</div>');
-			}				
-		}
-	});
-}
-
-function remove_user_preferences(id, actionStr='cart'){
-	$(".alert").remove();
-	$.ajax({
-		url: 'removeUserPreferences.htm',
-		type: 'POST',
-		data: {"uuid" : id,  "action" : actionStr , "random" : Math.random() },
-		dataType: 'json',
-		cache: false,
-		success: function(response){
-			if(response.success){
-				$("#"+id).remove();
-				evaluateGrandTotal();
-				fetchUserPreferences(actionStr);
-			}else if(response.error){
-				$(".cartTable").before('<div class="alert alert-danger" role="alert">'+response.error+'</div>');
-			}				
-		}
-	});
-}
-
-function evaluateGrandTotal(){
-	var subtotal=0, total_tax=0, grandTotal=0;
-	var taxRateNum=parseFloat($("#tax_rate").val());
-	
-	$('.subtotalClass').each(function(){
-		var itemUnitPrice= parseFloat($(this).val());
-		subtotal=subtotal+itemUnitPrice;
-	});
-	subtotal=subtotal.toFixed(2);
-	$("#subTotalHere").html(subtotal);
-	$("#items_subtotal").val(subtotal);
-	
-	if(taxRateNum!=0){
-		total_tax =subtotal*taxRateNum/100;
-		total_tax=total_tax.toFixed(2);
-	}
-	
-	grandTotal = parseFloat(subtotal)+parseFloat(total_tax);
-	grandTotal=grandTotal.toFixed(2);  
-	$("#grandTotalHere").html(grandTotal);
-	$("#totalTaxHere").html(total_tax);
-	
-	$("#grand_total").val(grandTotal);
-	$("#total_tax").val(total_tax);
 }
 </script>
 </body>
