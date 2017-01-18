@@ -28,6 +28,8 @@ if($dbResultsData->count()>0){
 		$bodyStr= $document["body"];
 		$bodyStr=getBriefText($bodyStr,115);
 
+		$row['link']= gb_fn_linkCacheHandler($document["code"].'.html','content.htm?code='.$document["code"]);
+		
 		$row['body']=$bodyStr;
 		$row['title']=$document["title"];
 		$row['code']=$document["code"];

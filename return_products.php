@@ -122,9 +122,12 @@ if($dbResultsData->count()>0){
 		}
 		if(isset($product["product_code"])){
 			$row['code']=  $product["product_code"];
+			$linkStr = gb_fn_linkCacheHandler('product-'.$product["product_code"].'.html','product.htm?code='.$product["product_code"]);
 		}else{
 			$row['code']=  "";
+			$linkStr = gb_fn_linkCacheHandler('product.htm?uuid='.$product["uuid"],'product.htm?uuid='.$product["uuid"]);
 		}
+		$row['link']=  $linkStr;
 		$row['id']=  $product["uuid"];
 		if (in_array($product["uuid"], $favProductArr)) {
     		$row['fav']=  true;
@@ -137,6 +140,7 @@ if($dbResultsData->count()>0){
 			$row['sku']=  "";
 		}
 		$row['price']=  CURRENCY.$product["Unit_Price"];
+		
 		$i++;			
 		$output['aaData'][] = $row;
 	}

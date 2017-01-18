@@ -99,11 +99,9 @@ function fetch_cat_products(e){
 }
 
 function load_data(){
-alert("Load data function called");
 var jsonRow="return_products.htm?start="+start+"&limit="+nPageSize+"&category="+category+"&keyword="+keyword;
 if(xhr) xhr.abort();
 xhr=$.getJSON(jsonRow,function(result){
-	alert("Got response by ajax request");
 	totalNum=result.iTotalRecords;
 	if(totalNum==0){
 		$('#products_section').html('<div class="alert alert-danger" role="alert">Sorry, no products found!</div>');
@@ -125,11 +123,10 @@ xhr=$.getJSON(jsonRow,function(result){
 				$.each(result.aaData, function(i,item){
 					htmlStr+='<div class="col-sm-6 col-md-6 col-lg-4 column">';
           			htmlStr+='<div class="productbox">';
-          			var linkStr=gb_fn_linkHandlerJS('product.htm?uuid='+item.id,'product.htm?uuid='+item.id, linkHandlerBool);
+          			var linkStr=item.link;
           			var buyStr="contact.htm?u="+item.id;
           			if(item.code){
-          				linkStr=gb_fn_linkHandlerJS('product-'+item.code+'.html','product.htm?code='+item.code, linkHandlerBool);
-						buyStr="contact.htm?c="+item.code;
+          				buyStr="contact.htm?c="+item.code;
           			}
             		htmlStr+='<div style="background:#fff;"><a href="'+linkStr+'" title="'+item.name+'"><img src="'+item.image+'" class="img-responsive prdt-listing-pg-img"  alt="'+item.name+'" onerror="this.src=\'images/default-product-large.png\'"></a></div>';
               		htmlStr+='<div class="producttitle">  <a href="'+linkStr+'" title="'+item.name+'">'+item.name+'</a></div>';

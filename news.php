@@ -101,7 +101,6 @@ $dbBlogsData = $db->web_content->find(array('$or' => array(array("status" => "tr
 		  url: "json-news.htm?pageNum="+pageNum,
 		  cache: false,
 		  success: function(html){
-			//alert(html);return false;
 			if(html!='no'){
 				$('#ImageLoadingDiv').hide();
 				$('#content_area').html(html);

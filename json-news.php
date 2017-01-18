@@ -23,9 +23,9 @@ if($dbResultsData->count()>0){
 		
 	    $data.='<div class="news-teaser"><div class="post-date"><div class="month">'.$monthStr.'</div><div class="day">'.$dateStr.'</div></div>';
 	    
-	    $data.='<h3><a title="'.$document["title"].'" rel="bookmark" href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS(\''.$document["code"].'\',\'content.php?code='.$document["code"].'\')">'.$document["title"].'</a></h3>';
+	    $data.='<h3><a title="'.$document["title"].'" rel="bookmark" href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS(\''.$document["code"].'.html\',\'content.php?code='.$document["code"].'\')">'.$document["title"].'</a></h3>';
 	   	$data.='<p>'.$bodyStr.'</p>';
-		$data.='<div class="text-right"><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS(\''.$document["code"].'\',\'content.php?code='.$document["code"].'\')" class="more-link">Continue reading  <span class="right-arrow"></span></a></div>';
+		$data.='<div class="text-right"><a href="javascript:void(0)" onClick="gb_fn_linkCacheHandlerJS(\''.$document["code"].'.html\',\'content.php?code='.$document["code"].'\')" class="more-link">Continue reading  <span class="right-arrow"></span></a></div>';
 		$data.='</div>';
 	}
 }else{

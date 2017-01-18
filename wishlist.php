@@ -60,10 +60,9 @@ function load_data(){
 			var htmlStr="";		
 			$.each(result.aaData, function(i,item){
 				htmlStr+='<div CLASS="row wishlist-row" >';
-				var linkStr=gb_fn_linkHandlerJS('product.htm?uuid='+item.id,'product.htm?uuid='+item.id, linkHandlerBool);
+				var linkStr=item.link;
           		var buyCodeStr=item.id, buyStr="uuid";
           		if(item.code){
-          			linkStr=gb_fn_linkHandlerJS('product-'+item.code+'.html','product.htm?code='+item.code, linkHandlerBool);
           			buyCodeStr=item.code;
           			buyStr="code";
           		}

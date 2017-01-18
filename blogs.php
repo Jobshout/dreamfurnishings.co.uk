@@ -88,9 +88,10 @@ function load_data(){
 		}else{
 			var htmlStr="";
 			$.each(result.aaData, function(i,item){
+				var linkStr= item.link;
 				htmlStr+='<div class="col-md-6">';
           		htmlStr+='<div class="blog-story">';
-            	htmlStr+='<div class="blog-listing-img"><a href="#"><img src="'+item.image+'" class="img-responsive" alt=""></a></div>';
+            	htmlStr+='<div class="blog-listing-img"><a href="'+linkStr+'"><img src="'+item.image+'" class="img-responsive" alt=""></a></div>';
             	htmlStr+='<div class="caption">';
               	htmlStr+='<div class="row">';
                 htmlStr+='<div class="col-xs-3 col-sm-4 col-md-3">';
@@ -98,7 +99,6 @@ function load_data(){
                 htmlStr+='<div class="comments-count"> '+item.comments+'</div>';
                 htmlStr+='</div>';
                 htmlStr+='<div class="col-xs-9 col-sm-8 col-md-9">';
-                var linkStr= gb_fn_linkHandlerJS(item.code+'.html','content.htm?code='+item.code, linkHandlerBool);
                 htmlStr+='<h3><a href="'+linkStr+'">'+item.title+'</a></h3>';
                 htmlStr+='<p>'+item.body+'</p>';
             	htmlStr+='<a href="'+linkStr+'" class="readmore">Read more &raquo; </a> </div>';
