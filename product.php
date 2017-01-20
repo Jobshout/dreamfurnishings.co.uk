@@ -64,6 +64,7 @@ if(isset($dbProductData['Unit_Price']) && $dbProductData['Unit_Price']>0){
 require_once("include/main_header.php"); ?>
 <link rel="stylesheet" href="css/imagezoom/imagezoom.css" />
 <link rel="stylesheet" href="css/elastislide/es-cus.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> 
 <style>
 .add-to-cart-btn{
 	width:100%;
